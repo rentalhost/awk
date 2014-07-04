@@ -1,4 +1,7 @@
 <?php
 
-	// Motor do framework.
-	printf("Hello World!");
+	// Carrega a classe básica do motor.
+	require_once "engine/awk.php";
+
+	// Inicia o processo.
+	awk::init();
