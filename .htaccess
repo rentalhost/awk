@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Redireciona todas as chamadas restantes ao motor.
+RewriteRule .+ index.php [L]
