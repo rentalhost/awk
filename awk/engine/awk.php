@@ -2,10 +2,19 @@
 
 	// Responsável pela inicialização do motor e alguns recursos essenciais.
 	class awk {
+		/** MÓDULO */
+		// Instância do módulo do próprio motor.
+		static private $module;
+
 		/** AUTOLOADER */
 		// Mapa de classes que podem ser carregadas através do motor.
-		// @type array<string>
+		// @type array<string>;
 		static private $class_mapper = [
+			// Controlador de paths.
+			"awk_path",
+
+			// Controlador de erro.
+			"awk_error",
 		];
 
 		// Carrega as classes do motor via SPL.
@@ -23,5 +32,8 @@
 		static public function init() {
 			// Registra o método de autoloader.
 			spl_autoload_register("self::load_class");
+
+			// Inicia o módulo do próprio motor.
+			self::$module = awk_module::get(self::class);
 		}
 	}
