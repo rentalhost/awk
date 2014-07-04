@@ -1,4 +1,10 @@
 RewriteEngine On
 
+# Permite o acesso direto aos arquivos contidos nas pastas públicas de um módulo.
+# Exceto arquivos com QUERY_STRING. Estes deverão prosseguir ao motor.
+RewriteCond %{QUERY_STRING} =""
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^[^/]+/publics/.+$ - [L]
+
 # Redireciona todas as chamadas restantes ao motor.
 RewriteRule .+ index.php [L]
