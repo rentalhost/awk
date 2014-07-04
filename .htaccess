@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Define a saída padrão para UTF-8;
+AddDefaultCharset UTF-8
+
 # Permite o acesso direto aos arquivos contidos nas pastas públicas de um módulo.
 # Exceto arquivos com QUERY_STRING. Estes deverão prosseguir ao motor.
 RewriteCond %{QUERY_STRING} =""
