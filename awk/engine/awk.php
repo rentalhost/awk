@@ -10,10 +10,15 @@
 		// Mapa de classes que podem ser carregadas através do motor.
 		// @type array<string>;
 		static private $class_mapper = [
-			// Controlador de paths.
-			"awk_path",
+			// Classes de feature.
+			"awk_module_feature",
 
-			// Controlador de erro.
+			// Classes view.
+			"awk_view_feature",
+			"awk_view",
+
+			// Classes diversas.
+			"awk_path",
 			"awk_error",
 		];
 
