@@ -17,6 +17,10 @@
 			"awk_view_feature",
 			"awk_view",
 
+			// Classes controller.
+			"awk_controller_feature",
+			"awk_controller",
+
 			// Classes diversas.
 			"awk_path",
 			"awk_error",

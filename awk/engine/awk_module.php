@@ -61,6 +61,7 @@
 		// @type array<string, string>;
 		static private $features_mapper = [
 			"views" => "awk_view_feature",
+			"controllers" => "awk_controller_feature"
 		];
 
 		// Armazena definições de plurais não linear.
