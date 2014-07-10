@@ -22,6 +22,10 @@
 			"awk_library_feature",
 			"awk_library",
 
+			// Classes helper.
+			"awk_helper_feature",
+			"awk_helper",
+
 			// Classes diversas.
 			"awk_path",
 			"awk_error",

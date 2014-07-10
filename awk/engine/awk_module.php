@@ -63,6 +63,7 @@
 			"routers" => "awk_router_feature",
 			"controllers" => "awk_controller_feature",
 			"libraries" => "awk_library_feature",
+			"helpers" => "awk_helper_feature",
 			"views" => "awk_view_feature",
 		];
 
