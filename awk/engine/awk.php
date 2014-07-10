@@ -18,6 +18,10 @@
 			"awk_controller_feature",
 			"awk_controller",
 
+			// Classes library.
+			"awk_library_feature",
+			"awk_library",
+
 			// Classes diversas.
 			"awk_path",
 			"awk_error",

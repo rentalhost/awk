@@ -60,15 +60,17 @@
 		// Os dados são informados pluralizados.
 		// @type array<string, string>;
 		static private $features_mapper = [
-			"views" => "awk_view_feature",
+			"routers" => "awk_router_feature",
 			"controllers" => "awk_controller_feature",
-			"routers" => "awk_router_feature"
+			"libraries" => "awk_library_feature",
+			"views" => "awk_view_feature",
 		];
 
 		// Armazena definições de plurais não linear.
 		// Exemplo: library -> libraries;
 		// @type array<string, string>;
 		static private $features_normalizers = [
+			"library" => "libraries"
 		];
 
 		// Armazena as classes de features mapeadas do módulo.
