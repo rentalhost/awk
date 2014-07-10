@@ -10,9 +10,6 @@
 		// Mapa de classes que podem ser carregadas através do motor.
 		// @type array<string>;
 		static private $class_mapper = [
-			// Classes de feature.
-			"awk_module_feature",
-
 			// Classes view.
 			"awk_view_feature",
 			"awk_view",
@@ -44,5 +41,10 @@
 
 			// Inicia o módulo do próprio motor.
 			self::$module = awk_module::get(self::class);
+
+			// Transfere a URL para o roteador principal.
+			// @todo carregar o roteador principal através das configurações do awk.
+			$boot_module = awk_module::get("debug");
+			$boot_module->router("index")->solve(awk_router::get_url());
 		}
 	}
