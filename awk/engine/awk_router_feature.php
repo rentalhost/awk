@@ -16,7 +16,7 @@
 			}
 
 			// Caso contrário, o constrói e o armazena.
-			$router_instance = new awk_router($this);
+			$router_instance = new awk_router($this->module, $this);
 			$router_instance->load($router_id);
 
 			return $this->routers[$router_id] = $router_instance;

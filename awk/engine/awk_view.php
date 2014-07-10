@@ -1,24 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados da view.
-	class awk_view {
-		// Armazena o módulo da view.
-		// @type awk_module;
-		private $module;
-
-		// Armazena a feature da view.
-		// @type awk_view_feature;
-		private $feature;
-
-		/** VIEW */
-		// Armazena o identificador da view.
-		// @type string;
-		private $id;
-
-		// Armazena o caminho completo da view.
-		// @type string;
-		private $path;
-
+	class awk_view extends awk_base {
 		// Armazena se o caminho da view remete a um arquivo acessível.
 		// @type boolean;
 		private $exists = false;
@@ -34,13 +17,6 @@
 		// Armazena se a view foi impressa.
 		// @type boolean;
 		private $printed = false;
-
-		/** CONSTRUCT */
-		// Constrói uma nova view sobre a feature.
-		public function __construct(awk_view_feature $feature) {
-			$this->feature = $feature;
-			$this->module = $feature->get_module();
-		}
 
 		/** LOAD */
 		// Carrega a view e a retorna.

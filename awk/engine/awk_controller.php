@@ -1,24 +1,8 @@
 <?php
 
 	// Responsável pelo modelo de dados do controller.
-	class awk_controller {
-		// Armazena o módulo do controller.
-		// @type awk_module;
-		private $module;
-
-		// Armazena a feature do controller.
-		// @type awk_controller_feature;
-		private $feature;
-
+	class awk_controller extends awk_base {
 		/** CONTROLLER */
-		// Armazena o identificador do controller.
-		// @type string;
-		private $id;
-
-		// Armazena o caminho completo do controller.
-		// @type string;
-		private $path;
-
 		// Armazena o nome da classe do controller registrado.
 		// @type string;
 		private $classname;
@@ -26,13 +10,6 @@
 		// Armazena a instância do controller.
 		// @type instance;
 		private $instance;
-
-		/** CONSTRUCT */
-		// Constrói um novo controller sobre a feature.
-		public function __construct(awk_controller_feature $feature) {
-			$this->feature = $feature;
-			$this->module = $feature->get_module();
-		}
 
 		/** LOAD */
 		// Carrega o controller e a retorna.
@@ -82,18 +59,6 @@
 		}
 
 		/** PROPRIEDADES */
-		// Obtém o identificador do controller.
-		// @return string;
-		public function get_id() {
-			return $this->id;
-		}
-
-		// Obtém o path normalizado do controller.
-		// @return string;
-		public function get_path() {
-			return awk_path::normalize($this->path);
-		}
-
 		// Retorna a instância do controller.
 		// @return instance;
 		public function get_instance() {

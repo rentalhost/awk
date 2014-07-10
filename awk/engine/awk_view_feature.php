@@ -10,7 +10,7 @@
 
 		// Carrega uma view diretamente.
 		public function load($view_id, $view_args = null, $view_unprint = null) {
-			$view_instance = new awk_view($this);
+			$view_instance = new awk_view($this->module, $this);
 			$view_instance->load($view_id, $view_args);
 
 			return $view_instance;

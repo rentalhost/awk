@@ -4,7 +4,7 @@
 	abstract class awk_module_feature {
 		// Armazena o módulo responsável.
 		// @type awk_module;
-		private $module;
+		protected $module;
 
 		/** CONSTRUCT */
 		// Constrói uma feature.

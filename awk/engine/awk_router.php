@@ -1,33 +1,10 @@
 <?php
 
 	// Responsável pela definição das rotas.
-	class awk_router {
-		// Armazena o módulo do router.
-		// @type awk_module;
-		private $module;
-
-		// Armazena a feature do router.
-		// @type awk_router_feature;
-		private $feature;
-
-		// Armazena o identificador da rota.
-		// @type string;
-		private $id;
-
-		// Armazena o caminho da rota.
-		// @type string;
-		private $path;
-
+	class awk_router extends awk_base {
 		// Armazena o callback de fallback.
 		// @type callback;
 		private $route_fallback;
-
-		/** CONSTRUCT */
-		// Constrói um novo router sobre a feature.
-		public function __construct(awk_router_feature $feature) {
-			$this->feature = $feature;
-			$this->module = $feature->get_module();
-		}
 
 		/** LOAD */
 		// Carrega o arquivo da rota.

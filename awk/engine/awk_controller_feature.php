@@ -17,7 +17,7 @@
 			}
 
 			// Carrega o controller e retorna.
-			$controller_instance = new awk_controller($this);
+			$controller_instance = new awk_controller($this->module, $this);
 			$controller_instance->load($controller_id);
 
 			$this->controllers[$controller_id] = $controller_instance;
