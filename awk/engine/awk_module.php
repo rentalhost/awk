@@ -65,6 +65,7 @@
 			"libraries" => "awk_library_feature",
 			"helpers" => "awk_helper_feature",
 			"views" => "awk_view_feature",
+			"databases" => "awk_database_feature",
 		];
 
 		// Armazena definições de plurais não linear.

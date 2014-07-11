@@ -26,6 +26,10 @@
 			"awk_helper_feature",
 			"awk_helper",
 
+			// Classes database.
+			"awk_database_feature",
+			"awk_database",
+
 			// Classes diversas.
 			"awk_path",
 			"awk_error",
