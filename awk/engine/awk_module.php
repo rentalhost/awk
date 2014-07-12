@@ -24,7 +24,7 @@
 		// Retorna o caminho absoluto do módulo.
 		// @return string;
 		public function get_path() {
-			return awk_path::normalize($this->path);
+			return $this->path;
 		}
 
 		/** CONSTRUCT */
@@ -66,13 +66,15 @@
 			"helpers" => "awk_helper_feature",
 			"views" => "awk_view_feature",
 			"databases" => "awk_database_feature",
+			"settings" => "awk_settings_feature",
 		];
 
 		// Armazena definições de plurais não linear.
 		// Exemplo: library -> libraries;
 		// @type array<string, string>;
 		static private $features_normalizers = [
-			"library" => "libraries"
+			"library" => "libraries",
+			"settings" => "settings"
 		];
 
 		// Armazena as classes de features mapeadas do módulo.

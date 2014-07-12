@@ -55,8 +55,7 @@
 			self::$module = awk_module::get(self::class);
 
 			// Transfere a URL para o roteador principal.
-			// @todo carregar o roteador principal através das configurações do awk.
-			$boot_module = awk_module::get("debug");
+			$boot_module = awk_module::get(self::$module->settings()->route_default);
 			$boot_module->router("index")->solve(awk_router::get_url());
 		}
 	}
