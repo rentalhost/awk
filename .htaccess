@@ -3,11 +3,17 @@ RewriteEngine On
 # Define a saída padrão para UTF-8;
 AddDefaultCharset UTF-8
 
+# Força um erro 404.
+RewriteRule ^404$ - [R=404,L]
+
 # Permite o acesso direto aos arquivos contidos nas pastas públicas de um módulo.
-# Exceto arquivos com QUERY_STRING. Estes deverão prosseguir ao motor.
+# Exceto se possuir QUERY_STRING.
 RewriteCond %{QUERY_STRING} =""
-RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^[^/]+/publics/.+$ - [L]
 
+# Pois caso possua, será necessário enviar a uma rota especial através do motor.
+# Para isso é definido uma ENV.
+RewriteRule ^[^/]+/publics/.+$ index.php [E=PUBLICS:true,L]
+
 # Redireciona todas as chamadas restantes ao motor.
-RewriteRule .+ index.php [L]
+RewriteRule ^ index.php [L]

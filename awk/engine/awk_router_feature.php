@@ -21,4 +21,10 @@
 
 			return $this->routers[$router_id] = $router_instance;
 		}
+
+		/** EXISTS */
+		// Verifica se um determinado roteador existe.
+		public function exists($router_id) {
+			return is_readable($this->module->get_path() . "/routers/{$router_id}.php");
+		}
 	}

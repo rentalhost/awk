@@ -34,4 +34,11 @@
 					break;
 			}
 		}
+
+		/** 404 ERROR */
+		// Força um erro de objeto não encontrado.
+		static public function force_404() {
+			$location_error = dirname($_SERVER["SCRIPT_NAME"]) . "/404";
+			header("Location: {$location_error}");
+		}
 	}

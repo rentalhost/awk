@@ -21,6 +21,12 @@
 				]);
 			}
 
+			// Se a rota for um arquivo público, define o Content-type da página.
+			if($this->is_file()) {
+				$finfo = new finfo(FILEINFO_MIME | FILEINFO_PRESERVE_ATIME);
+				header("Content-type: " . $finfo->file($this->file_path()));
+			}
+
 			// Carrega o arquivo do roteador.
 			// É neste ponto que as rotas devem ser definidas no roteador.
 			$this->module->include_clean($this->path, [ "router" => $this ]);
@@ -37,6 +43,20 @@
 		// Retorna o fallback.
 		public function get_fallback() {
 			return $this->route_fallback;
+		}
+
+		/** FILE */
+		// Informa se é o roteador está gerenciando um arquivo.
+		// @return boolean;
+		public function is_file() {
+			return isset($_SERVER["REDIRECT_PUBLICS"])
+				&& is_readable($this->file_path());
+		}
+
+		// Retorna o caminho do arquivo.
+		// @return string;
+		public function file_path() {
+			return $_SERVER["DOCUMENT_ROOT"] . ltrim($_SERVER["REDIRECT_URL"], "/");
 		}
 
 		/** SOLVE */
