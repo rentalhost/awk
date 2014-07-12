@@ -30,6 +30,9 @@
 			"awk_database_feature",
 			"awk_database",
 
+			// Classes router.
+			"awk_router_route",
+
 			// Classes diversas.
 			"awk_path",
 			"awk_error",

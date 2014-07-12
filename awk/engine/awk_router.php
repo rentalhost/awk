@@ -2,6 +2,11 @@
 
 	// Responsável pela definição das rotas.
 	class awk_router extends awk_base {
+		// Armazena as rotas gerenciáveis por este roteador.
+		// @type array<string, awk_router_route>;
+		private $routes = [
+		];
+
 		// Armazena o callback de fallback.
 		// @type callback;
 		private $route_fallback;
@@ -33,6 +38,16 @@
 		}
 
 		/** ROUTES */
+		// Adiciona uma nova rota ao roteador.
+		public function add_route($route_definition, $route_callback) {
+			$this->routes[] = new awk_router_route($route_definition, $route_callback);
+		}
+
+		// Obtém todas as rotas definidas no roteador.
+		public function get_routes() {
+			return $this->routes;
+		}
+
 		// Define uma rota de fallback.
 		// Este método será executado quando não for possível resolver uma rota.
 		// Se /null/ for informado o fallback será desativado.

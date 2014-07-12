@@ -67,6 +67,7 @@
 			"views" => "awk_view_feature",
 			"databases" => "awk_database_feature",
 			"settings" => "awk_settings_feature",
+			"modules" => "awk_module_feature",
 		];
 
 		// Armazena definições de plurais não linear.
@@ -155,5 +156,12 @@
 
 			// Inclui e retorna o valor do arquivo.
 			return include $include_file;
+		}
+
+		/** LOCALHOST */
+		// Retorna se está em um ambiente local de desenvolvimento.
+		// @return boolean;
+		public function is_localhost() {
+			return is_readable($_SERVER["DOCUMENT_ROOT"] . "/awk.localhost");
 		}
 	}
