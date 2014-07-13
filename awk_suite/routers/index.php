@@ -1,6 +1,6 @@
 <?php
 
 	// Define uma rota de fallback.
-	$router->set_fallback(function() {
+	$router->add_route("test", function() {
 		echo "Hello World!";
 	});

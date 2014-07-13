@@ -46,7 +46,7 @@
 
 		/** MATCH */
 		// Executa um teste de rota com a URL Array informada.
-		public function match($url_array, &$output_args = null) {
+		public function match($url_array, &$output_args, &$url_array_index) {
 			// Armazena a compilação da definição.
 			$compiled = $this->get_compiled();
 
@@ -74,7 +74,7 @@
 				if($compiled_statements["method"] === "static"
 				&& $compiled_statements["match"] === $url_array_part) {
 					$compiled_index++;
-					$url_array_part++;
+					$url_array_index++;
 					continue;
 				}
 
