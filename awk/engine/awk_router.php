@@ -74,19 +74,6 @@
 			return $_SERVER["DOCUMENT_ROOT"] . ltrim($_SERVER["REDIRECT_URL"], "/");
 		}
 
-		/** SOLVE */
-		// Resolve uma rota até a execução de seu callback.
-		public function solve($url) {
-			// Divide a URL em um array, eliminando espaços vazios.
-			// Ex. "1//2//3" => ["1", "2", "3"]
-			$url_array = array_filter(explode("/", $url), "strlen");
-
-			// Inicia um driver que navegará sobre as rotas.
-			$router_driver = new awk_router_driver();
-			$router_driver->set_router($this);
-			$router_driver->solve($url_array);
-		}
-
 		/** HELPER */
 		// Retorna a URL acessada.
 		// @return string;

@@ -44,9 +44,9 @@
 			return $this->definition_compiled = $definition_compiled;
 		}
 
-		/** TEST */
+		/** MATCH */
 		// Executa um teste de rota com a URL Array informada.
-		public function test($url_array) {
+		public function match($url_array, &$output_args = null) {
 			// Armazena a compilação da definição.
 			$compiled = $this->get_compiled();
 
