@@ -8,6 +8,8 @@
 	require_once "engine/awk_router_feature.php";
 	require_once "engine/awk_router_driver_stack.php";
 	require_once "engine/awk_router_driver.php";
+	require_once "engine/awk_router_route_part.php";
+	require_once "engine/awk_router_route.php";
 	require_once "engine/awk_router.php";
 	require_once "engine/awk_settings_feature.php";
 	require_once "engine/awk_settings.php";

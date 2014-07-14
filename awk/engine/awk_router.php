@@ -40,7 +40,7 @@
 		/** ROUTES */
 		// Adiciona uma nova rota ao roteador.
 		public function add_route($route_definition, $route_callback) {
-			$this->routes[] = new awk_router_route($route_definition, $route_callback);
+			$this->routes[] = new awk_router_route($this, $route_definition, $route_callback);
 		}
 
 		// Obtém todas as rotas definidas no roteador.

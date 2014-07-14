@@ -131,6 +131,53 @@
 			return $this->load_feature($key);
 		}
 
+		/** IDENTIFY */
+		// Identifica uma string e retorna o callback.
+		public function identify($id, $feature_type = null) {
+			// Se não for uma string, retorna o próprio identificador.
+			// Caso contrário, será necessário identificar a parte indicada.
+			if(!is_string($id)) {
+				awk_error::create([
+					"type" => awk_error::TYPE_FATAL,
+					"message" => "A identificação só é possível em strings."
+				]);
+			}
+
+			// Executa a tarefa de identificação, separando cada parte.
+			$id_validate = preg_match("/^
+				(?<feature>\w+\@)?
+				(?<module>\w+\-\>)?
+				(?<id>[\w\/]+)
+			$/x", $id, $id_match);
+
+			if($id_validate) {
+				// Módulo que será utilizado. Por padrão, o próprio módulo.
+				// @type awk_module;
+				$module_instance = $this;
+				if(!empty($id_match["module"])) {
+					$module_instance = self::get(substr($id_match["module"], 0, -2));
+				}
+
+				// Redefine a feature, se outra foi informada.
+				if(!empty($id_match["feature"])) {
+					$feature_type = substr($id_match["feature"], 0, -1);
+				}
+				else
+				if($feature_type === null) {
+					awk_error::create([
+						"type" => awk_error::TYPE_FATAL,
+						"message" => "Não foi possível identificar \"{$id}\". Um recurso não foi informado."
+					]);
+				}
+
+				// Após coletar todos os dados necessários, retorna o identificador.
+				return $module_instance->__call($feature_type, [ $id_match["id"] ]);
+			}
+
+			// Se não foi possível validar, retorna false.
+			return false;
+		}
+
 		/** LOADER */
 		// Carrega e retorna um módulo.
 		static public function get($module_id) {

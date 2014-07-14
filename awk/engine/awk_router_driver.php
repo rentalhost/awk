@@ -35,8 +35,10 @@
 			// Se não for a primeira pilha (zero), então clona a pilha anterior.
 			// Será necessário reiniciar alguns valores.
 			if($stack_next_index !== 0) {
-				$stack_next_instance = clone $this->stacks[$this->stack_index];
-				$stack_next_instance->stack_parent = $this->stacks[$this->stack_index];
+				$stack_current = $this->get_stack();
+
+				$stack_next_instance = clone $stack_current;
+				$stack_next_instance->stack_parent = $stack_current;
 				$stack_next_instance->reset();
 
 				return $this->stacks[$stack_next_index] = $stack_next_instance;
@@ -46,10 +48,15 @@
 			return $this->stacks[$stack_next_index] = new awk_router_driver_stack;
 		}
 
+		// Obtém a pilha de processamento atual.
+		private function get_stack() {
+			return $this->stacks[$this->stack_index];
+		}
+
 		// Resolve a stack atual.
 		private function stack_solver() {
 			// Carrega a pilha atual.
-			$stack_current = $this->stacks[$this->stack_index];
+			$stack_current = $this->get_stack();
 
 			// Obtém todas as rotas definidas no roteador atual.
 			// Será necessário testar uma a uma, até encontrar uma que possa ser resolvida.
@@ -57,16 +64,28 @@
 			foreach($router_routes as $router_route) {
 				// Verifica se a rota atual pode ser resolvida.
 				// Se puder, seu callback será executado.
-				if($router_route->match($stack_current->url_array, $callback_args, $url_array_index)) {
-					// Indica que a rota atual foi processada com sucesso.
-					$stack_current->url_processed = true;
-					$stack_current->stack_status[] = "route_match";
+				if($router_route->match($stack_current->url_array, $output_args, $output_attrs, $url_array_index)) {
+					// Armazena a rota que processou a stack.
+					$stack_current->stack_route = $router_route;
+
+					// Armazena os atributos capturados no driver.
+					$stack_current->url_attrs = $output_attrs;
 
 					// Define quantas partes da URL Array foram processadas pela rota.
 					$stack_current->url_array_index = $url_array_index;
 
 					// Executa o callback da rota e finaliza o processo.
-					$this->callback_execute($router_route->get_callback(), $callback_args);
+					$this->callback_execute($router_route->get_callback(), $output_args);
+
+					// Se houve uma invalidação, continua o processamento de rotas.
+					if(in_array("invalidated", $stack_current->stack_status)) {
+						$stack_current->reset();
+						continue;
+					}
+
+					// Indica que a rota atual foi processada com sucesso.
+					$stack_current->url_processed = true;
+					$stack_current->stack_status[] = "route_match";
 					return;
 				}
 			}
@@ -114,7 +133,7 @@
 		// Indica que a URL deverá ser preservada (não sofrer slice) \
 		// após iniciar a próxima stack.
 		public function preserve_url($preserve = null) {
-			$this->stacks[$this->stack_index]->url_array_preserve = $preserve !== false;
+			$this->get_stack()->url_array_preserve = $preserve !== false;
 		}
 
 		/** REDIRECT */
@@ -136,6 +155,18 @@
 
 			// Inicia o processamento de pilhas.
 			$this->stack_process();
+		}
+
+		/** INVALIDATE */
+		// Determina que a rota atual é inválida e permite o avanço para a próxima rota.
+		public function invalidate() {
+			return $this->get_stack()->stack_status[] = "invalidated";
+		}
+
+		/** ATTR */
+		// Retorna um valor de um atributo capturado na pilha atual.
+		public function get_attr($key) {
+			return $this->get_stack()->url_attrs[$key];
 		}
 
 		/** CALLBACK */

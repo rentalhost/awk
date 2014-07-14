@@ -6,6 +6,10 @@
 		// @type self;
 		public $stack_parent;
 
+		// Armazena a rota que a stack processou.
+		// @type awk_router_route;
+		public $stack_route;
+
 		// Armazena o status gerado na stack.
 		// @type array<string>;
 		public $stack_status = [];
@@ -26,6 +30,10 @@
 		// Indica se a URL foi processada por uma rota.
 		// @type boolean;
 		public $url_processed = false;
+
+		// Armazena os atributos capturados da URL.
+		// @type array<string, mixed>/
+		public $url_attrs = [];
 
 		// Armazena a instância do módulo responsável pela stack.
 		// @type awk_module;
