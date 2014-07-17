@@ -36,6 +36,11 @@
 		}
 
 		/** ROUTES */
+		// Adiciona uma rota de raíz, que só é executada quando não há mais argumentos na URL Array.
+		public function add_root($root_callback) {
+			$this->add_route("[awk->null]", $root_callback);
+		}
+
 		// Adiciona uma nova rota de passagem.
 		public function add_passage($passage_callback) {
 			$router_instance = new awk_router_route($this);
