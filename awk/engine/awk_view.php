@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados da view.
-	class awk_view extends awk_base {
+	class awk_view extends awk_module_base {
 		static protected $feature_type = "view";
 
 		// Armazena se o caminho da view remete a um arquivo acessível.

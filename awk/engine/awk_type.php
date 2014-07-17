@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados do type.
-	class awk_type extends awk_base {
+	class awk_type extends awk_module_base {
 		static protected $feature_type = "type";
 
 		// Armazena o validador de tipo.

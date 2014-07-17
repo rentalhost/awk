@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável por abstrair o modelo base das classes utilizadas pelas features.
-	abstract class awk_base {
+	abstract class awk_module_base {
 		// Armazena o tipo de recurso.
 		// @type string;
 		static protected $feature_type;

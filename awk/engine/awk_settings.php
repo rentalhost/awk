@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pela definição de configurações.
-	class awk_settings extends awk_base {
+	class awk_settings extends awk_module_base {
 		static protected $feature_type = "settings";
 
 		// Armazena o path de sobreposição de configurações.

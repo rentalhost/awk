@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados do controller.
-	class awk_controller extends awk_base {
+	class awk_controller extends awk_module_base {
 		static protected $feature_type = "controller";
 
 		/** CONTROLLER */

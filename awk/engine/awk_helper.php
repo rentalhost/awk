@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados do helper.
-	class awk_helper extends awk_base {
+	class awk_helper extends awk_module_base {
 		static protected $feature_type = "helper";
 
 		/** HELPER */

@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pela definição das rotas.
-	class awk_router extends awk_base {
+	class awk_router extends awk_module_base {
 		static protected $feature_type = "router";
 
 		// Armazena as rotas gerenciáveis por este roteador.

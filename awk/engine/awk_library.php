@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo modelo de dados da library.
-	class awk_library extends awk_base {
+	class awk_library extends awk_module_base {
 		static protected $feature_type = "library";
 
 		/** LIBRARY */
