@@ -133,7 +133,7 @@
 
 		/** IDENTIFY */
 		// Identifica uma string e retorna o callback.
-		public function identify($id, $feature_type = null, $module_required = null, $return_parts = null) {
+		public function identify($id, $feature_type = null, $feature_type_blocked = null, $module_required = null, $return_parts = null) {
 			// Executa a tarefa de identificação, separando cada parte.
 			$id_validate = preg_match("/^
 				(?<feature>\w+\@)?
@@ -165,9 +165,9 @@
 						"message" => "Não foi possível identificar \"{$id}\". A definição do recurso é obrigatória."
 					]);
 				}
-				else
-				// Se a feature foi definida, não pode ser substituida por outra.
-				if($feature_type !== null
+				// Se a feature foi definida, mas há necessidade de um bloqueio, gera um erro.
+				if($feature_type_blocked === true
+				&& $feature_type !== null
 				&& !empty($id_match["feature"])
 				&& $feature_type !== substr($id_match["feature"], 0, -1)) {
 					awk_error::create([
@@ -176,7 +176,8 @@
 					]);
 				}
 				// Em último caso, define a feature que será utilizada.
-				else {
+				else
+				if(!empty($id_match["feature"])) {
 					$feature_type = substr($id_match["feature"], 0, -1);
 				}
 

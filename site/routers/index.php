@@ -5,6 +5,6 @@
 	if($awk->is_localhost()
 	&& $awk->modules->exists("awk_suite")) {
 		$router->add_route("suite", function($driver) {
-			$driver->redirect_module("awk_suite");
+			$driver->redirect("awk_suite->index");
 		});
 	}

@@ -16,9 +16,10 @@
 
 		/** CONSTRUCT */
 		// Constrói um novo driver, definindo a rota inicial.
-		public function __construct($url) {
+		public function __construct($url, $module_instance) {
 			// Define a URL Array da próxima pilha de execução, eliminando partes vazias.
 			$stack_next = $this->get_stack_next();
+			$stack_next->module_instance = $module_instance;
 			$stack_next->url_array = array_filter(explode("/", $url), "strlen");
 		}
 
@@ -123,21 +124,15 @@
 		}
 
 		/** REDIRECT */
-		// Redireciona para um módulo.
-		public function redirect_module($module_id, $router_id = null) {
-			// Define o módulo da próxima pilha de execução.
-			$stack_next = $this->get_stack_next();
-			$stack_next->module_instance = awk_module::get($module_id);
-
-			// Define o roteador que será processado.
-			$this->redirect($router_id ?: "index");
-		}
-
-		// Redireciona para um roteador do mesmo módulo.
+		// Redireciona para um roteador através da id.
 		public function redirect($router_id) {
 			// Define o roteador da próxima pilha de execução.
 			$stack_next = $this->get_stack_next();
-			$stack_next->router_instance = $stack_next->module_instance->router($router_id);
+
+			// Carrega a definição do roteador.
+			$router_instance = $stack_next->module_instance->identify($router_id, "router");
+			$stack_next->module_instance = $router_instance->get_module();
+			$stack_next->router_instance = $router_instance;
 
 			// Inicia o processamento de pilhas.
 			$this->stack_process();
