@@ -58,18 +58,21 @@
 			// Inicia o módulo do próprio motor.
 			self::$module = awk_module::get(self::class);
 
+			// Carrega as configurações do motor.
+			$engine_settings = self::$module->settings();
+
 			// Por definição é usado o "index" como roteador padrão, porém,\
 			// quando vem de um arquivo público é necessário utilizar o roteador "index.file".
 			$router_id = isset($_SERVER["REDIRECT_PUBLICS"])
-				? "index.file"
-				: "index";
+				? $engine_settings->router_file_default
+				: $engine_settings->router_default;
 
+			// Identifica a rota.
 			// Se o roteador existir, ele será utilizado.
-			$boot_module_id = self::$module->settings()->route_default;
-			$boot_module_instance = awk_module::get($boot_module_id);
-			if($boot_module_instance->routers->exists($router_id)) {
+			$router_identify = self::$module->identify($router_id, "router", true, true);
+			if($router_identify["module"]->routers->exists($router_identify["id"])) {
 				$router_driver = new awk_router_driver(awk_router::get_url());
-				$router_driver->redirect_module($boot_module_id, $router_id);
+				$router_driver->redirect_module($router_identify["module"]->get_id(), $router_identify["id"]);
 				return;
 			}
 

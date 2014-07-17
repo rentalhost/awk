@@ -133,7 +133,7 @@
 
 		/** IDENTIFY */
 		// Identifica uma string e retorna o callback.
-		public function identify($id, $feature_type = null) {
+		public function identify($id, $feature_type = null, $module_required = false, $return_parts = false) {
 			// Se não for uma string, retorna o próprio identificador.
 			// Caso contrário, será necessário identificar a parte indicada.
 			if(!is_string($id)) {
@@ -147,7 +147,7 @@
 			$id_validate = preg_match("/^
 				(?<feature>\w+\@)?
 				(?<module>\w+\-\>)?
-				(?<id>[\w\/]+)
+				(?<id>[\w\/\.]+)
 			$/x", $id, $id_match);
 
 			if($id_validate) {
@@ -157,17 +157,45 @@
 				if(!empty($id_match["module"])) {
 					$module_instance = self::get(substr($id_match["module"], 0, -2));
 				}
-
-				// Redefine a feature, se outra foi informada.
-				if(!empty($id_match["feature"])) {
-					$feature_type = substr($id_match["feature"], 0, -1);
-				}
 				else
-				if($feature_type === null) {
+				if($module_required === true) {
 					awk_error::create([
 						"type" => awk_error::TYPE_FATAL,
-						"message" => "Não foi possível identificar \"{$id}\". Um recurso não foi informado."
+						"message" => "Não foi possível identificar \"{$id}\". A definição do módulo é obrigatória."
 					]);
+				}
+
+				// Define a feature a ser utilizada.
+				// Se uma feature é obrigatória (null), mas não foi definida, gera um erro.
+				if($feature_type === null
+				&& empty($id_match["feature"])) {
+					awk_error::create([
+						"type" => awk_error::TYPE_FATAL,
+						"message" => "Não foi possível identificar \"{$id}\". A definição do recurso é obrigatória."
+					]);
+				}
+				else
+				// Se a feature foi definida, não pode ser substituida por outra.
+				if($feature_type !== null
+				&& !empty($id_match["feature"])
+				&& $feature_type !== substr($id_match["feature"], 0, -1)) {
+					awk_error::create([
+						"type" => awk_error::TYPE_FATAL,
+						"message" => "Não foi possível identificar \"{$id}\". O recurso deve ser \"{$feature_type}\"."
+					]);
+				}
+				// Em último caso, define a feature que será utilizada.
+				else {
+					$feature_type = substr($id_match["feature"], 0, -1);
+				}
+
+				// Retorna as instâncias das partes identificadas.
+				if($return_parts === true) {
+					return [
+						"feature" => $feature_type,
+						"module" => $module_instance,
+						"id" => $id_match["id"]
+					];
 				}
 
 				// Após coletar todos os dados necessários, retorna o identificador.
