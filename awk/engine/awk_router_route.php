@@ -20,10 +20,10 @@
 
 		/** CONSTRUCT */
 		// Construtor.
-		public function __construct($router, $route_definition, $route_callback) {
-			$this->router = $router;
-			$this->definition = $route_definition;
-			$this->callback = $route_callback;
+		public function __construct($private_array) {
+			foreach($private_array as $key => $value) {
+				$this->{$key} = $value;
+			}
 		}
 
 		/** ROUTER */
@@ -58,19 +58,27 @@
 		/** MATCH */
 		// Executa um teste de rota com a URL Array informada.
 		public function match($url_array, &$output_args, &$output_attrs, &$url_array_index) {
+			// Definição de parâmetros.
+			$url_array_index = 0;
+			$output_args = [];
+			$output_attrs = [];
+
+			// Se não houver uma definição, é uma rota de passagem.
+			// Sempre deverá ser executada.
+			if(!$this->definition) {
+				return true;
+			}
+
 			// Armazena a compilação da definição.
 			$definition = $this->get_compiled();
 
 			// Verifica cada parte da definição.
 			$definition_index = 0;
 			$definition_length = count($definition);
-			$url_array_index = 0;
 			$url_array_length = count($url_array);
 
-			// Armazena os argumentos e atributos capturados.
+			// Armazena a captura atual de dados.
 			$output_value = null;
-			$output_args = [];
-			$output_attrs = [];
 
 			// Armazena o número de vezes que uma mesma parte da URL foi capturada.
 			$url_array_matched = 0;

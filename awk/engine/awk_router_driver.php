@@ -85,23 +85,9 @@
 
 					// Indica que a rota atual foi processada com sucesso.
 					$stack_current->url_processed = true;
-					$stack_current->stack_status[] = "route_match";
+					$stack_current->stack_status[] = "accepted";
 					return;
 				}
-			}
-
-			// Verifica se há um fallback.
-			// Se houver, ele será executado com o driver e finalizará a resolução.
-			$router_fallback = $stack_current->router_instance->get_fallback();
-			if($router_fallback) {
-				// Indica que a rota atual foi processada com sucesso, \
-				// porém, foi através de um fallback.
-				$stack_current->url_processed = true;
-				$stack_current->stack_status[] = "route_fallback";
-
-				// Executa o callback da rota e finaliza o processo.
-				$this->callback_execute($router_fallback);
-				return;
 			}
 		}
 

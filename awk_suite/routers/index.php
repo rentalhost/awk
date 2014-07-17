@@ -1,6 +1,6 @@
 <?php
 
-	// Define uma rota de fallback.
-	$router->add_route("test", function() {
+	// Define uma passagem.
+	$router->add_passage(function($driver) {
 		echo "Hello World!";
 	});

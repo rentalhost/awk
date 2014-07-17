@@ -7,10 +7,6 @@
 		private $routes = [
 		];
 
-		// Armazena o callback de fallback.
-		// @type callback;
-		private $route_fallback;
-
 		/** LOAD */
 		// Carrega o arquivo da rota.
 		public function load($router_id) {
@@ -38,26 +34,26 @@
 		}
 
 		/** ROUTES */
+		// Adiciona uma nova rota de passagem.
+		public function add_passage($passage_callback) {
+			$this->routes[] = new awk_router_route([
+				"router" => $this,
+				"callback" => $passage_callback
+			]);
+		}
+
 		// Adiciona uma nova rota ao roteador.
 		public function add_route($route_definition, $route_callback) {
-			$this->routes[] = new awk_router_route($this, $route_definition, $route_callback);
+			$this->routes[] = new awk_router_route([
+				"router" => $this,
+				"definition" => $route_definition,
+				"callback" => $route_callback
+			]);
 		}
 
 		// Obtém todas as rotas definidas no roteador.
 		public function get_routes() {
 			return $this->routes;
-		}
-
-		// Define uma rota de fallback.
-		// Este método será executado quando não for possível resolver uma rota.
-		// Se /null/ for informado o fallback será desativado.
-		public function set_fallback($callback) {
-			$this->route_fallback = $callback;
-		}
-
-		// Retorna o fallback.
-		public function get_fallback() {
-			return $this->route_fallback;
 		}
 
 		/** FILE */
