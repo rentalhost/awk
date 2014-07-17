@@ -78,7 +78,15 @@
 		// Os argumentos serão enviados diretamente ao construtor.
 		public function create() {
 			$reflection_instance = $this->get_reflection();
-			return $reflection_instance->newInstanceArgs(func_get_args());
+			$library_instance = $reflection_instance->newInstanceArgs(func_get_args());
+
+			// Se for uma instância de `awk_base`, armazena as informações da base.
+			if($library_instance instanceof awk_base) {
+				$library_instance->set_base($this->module);
+			}
+
+			// Retorna a instância.
+			return $library_instance;
 		}
 
 		/** UNIQUE */
@@ -111,6 +119,11 @@
 					]);
 				}
 
+				// Se for uma instância de `awk_base`, armazena as informações da base.
+				if($this->unique_instance instanceof awk_base) {
+					$this->unique_instance->set_base($this->module);
+				}
+
 				// Armazena e retorna a instância.
 				return $this->unique_instance = $unique_instance;
 			}
@@ -130,6 +143,14 @@
 			}
 
 			// Inicia a instância única.
-			return $this->unique_instance = $reflection_instance->newInstance();
+			$this->unique_instance = $reflection_instance->newInstance();
+
+			// Se for uma instância de `awk_base`, armazena as informações da base.
+			if($this->unique_instance instanceof awk_base) {
+				$this->unique_instance->set_base($this->module);
+			}
+
+			// Retorna a instância única.
+			return $this->unique_instance;
 		}
 	}

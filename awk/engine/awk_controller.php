@@ -52,6 +52,11 @@
 			// Inicia a instância do controller.
 			$controller_reflection = new ReflectionClass($this->classname);
 			$this->instance = $controller_reflection->newInstance();
+
+			// Se o controller for uma instância de `awk_base`, armazena as informações do módulo.
+			if($this->instance instanceof awk_base) {
+				$this->instance->set_base($this->module);
+			}
 		}
 
 		/** REGISTER */

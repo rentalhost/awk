@@ -35,6 +35,7 @@
 			"awk_database",
 
 			// Classes diversas.
+			"awk_base",
 			"awk_path",
 			"awk_error",
 		];
