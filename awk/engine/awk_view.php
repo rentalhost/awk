@@ -29,9 +29,11 @@
 			$this->exists = is_readable($this->path);
 
 			// Carrega o arquivo, armazenando sua saída.
-			ob_start();
-			$this->return = $this->module->include_clean($this->path, $view_args);
-			$this->contents = ob_get_clean();
+			if($this->exists) {
+				ob_start();
+				$this->return = $this->module->include_clean($this->path, $view_args);
+				$this->contents = ob_get_clean();
+			}
 
 			// Imprime a view, se for necessário.
 			if($view_unprint !== false) {

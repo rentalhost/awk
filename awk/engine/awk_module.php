@@ -139,6 +139,7 @@
 				(?<feature>\w+\@)?
 				(?<module>\w+\-\>)?
 				(?<name>[\w\/\.]+)
+				(?<method>::\w+)?
 			$/x", $id, $id_match);
 
 			if($id_validate) {
@@ -181,17 +182,32 @@
 					$feature_type = substr($id_match["feature"], 0, -1);
 				}
 
+				// Identifica um método.
+				$method_name = null;
+				if(!empty($id_match["method"])) {
+					$method_name = substr($id_match["method"], 2);
+				}
+
 				// Retorna as instâncias das partes identificadas.
 				if($return_parts === true) {
 					return [
 						"feature" => $feature_type,
 						"module" => $module_instance,
-						"name" => $id_match["name"]
+						"name" => $id_match["name"],
+						"method" => $method_name
 					];
 				}
 
-				// Após coletar todos os dados necessários, retorna o identificador.
-				return $module_instance->__call($feature_type, [ $id_match["name"] ]);
+				// Após coletar todos os dados necessários, carrega o objeto.
+				$object_instance = $module_instance->__call($feature_type, [ $id_match["name"] ]);
+
+				// Se um método foi informado, retorna um callable.
+				if($method_name !== null) {
+					return [ $object_instance, $method_name ];
+				}
+
+				// Caso contrário, apenas retorna o objeto.
+				return $object_instance;
 			}
 
 			// Se não foi possível validar, retorna false.

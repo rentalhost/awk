@@ -171,6 +171,13 @@
 							$callback_parts["module"]->view($callback_parts["name"]);
 						};
 						break;
+
+					// Identifica um controller a ser executado.
+					case "controller":
+						$callback = function($driver) use($callback_parts) {
+							call_user_func([ $callback_parts["module"]->controller($callback_parts["name"]), $callback_parts["method"] ], $driver);
+						};
+						break;
 				}
 			}
 
