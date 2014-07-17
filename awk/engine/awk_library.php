@@ -56,8 +56,13 @@
 
 		/** REGISTER */
 		// Registra a classe da library.
-		public function register($classname) {
+		public function register($classname, $autoinit_unique = null) {
 			$this->classname = $classname;
+
+			// Inicia uma instância única ao registrar a classe.
+			if($autoinit_unique === true) {
+				$this->unique();
+			}
 		}
 
 		/** REFLECTION */
