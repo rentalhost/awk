@@ -20,10 +20,8 @@
 
 		/** CONSTRUCT */
 		// Construtor.
-		public function __construct($private_array) {
-			foreach($private_array as $key => $value) {
-				$this->{$key} = $value;
-			}
+		public function __construct($router) {
+			$this->router = $router;
 		}
 
 		/** ROUTER */
@@ -170,6 +168,11 @@
 		}
 
 		/** DEFINITION */
+		// Define a rota.
+		public function set_definition($definition) {
+			$this->definition = $definition;
+		}
+
 		// Retorna a definição da rota.
 		// @return string;
 		public function get_definition() {
@@ -177,6 +180,11 @@
 		}
 
 		/** CALLBACK */
+		// Define a callback.
+		public function set_callback($callback) {
+			$this->callback = $callback;
+		}
+
 		// Retorna a callback armazenada.
 		public function get_callback() {
 			return $this->callback;

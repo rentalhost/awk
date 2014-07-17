@@ -4,7 +4,5 @@
 	// adiciona a seguinte rota.
 	if($awk->is_localhost()
 	&& $awk->modules->exists("awk_suite")) {
-		$router->add_route("suite", function($driver) {
-			$driver->redirect("awk_suite->index");
-		});
+		$router->add_route("suite", "awk_suite->index");
 	}

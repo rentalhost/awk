@@ -38,19 +38,19 @@
 		/** ROUTES */
 		// Adiciona uma nova rota de passagem.
 		public function add_passage($passage_callback) {
-			$this->routes[] = new awk_router_route([
-				"router" => $this,
-				"callback" => $passage_callback
-			]);
+			$router_instance = new awk_router_route($this);
+			$router_instance->set_callback($passage_callback);
+
+			$this->routes[] = $router_instance;
 		}
 
 		// Adiciona uma nova rota ao roteador.
 		public function add_route($route_definition, $route_callback) {
-			$this->routes[] = new awk_router_route([
-				"router" => $this,
-				"definition" => $route_definition,
-				"callback" => $route_callback
-			]);
+			$router_instance = new awk_router_route($this);
+			$router_instance->set_definition($route_definition);
+			$router_instance->set_callback($route_callback);
+
+			$this->routes[] = $router_instance;
 		}
 
 		// Obtém todas as rotas definidas no roteador.

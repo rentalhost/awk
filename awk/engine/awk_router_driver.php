@@ -153,6 +153,27 @@
 		/** CALLBACK */
 		// Executa uma callback e retorna o status da operação.
 		private function callback_execute($callback, $callback_args = null) {
+			// Se a callback for uma string, é necessário identificá-la.
+			if(is_string($callback)) {
+				$stack_instance = $this->get_stack();
+				$callback_parts = $stack_instance->module_instance->identify($callback, "router", null, null, true);
+
+				// Gera um callback a depender do tipo retornado.
+				switch($callback_parts["feature"]) {
+					// Identifica um redirecionamento de rota.
+					case "router":
+						$callback = function($driver) use($callback) { $driver->redirect($callback); };
+						break;
+
+					// Identifica uma view a ser impressa.
+					case "view":
+						$callback = function($driver) use($callback_parts) {
+							$callback_parts["module"]->view($callback_parts["name"]);
+						};
+						break;
+				}
+			}
+
 			// O driver é o primeiro argumento do callback.
 			$callback_args = $callback_args ?: [];
 			array_unshift($callback_args, $this);
