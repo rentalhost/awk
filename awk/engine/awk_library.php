@@ -2,6 +2,8 @@
 
 	// Responsável pelo modelo de dados da library.
 	class awk_library extends awk_base {
+		static protected $feature_type = "library";
+
 		/** LIBRARY */
 		// Armazena o nome da classe da library registrada.
 		// @type string;
@@ -18,16 +20,16 @@
 		/** LOAD */
 		// Carrega a library e a retorna.
 		// @return self;
-		public function load($library_id) {
-			$this->id = $library_id;
-			$this->path = $this->module->get_path() . "/libraries/{$this->id}.php";
+		public function load($library_name) {
+			$this->name = $library_name;
+			$this->path = $this->module->get_path() . "/libraries/{$this->name}.php";
 
 			// Se o arquivo da library não existir, lança um erro.
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"" . $this->module->get_id() . "\" não possui a library \"{$this->id}\"."
+					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."
 				]);
 			}
 
@@ -39,7 +41,7 @@
 			if(!$this->classname) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "A library \"{$this->id}\" do módulo \"" . $this->module->get_id() . "\" não efetuou o registro de classe."
+					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
 			}
 
@@ -47,7 +49,7 @@
 			if(!class_exists($this->classname)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "A library \"{$this->id}\" do módulo \"" . $this->module->get_id() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
+					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
 			}
 		}
@@ -104,7 +106,7 @@
 					awk_error::create([
 						"type" => awk_error::TYPE_FATAL,
 						"message" => "O método \"library_unique\" da library \"{$this->id}\" do módulo \"" .
-							$this->module->get_id() . "\" não retornou uma instância da classe \"{$this->classname}\", " .
+							$this->module->get_name() . "\" não retornou uma instância da classe \"{$this->classname}\", " .
 							" ao invés disso, retornou \"{$unique_instance_type}\"."
 					]);
 				}
@@ -121,7 +123,7 @@
 					awk_error::create([
 						"type" => awk_error::TYPE_FATAL,
 						"message" => "A instância única da library \"{$this->id}\" do módulo \"" .
-							$this->module->get_id() . "\" não pôde ser criada pois seu construtor requer parâmetros. " .
+							$this->module->get_name() . "\" não pôde ser criada pois seu construtor requer parâmetros. " .
 							"Considere definir o método `library_unique`."
 					]);
 				}

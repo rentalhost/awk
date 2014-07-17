@@ -70,9 +70,9 @@
 			// Identifica a rota.
 			// Se o roteador existir, ele será utilizado.
 			$router_identify = self::$module->identify($router_id, "router", true, true);
-			if($router_identify["module"]->routers->exists($router_identify["id"])) {
+			if($router_identify["module"]->routers->exists($router_identify["name"])) {
 				$router_driver = new awk_router_driver(awk_router::get_url());
-				$router_driver->redirect_module($router_identify["module"]->get_id(), $router_identify["id"]);
+				$router_driver->redirect_module($router_identify["module"]->get_name(), $router_identify["name"]);
 				return;
 			}
 

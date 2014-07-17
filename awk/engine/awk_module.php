@@ -7,9 +7,9 @@
 		static private $modules = [];
 
 		/** ID */
-		// Identificador do módulo.
+		// Nome do módulo.
 		// @type string;
-		private $id;
+		private $name;
 
 		// Caminho absoluto do módulo.
 		// @type string;
@@ -17,8 +17,8 @@
 
 		// Retorna o identificador do módulo.
 		// @return string;
-		public function get_id() {
-			return $this->id;
+		public function get_name() {
+			return $this->name;
 		}
 
 		// Retorna o caminho absoluto do módulo.
@@ -29,16 +29,16 @@
 
 		/** CONSTRUCT */
 		// Constrói uma nova instância de módulo.
-		private function __construct($module_id) {
-			$this->id = $module_id;
-			$this->path = __DIR__ . "/../../{$module_id}";
+		private function __construct($module_name) {
+			$this->name = $module_name;
+			$this->path = __DIR__ . "/../../{$module_name}";
 
 			// Se o caminho informado não existir, gera um erro.
 			// @error generic;
 			if(!is_dir($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"{$module_id}\" não existe."
+					"message" => "O módulo \"{$module_name}\" não existe."
 				]);
 				return;
 			}
@@ -50,7 +50,7 @@
 			if(!is_file($module_settings_path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"{$module_id}\" não definiu o arquivo de configuração."
+					"message" => "O módulo \"{$module_name}\" não definiu o arquivo de configuração."
 				]);
 			}
 		}
@@ -133,21 +133,12 @@
 
 		/** IDENTIFY */
 		// Identifica uma string e retorna o callback.
-		public function identify($id, $feature_type = null, $module_required = false, $return_parts = false) {
-			// Se não for uma string, retorna o próprio identificador.
-			// Caso contrário, será necessário identificar a parte indicada.
-			if(!is_string($id)) {
-				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
-					"message" => "A identificação só é possível em strings."
-				]);
-			}
-
+		public function identify($id, $feature_type = null, $module_required = null, $return_parts = null) {
 			// Executa a tarefa de identificação, separando cada parte.
 			$id_validate = preg_match("/^
 				(?<feature>\w+\@)?
 				(?<module>\w+\-\>)?
-				(?<id>[\w\/\.]+)
+				(?<name>[\w\/\.]+)
 			$/x", $id, $id_match);
 
 			if($id_validate) {
@@ -194,12 +185,12 @@
 					return [
 						"feature" => $feature_type,
 						"module" => $module_instance,
-						"id" => $id_match["id"]
+						"name" => $id_match["name"]
 					];
 				}
 
 				// Após coletar todos os dados necessários, retorna o identificador.
-				return $module_instance->__call($feature_type, [ $id_match["id"] ]);
+				return $module_instance->__call($feature_type, [ $id_match["name"] ]);
 			}
 
 			// Se não foi possível validar, retorna false.

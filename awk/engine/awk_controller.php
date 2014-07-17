@@ -2,6 +2,8 @@
 
 	// Responsável pelo modelo de dados do controller.
 	class awk_controller extends awk_base {
+		static protected $feature_type = "controller";
+
 		/** CONTROLLER */
 		// Armazena o nome da classe do controller registrado.
 		// @type string;
@@ -14,16 +16,16 @@
 		/** LOAD */
 		// Carrega o controller e a retorna.
 		// @return self;
-		public function load($controller_id) {
-			$this->id = $controller_id;
-			$this->path = $this->module->get_path() . "/controllers/{$this->id}.php";
+		public function load($controller_name) {
+			$this->name = $controller_name;
+			$this->path = $this->module->get_path() . "/controllers/{$this->name}.php";
 
 			// Se o arquivo do controller não existir, lança um erro.
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"" . $this->module->get_id() . "\" não possui o controller \"{$this->id}\"."
+					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o controller \"{$this->name}\"."
 				]);
 			}
 
@@ -35,7 +37,7 @@
 			if(!$this->classname) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O controller \"{$this->id}\" do módulo \"" . $this->module->get_id() . "\" não efetuou o registro de classe."
+					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
 			}
 
@@ -43,7 +45,7 @@
 			if(!class_exists($this->classname)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O controller \"{$this->id}\" do módulo \"" . $this->module->get_id() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
+					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
 			}
 

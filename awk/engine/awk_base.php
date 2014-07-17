@@ -2,6 +2,10 @@
 
 	// Responsável por abstrair o modelo base das classes utilizadas pelas features.
 	abstract class awk_base {
+		// Armazena o tipo de recurso.
+		// @type string;
+		static protected $feature_type;
+
 		// Armazena uma referência direta ao módulo.
 		// @type awk_module;
 		protected $module;
@@ -10,9 +14,9 @@
 		// @type instance;
 		protected $parent;
 
-		// Armazena o ID da base.
+		// Armazena o nome da base.
 		// @type string;
-		protected $id;
+		protected $name;
 
 		// Armazena o path da base.
 		// @type string;
@@ -40,9 +44,16 @@
 			return $this->parent;
 		}
 
-		// Obtém o ID da base.
+		// Obtém o nome da base.
+		public function get_name() {
+			return $this->name;
+		}
+
+		// Obtém o ID do recurso.
 		public function get_id() {
-			return $this->id;
+			return static::$feature_type . "@"
+				. $this->module->get_name() . "->"
+				. $this->name;
 		}
 
 		// Obtém o caminho normalizado da base.

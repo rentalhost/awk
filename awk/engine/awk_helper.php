@@ -2,6 +2,8 @@
 
 	// Responsável pelo modelo de dados do helper.
 	class awk_helper extends awk_base {
+		static protected $feature_type = "helper";
+
 		/** HELPER */
 		// Armazena os métodos registrados para o helper.
 		// @type array<string, callback>;
@@ -11,16 +13,16 @@
 		/** LOAD */
 		// Carrega o helper e o retorna.
 		// @return self;
-		public function load($helper_id) {
-			$this->id = $helper_id;
-			$this->path = $this->module->get_path() . "/helpers/{$this->id}.php";
+		public function load($helper_name) {
+			$this->name = $helper_name;
+			$this->path = $this->module->get_path() . "/helpers/{$this->name}.php";
 
 			// Se o arquivo do helper não existir, lança um erro.
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"" . $this->module->get_id() . "\" não possui o helper \"{$this->id}\"."
+					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o helper \"{$this->name}\"."
 				]);
 			}
 

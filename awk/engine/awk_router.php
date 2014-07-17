@@ -2,6 +2,8 @@
 
 	// Responsável pela definição das rotas.
 	class awk_router extends awk_base {
+		static protected $feature_type = "router";
+
 		// Armazena as rotas gerenciáveis por este roteador.
 		// @type array<string, awk_router_route>;
 		private $routes = [
@@ -9,16 +11,16 @@
 
 		/** LOAD */
 		// Carrega o arquivo da rota.
-		public function load($router_id) {
-			$this->id = $router_id;
-			$this->path = $this->module->get_path() . "/routers/{$this->id}.php";
+		public function load($router_name) {
+			$this->name = $router_name;
+			$this->path = $this->module->get_path() . "/routers/{$this->name}.php";
 
 			// Se o arquivo do roteador não existir, lança um erro.
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"" . $this->module->get_id() . "\" não possui o roteador \"{$this->id}\"."
+					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o roteador \"{$this->name}\"."
 				]);
 			}
 

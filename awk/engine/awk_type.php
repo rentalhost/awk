@@ -2,6 +2,8 @@
 
 	// Responsável pelo modelo de dados do type.
 	class awk_type extends awk_base {
+		static protected $feature_type = "type";
+
 		// Armazena o validador de tipo.
 		// @type callback;
 		private $validate_callback;
@@ -13,16 +15,16 @@
 		/** LOAD */
 		// Carrega o type e o retorna.
 		// @return self;
-		public function load($type_id) {
-			$this->id = $type_id;
-			$this->path = $this->module->get_path() . "/types/{$this->id}.php";
+		public function load($type_name) {
+			$this->name = $type_name;
+			$this->path = $this->module->get_path() . "/types/{$this->name}.php";
 
 			// Se o arquivo do type não existir, lança um erro.
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"type" => awk_error::TYPE_FATAL,
-					"message" => "O módulo \"" . $this->module->get_id() . "\" não possui o tipo \"{$this->id}\"."
+					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o tipo \"{$this->name}\"."
 				]);
 			}
 

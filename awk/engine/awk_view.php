@@ -2,6 +2,8 @@
 
 	// Responsável pelo modelo de dados da view.
 	class awk_view extends awk_base {
+		static protected $feature_type = "view";
+
 		// Armazena se o caminho da view remete a um arquivo acessível.
 		// @type boolean;
 		private $exists = false;
@@ -21,9 +23,9 @@
 		/** LOAD */
 		// Carrega a view e a retorna.
 		// @return self;
-		public function load($view_id, $view_args = null, $view_unprint = null) {
-			$this->id = $view_id;
-			$this->path = $this->module->get_path() . "/views/{$view_id}.php";
+		public function load($view_name, $view_args = null, $view_unprint = null) {
+			$this->name = $view_name;
+			$this->path = $this->module->get_path() . "/views/{$view_name}.php";
 			$this->exists = is_readable($this->path);
 
 			// Carrega o arquivo, armazenando sua saída.
@@ -54,7 +56,7 @@
 		/** PROPRIEDADES */
 		// Obtém o identificador da view.
 		// @return string;
-		public function get_id() {
+		public function get_name() {
 			return $this->id;
 		}
 

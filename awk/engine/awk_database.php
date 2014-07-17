@@ -2,6 +2,8 @@
 
 	// Responsável por gerir a conexão com o banco de dados via PDO.
 	class awk_database extends awk_base {
+		static protected $feature_type = "database";
+
 		// Armazena a instãncia da conexão.
 		// @type PDO;
 		private $connection;

@@ -2,6 +2,8 @@
 
 	// Responsável pela definição de configurações.
 	class awk_settings extends awk_base {
+		static protected $feature_type = "settings";
+
 		// Armazena o path de sobreposição de configurações.
 		// @type string;
 		private $overwrite_path;
@@ -27,7 +29,7 @@
 			$this->module->include_clean($this->path, [ "settings" => $this ]);
 
 			// Define o caminho de sobreposição.
-			$this->overwrite_path = $this->module->get_path() . "/../settings." . $this->module->get_id() . ".php";
+			$this->overwrite_path = $this->module->get_path() . "/../settings." . $this->module->get_name() . ".php";
 			$this->overwrite_exists = is_readable($this->overwrite_path);
 
 			// Se o arquivo de sobreposição existe, ele é executado.
