@@ -43,10 +43,7 @@
 
 		// Adiciona uma nova rota de passagem.
 		public function add_passage($passage_callback) {
-			$router_instance = new awk_router_route($this);
-			$router_instance->set_callback($passage_callback);
-
-			$this->routes[] = $router_instance;
+			$this->add_route(null, $passage_callback);
 		}
 
 		// Adiciona uma nova rota ao roteador.
@@ -78,6 +75,27 @@
 		}
 
 		/** HELPER */
+		// Verifica se a conexão utilizada com o roteador é segura (HTTPS).
+		// @return boolean;
+		static public function is_secure() {
+			// Verificação simplificada.
+			if(!empty($_SERVER["HTTPS"])
+			&& $_SERVER["HTTPS"] !== "off") {
+				return true;
+			}
+
+			// Caso contrário, será necessário verificar as configurações do HTTPS.
+			return $_SERVER["SERVER_PORT"] === getservbyname("https", "tcp");
+		}
+
+		// Retorna a URL base.
+		// @return string;
+		static public function get_baseurl() {
+			return ( self::is_secure() ? "https://" : "http://" )
+				. $_SERVER["SERVER_NAME"]
+				. dirname($_SERVER["SCRIPT_NAME"]) . "/";
+		}
+
 		// Retorna a URL acessada.
 		// @return string;
 		static public function get_url() {

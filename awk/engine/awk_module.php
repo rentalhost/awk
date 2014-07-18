@@ -69,6 +69,7 @@
 			"settings" => "awk_settings_feature",
 			"modules" => "awk_module_feature",
 			"types" => "awk_type_feature",
+			"publics" => "awk_public_feature",
 		];
 
 		// Armazena definições de plurais não linear.

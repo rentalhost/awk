@@ -34,6 +34,10 @@
 			"awk_database_feature",
 			"awk_database",
 
+			// Classes public.
+			"awk_public_feature",
+			"awk_public",
+
 			// Classes diversas.
 			"awk_base",
 			"awk_path",

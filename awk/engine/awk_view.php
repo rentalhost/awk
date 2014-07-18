@@ -56,18 +56,6 @@
 		}
 
 		/** PROPRIEDADES */
-		// Obtém o identificador da view.
-		// @return string;
-		public function get_name() {
-			return $this->id;
-		}
-
-		// Obtém o path normalizado da view.
-		// @return string;
-		public function get_path() {
-			return awk_path::normalize($this->path);
-		}
-
 		// Retorna o *return* da view, após ser carregada.
 		// @return mixed;
 		public function get_return() {
@@ -86,7 +74,7 @@
 			return $this->get_contents();
 		}
 
-		// Retorna se o arquivo da view existe ou não.
+		// Retorna se o arquivo da view existe.
 		// @return boolean;
 		public function exists() {
 			return $this->exists;

@@ -138,6 +138,12 @@
 			$this->stack_process();
 		}
 
+		/** ROUTER */
+		// Retorna o roteador da pilha atual.
+		public function get_router() {
+			return $this->get_stack()->router_instance;
+		}
+
 		/** INVALIDATE */
 		// Determina que a rota atual é inválida e permite o avanço para a próxima rota.
 		public function invalidate() {
