@@ -21,7 +21,7 @@
 		// Obtém uma URL de acesso ao arquivo.
 		// return @string;
 		public function get_url($include_baseurl = null) {
-			return ( $include_baseurl !== false ? awk_router::get_baseurl()  : null )
+			return ( $include_baseurl === true ? awk_router::get_baseurl()  : null )
 				. $this->module->get_name() . "/publics/" . $this->name;
 		}
 
