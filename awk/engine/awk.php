@@ -38,6 +38,10 @@
 			"awk_public_feature",
 			"awk_public",
 
+			// Classes file.
+			"awk_file_feature",
+			"awk_file",
+
 			// Classes diversas.
 			"awk_base",
 			"awk_path",
