@@ -23,7 +23,7 @@
 		/** LOAD */
 		// Carrega a view e a retorna.
 		// @return self;
-		public function load($view_name, $view_args = null, $view_unprint = null) {
+		public function load($view_name, $view_args = null, $view_avoid_print = null) {
 			$this->name = $view_name;
 			$this->path = $this->module->get_path() . "/views/{$view_name}.php";
 			$this->exists = is_readable($this->path);
@@ -36,7 +36,7 @@
 			}
 
 			// Imprime a view, se for necessário.
-			if($view_unprint !== false) {
+			if($view_avoid_print !== true) {
 				$this->print_contents();
 			}
 		}
