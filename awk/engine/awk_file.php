@@ -14,7 +14,30 @@
 		public function load($file_name) {
 			$this->name = $file_name;
 			$this->path = $this->module->get_path() . "/files/" . $file_name;
-			$this->exists = is_readable($this->path);
+			$this->exists = file_exists($this->path);
+		}
+
+		/** DIR */
+		// Obtém os arquivos de um diretório, eliminando dots.
+		public function get_files($include_dirs = null) {
+			$opendir = opendir($this->path);
+			$current_path = $this->get_path();
+
+			while($file = readdir($opendir)) {
+				// Ignora dots.
+				if($file === "."
+				|| $file === "..") {
+					continue;
+				}
+
+				// Se houver necessidade, pode omitir diretórios.
+				if($include_dirs === false
+				&& is_dir("{$current_path}/{$file}")) {
+					continue;
+				}
+
+				yield "{$current_path}/{$file}";
+			}
 		}
 
 		/** PROPRIEDADES */
