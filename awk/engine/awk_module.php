@@ -250,4 +250,10 @@
 		public function is_localhost() {
 			return is_readable($_SERVER["DOCUMENT_ROOT"] . "/awk.localhost");
 		}
+
+		/** DEVELOPMENT */
+		// Verifica se está em um ambiente de desenvolvimento.
+		public function is_development() {
+			return awk_module::get("awk")->settings()->project_development_mode === true;
+		}
 	}
