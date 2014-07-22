@@ -4,6 +4,9 @@
 	$awk_settings = $awk->settings();
 	$framework_version = join(".", $awk_settings->framework_version);
 
+	// Verifica se o Code Coverage está disponível.
+	$coverage_enabled = $module->settings()->coverage_enabled;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +26,11 @@
 				<div class="controller-widget">
 					<a href="suite/run">Executar</a>
 					<span class="separator"></span>
-					<a href="suite/run/ignore-successes">Falhas</a>
+					<a href="suite/run/ignore-successes">Localizar Falhas</a>
+					<?php if($coverage_enabled): ?>
+					<span class="separator"></span>
+					<a href="suite/run/enable-coverage">Coverage</a>
+					<?php endif; ?>
 					<span class="long-separator"></span>
 					<span class="text"><?php echo "{$awk_settings->framework_name} {$framework_version}"; ?></span>
 				</div>

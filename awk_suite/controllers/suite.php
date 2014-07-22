@@ -19,10 +19,13 @@
 		//@url /suite/run
 		public function home_run($options) {
 			$assert_controller = $this->get_module()->controller("asserts");
-			$assert_controller->run();
+			$assert_controller->run([
+				"enable-coverage" => in_array("enable-coverage", $options)
+			]);
 
 			$this->master_base($assert_controller->get_contents([
-				"ignore-successes" => in_array("ignore-successes", $options)
+				"ignore-successes" => in_array("ignore-successes", $options),
+				"enable-coverage" => in_array("enable-coverage", $options)
 			]));
 		}
 	}

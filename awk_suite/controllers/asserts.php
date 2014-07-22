@@ -7,9 +7,10 @@
 		private $asserts_files = [];
 
 		// Inicia o processamento de asserts.
-		public function run() {
-			$suite_settings = $this->get_module()->settings();
-			if($suite_settings->coverage_enabled === true) {
+		public function run($options) {
+			// Verifica se deve ativar o Coverage.
+			$enable_coverage = isset($options["enable-coverage"]) ? (bool) $options["enable-coverage"] : false;
+			if($enable_coverage) {
 				$coverage = new PHP_CodeCoverage;
 				$coverage->start('Test');
 			}
@@ -22,8 +23,10 @@
 				$this->asserts_files[] = $assert_file_instance;
 			}
 
-			if($suite_settings->coverage_enabled === true) {
+			if($enable_coverage) {
 				$coverage->stop();
+
+				$suite_settings = $this->get_module()->settings();
 
 				$writer = new PHP_CodeCoverage_Report_HTML;
 				$writer->process($coverage, $suite_settings->coverage_output_dir);
@@ -36,6 +39,7 @@
 
 			// Verifica se deve ignorar os sucessos.
 			$ignore_successes = isset($options["ignore-successes"]) ? (bool) $options["ignore-successes"] : false;
+			$enable_coverage = isset($options["enable-coverage"]) ? (bool) $options["enable-coverage"] : false;
 
 			// Número de falhas.
 			$fail_count = 0;
@@ -87,7 +91,7 @@
 			// Retorna o resultado final obtido
 			return $this->get_module()->view("asserts/widget", [
 				"contents" => join("\n", $assert_contents),
-				"coverage_path" => $suite_settings->coverage_enabled
+				"coverage_path" => $enable_coverage
 					? $this->get_module()->public("coverage/index.html")->get_url()
 					: null,
 				"footer_message" => $footer_message,
