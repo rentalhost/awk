@@ -111,6 +111,6 @@
 			// Caso contrário, utilizará o método padrão, através da REQUEST_URI.
 			// Ex. /example => example
 			$router_url = strtok($_SERVER["REQUEST_URI"], "?") ?: $_SERVER["REQUEST_URI"];
-			return ltrim(substr($router_url, strlen(basename($_SERVER["SCRIPT_NAME"])) + 1), "/");
+			return trim(substr($router_url, strlen(dirname($_SERVER["SCRIPT_NAME"])) + 1), "/");
 		}
 	}
