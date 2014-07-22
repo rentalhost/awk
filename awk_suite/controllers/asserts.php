@@ -32,6 +32,9 @@
 
 		// Após processar, retorna o conteúdo obtido.
 		public function get_contents($options) {
+			$suite_settings = $this->get_module()->settings();
+
+			// Verifica se deve ignorar os sucessos.
 			$ignore_successes = isset($options["ignore-successes"]) ? (bool) $options["ignore-successes"] : false;
 
 			// Número de falhas.
@@ -84,7 +87,10 @@
 			// Retorna o resultado final obtido
 			return $this->get_module()->view("asserts/widget", [
 				"contents" => join("\n", $assert_contents),
-				"footer_message" => $footer_message
+				"coverage_path" => $suite_settings->coverage_enabled
+					? $this->get_module()->public("coverage/index.html")->get_url()
+					: null,
+				"footer_message" => $footer_message,
 			], true);
 		}
 	}

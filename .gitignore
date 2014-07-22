@@ -1,5 +1,7 @@
-/settings.awk.php
 /_gsdata_/
+
+/awk_suite/publics/coverage
+/settings.awk.php
 
 composer.phar
 composer.lock
