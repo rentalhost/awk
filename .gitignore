@@ -1,2 +1,6 @@
 /settings.awk.php
 /_gsdata_/
+
+composer.phar
+composer.lock
+vendor/

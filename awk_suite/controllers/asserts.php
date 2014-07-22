@@ -8,12 +8,25 @@
 
 		// Inicia o processamento de asserts.
 		public function run() {
+			$suite_settings = $this->get_module()->settings();
+			if($suite_settings->coverage_enabled === true) {
+				$coverage = new PHP_CodeCoverage;
+				$coverage->start('Test');
+			}
+
 			$asserts_dir = $this->get_module()->file("asserts");
 			foreach($asserts_dir->get_files() as $assert_file) {
 				$assert_file_instance = $this->get_module()->library("asserts/file")->create();
 				$assert_file_instance->run($assert_file);
 
 				$this->asserts_files[] = $assert_file_instance;
+			}
+
+			if($suite_settings->coverage_enabled === true) {
+				$coverage->stop();
+
+				$writer = new PHP_CodeCoverage_Report_HTML;
+				$writer->process($coverage, $suite_settings->coverage_output_dir);
 			}
 		}
 
