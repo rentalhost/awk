@@ -70,3 +70,82 @@ body {
 .controller-widget > span.text {
     color: #666;
 }
+
+/** CONTENT WIDGET */
+.content-widget {
+    padding: 30px 35px;
+    font: 10.5pt Consolas;
+}
+
+/** ASSERT WIDGET */
+.assert-widget {
+}
+
+.assert-group {
+    clear: both;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+.assert-group-title {
+    padding: 5px 0;
+    color: #DFDFDF;
+}
+.assert-group-body {
+}
+
+.assert-item {
+    clear: both;
+    padding: 2px 0;
+}
+.assert-item.success {
+    color: #00C900;
+}
+.assert-item.fail {
+    color: #E00000;
+}
+
+.assert-item > div {
+	display: inline-block;
+	float: left;
+}
+
+.assert-item-line::before {
+	content: "\00a0[";
+	float: left;
+	color: #F3F3F3;
+}
+.assert-item-line {
+    color: #A8A8A8;
+    width: 80px;
+    text-align: right;
+}
+.assert-item-line::after {
+	content: "]\00a0";
+	color: #F3F3F3;
+}
+
+.assert-item-info::before {
+    content: "->";
+    padding: 0 10px;
+    color: #F3F3F3;
+}
+.assert-item-info {
+    color: #D5D5D5;
+}
+
+.assert-item-fail-message::before {
+	content: "\00a0\00bb\00a0";
+	color: silver;
+}
+.assert-item-fail-message {
+	color: red;
+	clear: both;
+	margin-left: 80px;
+	padding: 5px 0;
+}
+
+.assert-footer {
+    font-size: small;
+    margin-top: 20px;
+    clear: both;
+}

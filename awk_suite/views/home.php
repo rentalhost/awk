@@ -9,6 +9,7 @@
 <html>
 	<head>
 		<title>Awk Suite :: <?php echo $framework_version; ?></title>
+		<base href="<?php echo awk_router::get_baseurl(); ?>" />
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css" />
 		<link href="<?php echo $module->public("app/home.css")->get_url(); ?>" rel="stylesheet" type="text/css" />
 		<script src="<?php echo $module->public("vendor/jquery.js")->get_url(); ?>"></script>
@@ -20,12 +21,13 @@
 					<h1>Suite de Testes</h1>
 				</div>
 				<div class="controller-widget">
-					<a href="run">Executar</a>
+					<a href="suite/run">Executar</a>
+					<span class="separator"></span>
+					<a href="suite/run/ignore-successes">Falhas</a>
 					<span class="long-separator"></span>
 					<span class="text"><?php echo "{$awk_settings->framework_name} {$framework_version}"; ?></span>
 				</div>
-				<div class="content-widget">
-				</div>
+				<div class="content-widget"><?php echo $contents; ?></div>
 			</div>
 		</div>
 	</body>
