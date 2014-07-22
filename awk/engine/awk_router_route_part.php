@@ -64,7 +64,7 @@
 				// Define um repetidor simples.
 				if(!empty($definition_options["repeat_simple"])) {
 					$this->repeat = true;
-					$this->repeat_min = (int) $definition_options["repeat_simple"] === "+";
+					$this->repeat_min = intval($definition_options["repeat_simple"] === "+");
 				}
 				else
 				// Define um repetidor exato.
