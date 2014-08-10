@@ -54,6 +54,66 @@
 			$this->asserts_unities[] = $assert_unit;
 		}
 
+		// Espera uma exceção.
+		public function expect_exception($callback, $exception_type, $expection_message = null, $description = null) {
+
+			// Armazena a instância da exceção, se lançada.
+			$exception_instance = false;
+
+			// Executa a função, esperando uma exceção.
+			try { $callback_return = call_user_func($callback); }
+			catch(Exception $exception_instance) {}
+
+			// VERIFICA O TIPO DA EXCEÇÃO.
+			// Define os dados da exceção.
+			$assert_unit = $this->unit_library->create();
+			$assert_unit->set_title("expect_exception(type {$exception_type})");
+			$assert_unit->set_description($description);
+			$assert_unit->set_success(
+				$exception_instance !== null
+			 && $exception_instance instanceof $exception_type
+			);
+
+			// Define a mensagem de falha.
+			if(!$assert_unit->get_success()) {
+				$this->fail_count++;
+
+				// Armazena o tipo de erro.
+				$assert_fail_message = "expected exception of type {$exception_type}, but nothing thrown.";
+				if($exception_instance !== null) {
+					$assert_fail_message = "expected exception of type {$exception_type}, but received " . get_class($exception_instance) . ".";
+				}
+
+				// Define a mensagem de falha.
+				$assert_unit->set_fail_message($assert_fail_message);
+			}
+
+			// Adiciona às unidades.
+			$this->asserts_unities[] = $assert_unit;
+
+			// VERIFICA A MENSAGEM RECEBIDA.
+			// Se uma mensagem foi informada, então verifica se está correta.
+			if($expection_message !== null
+			&& $exception_instance !== null) {
+				$assert_unit = $this->unit_library->create();
+				$assert_unit->set_title("expect_exception(type {$exception_type}, message \"{$expection_message}\")");
+				$assert_unit->set_description($description);
+				$assert_unit->set_success($exception_instance->getMessage() === $expection_message);
+
+				// Define a mensagem de falha.
+				if(!$assert_unit->get_success()) {
+					$this->fail_count++;
+
+					// Define a mensagem de falha.
+					$assert_unit->set_fail_message("expected exception of type {$exception_type} with message \"{$expection_message}\", but received \"" .
+						$exception_instance->getMessage() . "\".");
+				}
+
+				// Adiciona às unidades.
+				$this->asserts_unities[] = $assert_unit;
+			}
+		}
+
 		/** PROPRIEDADES */
 		// Retorna o nome do grupo.
 		public function get_name() {
