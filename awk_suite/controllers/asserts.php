@@ -98,7 +98,7 @@
 				? "Verificação finalizada, sem falhas."
 				: "Verificação finalizada, {$fail_count} falha(s).";
 			$footer_message.= sprintf("<div class=\"assert-footer-time\">Executado em %.2f segundo%s.</div>",
-				$assert_time, $assert_time >= 1 ? "s" : null);
+				$assert_time, $assert_time >= 2 ? "s" : null);
 
 			// Retorna o resultado final obtido
 			return $this->get_module()->view("asserts/widget", [
