@@ -30,7 +30,7 @@
 					<a href="suite/run/ignore-successes">Localizar Falhas</a>
 					<?php if($coverage_enabled): ?>
 					<span class="separator"></span>
-					<a href="suite/run/enable-coverage">Coverage</a>
+					<a href="suite/run/ignore-successes/enable-coverage">Coverage</a>
 					<?php endif; ?>
 					<span class="long-separator"></span>
 					<span class="text"><?php echo "{$awk_settings->framework_name} {$framework_version}"; ?></span>

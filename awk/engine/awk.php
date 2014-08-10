@@ -49,6 +49,7 @@
 		];
 
 		// Carrega as classes do motor via SPL.
+		/** @codeCoverageIgnore: o método é mapeado. */
 		static private function load_class($classname) {
 			// Se localizar a classe no mapa, então será possível carregá-la.
 			// Caso contrário, deixará que o PHP verifique em outro SPL, se houver.
@@ -60,6 +61,7 @@
 
 		/** INIT */
 		// Inicializa o motor.
+		/** @codeCoverageIgnore: se falhar neste ponto, nada funcionará. */
 		static public function init() {
 			// Registra o método de autoloader.
 			spl_autoload_register("self::load_class");
