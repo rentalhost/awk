@@ -6,6 +6,10 @@
 		//@type array<library("asserts/file")>;
 		private $asserts_files = [];
 
+		// Armazena o tempo total de execução.
+		//@type array<float>;
+		private $asserts_times = [];
+
 		// Inicia o processamento de asserts.
 		public function run($options) {
 			// Verifica se deve ativar o Coverage.
@@ -18,7 +22,10 @@
 			$asserts_dir = $this->get_module()->file("asserts");
 			foreach($asserts_dir->get_files() as $assert_file) {
 				$assert_file_instance = $this->get_module()->library("asserts/file")->create();
+
+				$assert_time_start = microtime(true);
 				$assert_file_instance->run($assert_file);
+				$this->asserts_times[] = microtime(true) - $assert_time_start;
 
 				$this->asserts_files[] = $assert_file_instance;
 			}
@@ -83,10 +90,15 @@
 				], true);
 			}
 
+			// Obtém o tempo utilizado.
+			$assert_time = array_sum($this->asserts_times);
+
 			// Define a mensagem do rodapé.
 			$footer_message = $fail_count === 0
 				? "Verificação finalizada, sem falhas."
 				: "Verificação finalizada, {$fail_count} falha(s).";
+			$footer_message.= sprintf("<div class=\"assert-footer-time\">Executado em %.2f segundo%s.</div>",
+				$assert_time, $assert_time >= 1 ? "s" : null);
 
 			// Retorna o resultado final obtido
 			return $this->get_module()->view("asserts/widget", [

@@ -149,3 +149,11 @@ a:hover {
     margin-top: 20px;
     clear: both;
 }
+.assert-footer:first-child {
+    margin-top: inherit;
+}
+
+.assert-footer-time {
+    font-size: 9pt;
+    color: #CCC;
+}
