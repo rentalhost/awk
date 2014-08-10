@@ -9,5 +9,7 @@
 
 	// Define a transformação de int.
 	$type->set_transform(function($value) {
-		return (float) $value;
+		return is_scalar($value)
+			? (float) $value
+			: 0.0;
 	});

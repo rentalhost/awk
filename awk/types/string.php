@@ -8,5 +8,7 @@
 
 	// Define a transformação da string.
 	$type->set_transform(function($value) {
-		return (string) $value;
+		return is_scalar($value)
+			? (string) $value
+			: "";
 	});

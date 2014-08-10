@@ -14,6 +14,7 @@
 		<title>Awk Suite :: <?php echo $framework_version; ?></title>
 		<base href="<?php echo awk_router::get_baseurl(); ?>" />
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $module->public("vendor/reset.css")->get_url(); ?>" rel="stylesheet" type="text/css" />
 		<link href="<?php echo $module->public("app/home.css")->get_url(); ?>" rel="stylesheet" type="text/css" />
 		<script src="<?php echo $module->public("vendor/jquery.js")->get_url(); ?>"></script>
 	</head>

@@ -38,17 +38,17 @@
 		public function expect_equal($value_a, $value_b, $description = null) {
 			$assert_unit = $this->unit_library->create();
 
-			$assert_unit->set_title("expect_equal(with {$value_b})");
+			$value_b_typed = $this->type_helper->call("normalize", $value_b);
+
+			$assert_unit->set_title("expect_equal(with {$value_b_typed})");
 			$assert_unit->set_description($description);
 			$assert_unit->set_success($value_a === $value_b);
 
 			if(!$assert_unit->get_success()) {
 				$this->fail_count++;
 
-				$value_b = $this->type_helper->call("normalize", $value_b);
-				$value_a = $this->type_helper->call("normalize", $value_a);
-
-				$assert_unit->set_fail_message("expected {$value_b}, but received {$value_a}.");
+				$value_a_typed = $this->type_helper->call("normalize", $value_a);
+				$assert_unit->set_fail_message("expected {$value_b_typed}, but received {$value_a_typed}.");
 			}
 
 			$this->asserts_unities[] = $assert_unit;
