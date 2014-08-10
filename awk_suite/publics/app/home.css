@@ -3,11 +3,9 @@ html {
 	background-color: #FCFCFC;
 }
 body {
+	height: 100%;
 	margin: 0;
 	font: 12pt "Open Sans";
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
 }
 
 a {
@@ -21,14 +19,14 @@ a:hover {
 
 /** BASE WIDGET */
 .base-widget {
-    flex: 1 auto;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
+    margin: 0 auto;
 }
 .base-page {
     background-color: white;
     width: 1200px;
-    height: 100%;
     margin: 0 auto;
     box-shadow: 0 0 5px rgba(238, 238, 238, 0.6);
     box-sizing: border-box;
