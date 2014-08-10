@@ -19,7 +19,6 @@
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o roteador \"{$this->name}\"."
 				]);
 			}

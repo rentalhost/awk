@@ -7,6 +7,8 @@
 		const TYPE_FATAL = "fatal";
 		// Indica um erro do tipo E_USER_WARNING.
 		const TYPE_WARNING = "warning";
+		// Indica um erro lançado por uma exceção.
+		const TYPE_EXCEPTION = "exception";
 
 		// Cria um erro com as especificações fornecidas.
 		static public function create($error_options) {
@@ -14,7 +16,11 @@
 			$error_options = array_replace([
 				// Tipo do erro a ser lançado.
 				// @type const TYPE;
-				"type" => self::TYPE_WARNING,
+				"type" => self::TYPE_EXCEPTION,
+
+				// Tipo de exceção que será lançada.
+				// @type string;
+				"exception" => "awk_error_exception",
 
 				// Mensagem do erro.
 				// @type string?;
@@ -23,6 +29,12 @@
 
 			// Determina o tipo da execução do erro.
 			switch($error_options["type"]) {
+				// Lança uma exceção.
+				case self::TYPE_EXCEPTION:
+					$exception_classname = $error_options["exception"];
+					throw new $exception_classname($error_options["message"]);
+					break;
+
 				// Lança um erro fatal via E_USER_ERROR.
 				case self::TYPE_FATAL:
 					trigger_error($error_options["message"], E_USER_ERROR);
@@ -33,6 +45,11 @@
 					trigger_error($error_options["message"], E_USER_WARNING);
 					break;
 			}
+		}
+
+		/** EXCEPTION HANDLER */
+		// Gerencia exceções não capturadas.
+		static public function exception_handler() {
 		}
 
 		/** 404 ERROR */

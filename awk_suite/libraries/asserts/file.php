@@ -58,7 +58,7 @@
 		public function expect_exception($callback, $exception_type, $expection_message = null, $description = null) {
 
 			// Armazena a instância da exceção, se lançada.
-			$exception_instance = false;
+			$exception_instance = null;
 
 			// Executa a função, esperando uma exceção.
 			try { $callback_return = call_user_func($callback); }

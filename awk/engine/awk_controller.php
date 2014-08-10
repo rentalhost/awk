@@ -24,7 +24,6 @@
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o controller \"{$this->name}\"."
 				]);
 			}
@@ -36,7 +35,6 @@
 			// Se não foi registrado uma classe neste controlador, gera um erro.
 			if(!$this->classname) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
 			}
@@ -44,8 +42,8 @@
 			// Se a classe não existir, gera um erro.
 			if(!class_exists($this->classname)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
-					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
+					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() .
+						"\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
 			}
 

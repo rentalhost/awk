@@ -28,7 +28,6 @@
 			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."
 				]);
 			}
@@ -40,7 +39,6 @@
 			// Se não foi registrado uma classe nesta library, gera um erro.
 			if(!$this->classname) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
 			}
@@ -48,7 +46,6 @@
 			// Se a classe não existir, gera um erro.
 			if(!class_exists($this->classname)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
 			}
@@ -117,9 +114,8 @@
 				if(!$unique_instance instanceof $this->classname) {
 					$unique_instance_type = is_object($unique_instance) ? get_class($unique_instance) : gettype($unique_instance);
 					awk_error::create([
-						"type" => awk_error::TYPE_FATAL,
-						"message" => "O método \"library_unique\" da library \"{$this->id}\" do módulo \"" .
-							$this->module->get_name() . "\" não retornou uma instância da classe \"{$this->classname}\", " .
+						"message" => "O método \"library_unique\" da library \"{$this->classname}\" do módulo \"" .
+							$this->module->get_name() . "\" não retornou uma instância da classe \"{$this->classname}\"," .
 							" ao invés disso, retornou \"{$unique_instance_type}\"."
 					]);
 				}
@@ -139,10 +135,9 @@
 			if($reflection_constructor) {
 				if($reflection_constructor->getNumberOfRequiredParameters() !== 0) {
 					awk_error::create([
-						"type" => awk_error::TYPE_FATAL,
-						"message" => "A instância única da library \"{$this->id}\" do módulo \"" .
+						"message" => "A instância única da library \"{$this->classname}\" do módulo \"" .
 							$this->module->get_name() . "\" não pôde ser criada pois seu construtor requer parâmetros. " .
-							"Considere definir o método `library_unique`."
+							"Considere definir o método \"library_unique\"."
 					]);
 				}
 			}

@@ -37,7 +37,6 @@
 			// @error generic;
 			if(!is_dir($this->path)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O módulo \"{$module_name}\" não existe."
 				]);
 				return;
@@ -49,7 +48,6 @@
 			$module_settings_path = "{$this->path}/settings.php";
 			if(!is_file($module_settings_path)) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O módulo \"{$module_name}\" não definiu o arquivo de configuração."
 				]);
 			}
@@ -100,7 +98,6 @@
 			// @error generic;
 			if(!isset(self::$features_mapper[$name])) {
 				awk_error::create([
-					"type" => awk_error::TYPE_FATAL,
 					"message" => "O recurso \"{$name}\" não está disponível."
 				]);
 			}
@@ -154,7 +151,6 @@
 				else
 				if($module_required === true) {
 					awk_error::create([
-						"type" => awk_error::TYPE_FATAL,
 						"message" => "Não foi possível identificar \"{$id}\". A definição do módulo é obrigatória."
 					]);
 				}
@@ -164,7 +160,6 @@
 				if($feature_type === null
 				&& empty($id_match["feature"])) {
 					awk_error::create([
-						"type" => awk_error::TYPE_FATAL,
 						"message" => "Não foi possível identificar \"{$id}\". A definição do recurso é obrigatória."
 					]);
 				}
@@ -174,7 +169,6 @@
 				&& !empty($id_match["feature"])
 				&& $feature_type !== substr($id_match["feature"], 0, -1)) {
 					awk_error::create([
-						"type" => awk_error::TYPE_FATAL,
 						"message" => "Não foi possível identificar \"{$id}\". O recurso deve ser \"{$feature_type}\"."
 					]);
 				}

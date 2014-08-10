@@ -1,0 +1,1 @@
+<?php $controller->register("unexistent_class");

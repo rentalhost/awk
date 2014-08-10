@@ -42,10 +42,13 @@
 			"awk_file_feature",
 			"awk_file",
 
+			// Classes error.
+			"awk_error",
+			"awk_error_exception",
+
 			// Classes diversas.
 			"awk_base",
 			"awk_path",
-			"awk_error",
 		];
 
 		// Carrega as classes do motor via SPL.
