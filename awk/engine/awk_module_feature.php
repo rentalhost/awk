@@ -21,5 +21,5 @@
 		/** FEATURE CALL */
 		// Este método precisa ser sobrescrito pela finalidade da feature.
 		public function feature_call() {
-		}
+		} // @codeCoverageIgnore
 	}
