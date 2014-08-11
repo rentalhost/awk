@@ -3,6 +3,6 @@
 	// Se estiver em um ambiente de desenvolvimento e o módulo "awk_suite" existir, \
 	// adiciona a seguinte rota.
 	if($awk->is_development()
-	&& $awk->modules->exists("awk_suite")) {
+	&& awk_module::exists("awk_suite")) {
 		$router->add_route("suite", "awk_suite->index");
 	}

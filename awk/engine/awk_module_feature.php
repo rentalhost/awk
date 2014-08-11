@@ -22,12 +22,4 @@
 		// Este método precisa ser sobrescrito pela finalidade da feature.
 		public function feature_call() {
 		}
-
-		/** EXISTS */
-		// Retorna se um determinado módulo existe.
-		// @param string $module_id: identificador do módulo;
-		// @return boolean;
-		public function exists($module_id) {
-			return is_readable($this->module->get_path() . "/../{$module_id}/settings.php");
-		}
 	}

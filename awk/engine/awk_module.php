@@ -249,4 +249,12 @@
 		public function is_development() {
 			return awk_module::get("awk")->settings()->project_development_mode === true;
 		}
+
+		/** EXISTS */
+		// Retorna se um determinado módulo existe.
+		// @param string $module_id: identificador do módulo;
+		// @return boolean;
+		static public function exists($module_id) {
+			return is_readable(getcwd() . "/{$module_id}/settings.php");
+		}
 	}
