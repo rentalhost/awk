@@ -14,9 +14,15 @@
 		// @type boolean;
 		private $stack_processing = false;
 
+		// Indica se deverá lançar um erro 404 em caso de falha total.
+		// @type boolean;
+		private $apache_error;
+
 		/** CONSTRUCT */
 		// Constrói um novo driver, definindo a rota inicial.
-		public function __construct($url, $module_instance) {
+		public function __construct($url, $module_instance, $apache_error = null) {
+			$this->apache_error = $apache_error;
+
 			// Define a URL Array da próxima pilha de execução, eliminando partes vazias.
 			$stack_next = $this->get_stack_next();
 			$stack_next->module_instance = $module_instance;
@@ -110,10 +116,13 @@
 			// Verifica se a pilha atual processou corretamente uma URL, \
 			// isso é, se a URL foi direcionada a uma rota.
 			// Se isso não aconteceu, então será forçado um Erro 404.
+			// @codeCoverageIgnoreStart
 			$stack_last = $this->stacks[$this->stack_index - 1];
-			if($stack_last->url_processed === false) {
+			if($stack_last->url_processed === false
+			&& $this->apache_error === true) {
 				awk_error::force_404();
 			}
+			// @codeCoverageIgnoreEnd
 		}
 
 		/** PRESERVE */

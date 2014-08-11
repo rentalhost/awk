@@ -173,12 +173,6 @@
 			$this->definition = $definition;
 		}
 
-		// Retorna a definição da rota.
-		// @return string;
-		public function get_definition() {
-			return $this->definition;
-		}
-
 		/** CALLBACK */
 		// Define a callback.
 		public function set_callback($callback) {

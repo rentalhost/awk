@@ -85,7 +85,7 @@
 			// Se o roteador existir, ele será utilizado.
 			$router_identify = self::$module->identify($router_id, "router", null, true, true);
 			if($router_identify["module"]->routers->exists($router_identify["name"])) {
-				$router_driver = new awk_router_driver(awk_router::get_url(), $router_identify["module"]);
+				$router_driver = new awk_router_driver(awk_router::get_url(), $router_identify["module"], true);
 				$router_driver->redirect($router_id);
 				return;
 			}

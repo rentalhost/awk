@@ -25,7 +25,6 @@
 			$this->path = $this->module->get_path() . "/libraries/{$this->name}.php";
 
 			// Se o arquivo da library não existir, lança um erro.
-			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."

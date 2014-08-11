@@ -16,8 +16,7 @@
 			$enable_coverage = isset($options["enable-coverage"]) ? (bool) $options["enable-coverage"] : false;
 			if($enable_coverage) {
 				$coverage_filter = new PHP_CodeCoverage_Filter;
-				$coverage_filter->addDirectoryToBlacklist(__DIR__ . "/../controllers/");
-				$coverage_filter->addDirectoryToBlacklist(__DIR__ . "/../libraries/");
+				$coverage_filter->addDirectoryToWhitelist(__DIR__ . "/../../awk/*/");
 
 				$coverage = new PHP_CodeCoverage(null, $coverage_filter);
 				$coverage->start("AwkSuite");
@@ -25,7 +24,7 @@
 
 			$asserts_dir = $this->get_module()->file("asserts");
 			foreach($asserts_dir->get_files() as $assert_file) {
-				$assert_file_instance = $this->get_module()->library("asserts/file")->create();
+                $assert_file_instance = $this->get_module()->library("asserts/file")->create();
 
 				$assert_time_start = microtime(true);
 				$assert_file_instance->run($assert_file);

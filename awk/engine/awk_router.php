@@ -16,18 +16,19 @@
 			$this->path = $this->module->get_path() . "/routers/{$this->name}.php";
 
 			// Se o arquivo do roteador não existir, lança um erro.
-			// @error generic;
 			if(!is_readable($this->path)) {
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o roteador \"{$this->name}\"."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Se a rota for um arquivo público, define o Content-type da página.
+			// @codeCoverageIgnoreStart
 			if($this->is_file()) {
 				$finfo = new finfo(FILEINFO_MIME | FILEINFO_PRESERVE_ATIME);
 				header("Content-type: " . $finfo->file($this->file_path()));
 			}
+			// @codeCoverageIgnoreEnd
 
 			// Carrega o arquivo do roteador.
 			// É neste ponto que as rotas devem ser definidas no roteador.
@@ -80,7 +81,7 @@
 			// Verificação simplificada.
 			if(!empty($_SERVER["HTTPS"])
 			&& $_SERVER["HTTPS"] !== "off") {
-				return true;
+				return true; // @codeCoverageIgnore
 			}
 
 			// Caso contrário, será necessário verificar as configurações do HTTPS.
@@ -104,7 +105,7 @@
 			// Se houver PATH_INFO, será utilizado.
 			// Ex. /index.php/example => example
 			if(isset($_SERVER["PATH_INFO"])) {
-				return ltrim($_SERVER["PATH_INFO"], "/");
+				return ltrim($_SERVER["PATH_INFO"], "/"); // @codeCoverageIgnore
 			}
 
 			// Caso contrário, utilizará o método padrão, através da REQUEST_URI.

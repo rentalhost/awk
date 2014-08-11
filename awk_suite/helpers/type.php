@@ -42,5 +42,5 @@
 			case "NULL":
 				return "null";
 				break;
-		} // @codeCoverageIgnore
+		}
 	});

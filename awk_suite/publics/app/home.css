@@ -105,6 +105,7 @@ a:hover {
 .assert-item > div {
 	display: inline-block;
 	float: left;
+	max-width: 1045px;
 }
 
 .assert-item-line::before {

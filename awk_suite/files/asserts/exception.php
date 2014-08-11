@@ -29,6 +29,10 @@
 		$module->identify("router@test", "type", true);
 	}, "awk_error_exception", "Não foi possível identificar \"router@test\". O recurso deve ser \"type\".");
 
+	$asserts->expect_exception(function() use($module) {
+		$module->identify("%invalid%", "type", true);
+	}, "awk_error_exception", "Não foi possível identificar \"%invalid%\".");
+
 	// awk_controller.php
 	$asserts->expect_exception(function() use($module) {
 		$module->controller("unexistent");

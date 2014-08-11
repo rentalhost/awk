@@ -34,7 +34,6 @@
 			$this->path = __DIR__ . "/../../{$module_name}";
 
 			// Se o caminho informado não existir, gera um erro.
-			// @error generic;
 			if(!is_dir($this->path)) {
 				awk_error::create([
 					"message" => "O módulo \"{$module_name}\" não existe."
@@ -43,7 +42,6 @@
 
 			// Se o arquivo de configuração (settings.php) não existe, gera um erro.
 			// Módulos devem possuir este arquivo para indicar um módulo valido.
-			// @error generic;
 			$module_settings_path = "{$this->path}/settings.php";
 			if(!is_file($module_settings_path)) {
 				awk_error::create([
@@ -94,7 +92,6 @@
 
 			// Verifica se é uma feature mapeada.
 			// Se não for, será necessário lançar um erro.
-			// @error generic;
 			if(!isset(self::$features_mapper[$name])) {
 				awk_error::create([
 					"message" => "O recurso \"{$name}\" não está disponível."
@@ -205,9 +202,9 @@
 				return $object_instance;
 			}
 
-			// Se não foi possível validar, retorna false.
-			return false;
-		}
+			// Se não foi possível validar, lança uma exceção.
+			awk_error::create([ "message" => "Não foi possível identificar \"{$id}\"." ]);
+		} // @codeCoverageIgnore
 
 		/** LOADER */
 		// Carrega e retorna um módulo.
