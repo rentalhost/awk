@@ -26,7 +26,7 @@
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o controller \"{$this->name}\"."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Carrega o arquivo do controller.
 			// É esperado que o controlador registre uma classe.
@@ -37,7 +37,7 @@
 				awk_error::create([
 					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Se a classe não existir, gera um erro.
 			if(!class_exists($this->classname)) {
@@ -45,7 +45,7 @@
 					"message" => "O controller \"{$this->name}\" do módulo \"" . $this->module->get_name() .
 						"\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Inicia a instância do controller.
 			$controller_reflection = new ReflectionClass($this->classname);

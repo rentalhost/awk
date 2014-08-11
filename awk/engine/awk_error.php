@@ -28,6 +28,7 @@
 			], $error_options);
 
 			// Determina o tipo da execução do erro.
+			// @codeCoverageIgnoreStart
 			switch($error_options["type"]) {
 				// Lança uma exceção.
 				case self::TYPE_EXCEPTION:
@@ -45,15 +46,11 @@
 					trigger_error($error_options["message"], E_USER_WARNING);
 					break;
 			}
-		}
-
-		/** EXCEPTION HANDLER */
-		// Gerencia exceções não capturadas.
-		static public function exception_handler() {
-		}
+		} // @codeCoverageIgnoreEnd
 
 		/** 404 ERROR */
 		// Força um erro de objeto não encontrado.
+		/** @codeCoverageIgnore */
 		static public function force_404() {
 			$location_error = dirname($_SERVER["SCRIPT_NAME"]) . "/404";
 			header("Location: {$location_error}");

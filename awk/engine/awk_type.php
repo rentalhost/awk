@@ -25,7 +25,7 @@
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o tipo \"{$this->name}\"."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Carrega o arquivo do type.
 			$this->module->include_clean($this->path, [ "type" => $this ]);
@@ -38,13 +38,13 @@
 		}
 
 		// Executa um teste de validação.
-		// @note Retornará true caso não haja um método de validação definido.
+		// @note se um validador não foi definido, sempre falhará.
 		public function validate($value) {
 			if($this->validate_callback) {
 				return call_user_func($this->validate_callback, $value);
 			}
 
-			return true;
+			return false;
 		}
 
 		/** TRANSFORM */
@@ -54,12 +54,10 @@
 		}
 
 		// Executa uma transformação.
-		// @note Retornará o mesmo valor caso não haja um método de transformação definido.
+		// @note se uma transformação não foi definida, sempre retornará null.
 		public function transform($value) {
 			if($this->transform_callback) {
 				return call_user_func($this->transform_callback, $value);
 			}
-
-			return $value;
 		}
 	}

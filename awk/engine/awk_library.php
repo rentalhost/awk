@@ -30,7 +30,7 @@
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Carrega o arquivo da library.
 			// É esperado que a library registre uma classe.
@@ -41,14 +41,14 @@
 				awk_error::create([
 					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Se a classe não existir, gera um erro.
 			if(!class_exists($this->classname)) {
 				awk_error::create([
 					"message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
 				]);
-			}
+			} // @codeCoverageIgnore
 		}
 
 		/** REGISTER */
@@ -118,11 +118,11 @@
 							$this->module->get_name() . "\" não retornou uma instância da classe \"{$this->classname}\"," .
 							" ao invés disso, retornou \"{$unique_instance_type}\"."
 					]);
-				}
+				} // @codeCoverageIgnore
 
 				// Se for uma instância de `awk_base`, armazena as informações da base.
-				if($this->unique_instance instanceof awk_base) {
-					$this->unique_instance->set_base($this->module);
+				if($unique_instance instanceof awk_base) {
+					$unique_instance->set_base($this->module);
 				}
 
 				// Armazena e retorna a instância.
@@ -139,7 +139,7 @@
 							$this->module->get_name() . "\" não pôde ser criada pois seu construtor requer parâmetros. " .
 							"Considere definir o método \"library_unique\"."
 					]);
-				}
+				} // @codeCoverageIgnore
 			}
 
 			// Inicia a instância única.

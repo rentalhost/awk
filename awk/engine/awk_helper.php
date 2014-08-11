@@ -23,7 +23,7 @@
 				awk_error::create([
 					"message" => "O módulo \"" . $this->module->get_name() . "\" não possui o helper \"{$this->name}\"."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Carrega o arquivo do helper.
 			$this->module->include_clean($this->path, [ "helper" => $this ]);

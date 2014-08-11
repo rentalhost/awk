@@ -39,8 +39,7 @@
 				awk_error::create([
 					"message" => "O módulo \"{$module_name}\" não existe."
 				]);
-				return;
-			}
+			} // @codeCoverageIgnore
 
 			// Se o arquivo de configuração (settings.php) não existe, gera um erro.
 			// Módulos devem possuir este arquivo para indicar um módulo valido.
@@ -50,8 +49,8 @@
 				awk_error::create([
 					"message" => "O módulo \"{$module_name}\" não definiu o arquivo de configuração."
 				]);
-			}
-		}
+			} // @codeCoverageIgnore
+		} // @codeCoverageIgnore
 
 		/** FEATURE */
 		// Define um mapa de features, ligando a sua classe.
@@ -100,7 +99,7 @@
 				awk_error::create([
 					"message" => "O recurso \"{$name}\" não está disponível."
 				]);
-			}
+			} // @codeCoverageIgnore
 
 			// Gera e retorna a instância da feature.
 			$feature_reflection = new ReflectionClass(self::$features_mapper[$name]);
@@ -153,7 +152,7 @@
 					awk_error::create([
 						"message" => "Não foi possível identificar \"{$id}\". A definição do módulo é obrigatória."
 					]);
-				}
+				} // @codeCoverageIgnore
 
 				// Define a feature a ser utilizada.
 				// Se uma feature é obrigatória (null), mas não foi definida, gera um erro.
@@ -162,7 +161,7 @@
 					awk_error::create([
 						"message" => "Não foi possível identificar \"{$id}\". A definição do recurso é obrigatória."
 					]);
-				}
+				} // @codeCoverageIgnore
 				// Se a feature foi definida, mas há necessidade de um bloqueio, gera um erro.
 				if($feature_type_blocked === true
 				&& $feature_type !== null
@@ -171,7 +170,7 @@
 					awk_error::create([
 						"message" => "Não foi possível identificar \"{$id}\". O recurso deve ser \"{$feature_type}\"."
 					]);
-				}
+				} // @codeCoverageIgnore
 				// Em último caso, define a feature que será utilizada.
 				else
 				if(!empty($id_match["feature"])) {

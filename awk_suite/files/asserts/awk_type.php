@@ -135,3 +135,8 @@
 		[ [],		false,	"" ],
 		[ [true],	false,	"" ],
 	]);
+
+	/** TEST TYPE */
+	$test_type = $module->type("test");
+	$asserts->expect_equal($test_type->validate(true), false);
+	$asserts->expect_equal($test_type->transform(true), null);
