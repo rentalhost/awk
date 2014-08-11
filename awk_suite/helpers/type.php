@@ -42,7 +42,5 @@
 			case "NULL":
 				return "null";
 				break;
-		}
-
-		return "unknow";
+		} // @codeCoverageIgnore
 	});

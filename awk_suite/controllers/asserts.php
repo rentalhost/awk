@@ -15,8 +15,12 @@
 			// Verifica se deve ativar o Coverage.
 			$enable_coverage = isset($options["enable-coverage"]) ? (bool) $options["enable-coverage"] : false;
 			if($enable_coverage) {
-				$coverage = new PHP_CodeCoverage;
-				$coverage->start('Test');
+				$coverage_filter = new PHP_CodeCoverage_Filter;
+				$coverage_filter->addDirectoryToBlacklist(__DIR__ . "/../controllers/");
+				$coverage_filter->addDirectoryToBlacklist(__DIR__ . "/../libraries/");
+
+				$coverage = new PHP_CodeCoverage(null, $coverage_filter);
+				$coverage->start("AwkSuite");
 			}
 
 			$asserts_dir = $this->get_module()->file("asserts");
