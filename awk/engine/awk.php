@@ -42,6 +42,9 @@
 			"awk_file_feature",
 			"awk_file",
 
+			// Classes session.
+			"awk_session_feature",
+
 			// Classes error.
 			"awk_error",
 			"awk_error_exception",
