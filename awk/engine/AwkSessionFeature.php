@@ -49,16 +49,19 @@
 		/** MAGIC */
 		// Verifica se uma sessão foi definida.
 		public function __isset($session_key) {
+			$this->init_session_key();
 			return array_key_exists($session_key, $_SESSION[$this->session_key]);
 		}
 
 		// Remove a definição de uma sessão.
 		public function __unset($session_key) {
+			$this->init_session_key();
 			unset($_SESSION[$this->session_key][$session_key]);
 		}
 
 		// Elimina todos os dados da sessão.
 		public function clear() {
+			$this->init_session_key();
 			$_SESSION[$this->session_key] = [];
 		}
 	}
