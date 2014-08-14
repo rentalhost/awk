@@ -6,7 +6,6 @@
 		// @type array<string, self>;
 		static private $modules = [];
 
-		/** ID */
 		// Nome do módulo.
 		// @type string;
 		private $name;
@@ -15,6 +14,11 @@
 		// @type string;
 		private $path;
 
+		// Caminho dos dados globais.
+		// @type AwkData;
+		public $globals;
+
+		/** ID */
 		// Retorna o identificador do módulo.
 		// @return string;
 		public function get_name() {
@@ -32,6 +36,9 @@
 		private function __construct($module_name) {
 			$this->name = $module_name;
 			$this->path = __DIR__ . "/../../{$module_name}";
+
+			// Inicia a variável global do módulo.
+			$this->globals = new AwkData;
 
 			// Se o caminho informado não existir, gera um erro.
 			if(!is_dir($this->path)) {
@@ -231,6 +238,7 @@
 			$include_args["module"] = $this;
 
 			// Extrai os argumentos para o arquivo.
+			extract($this->globals->get_all(), EXTR_REFS);
 			extract($include_args);
 
 			// Inclui e retorna o valor do arquivo.

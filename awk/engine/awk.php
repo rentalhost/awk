@@ -51,6 +51,7 @@
 
 			// Classes diversas.
 			"AwkBase",
+			"AwkData",
 			"AwkPath",
 		];
 
