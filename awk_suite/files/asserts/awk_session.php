@@ -22,7 +22,7 @@
 	$asserts->expect_equal(isset($module->sessions->text), false);
 
 	// Verifica uma sessão em outro módulo.
-	$site = awk_module::get("site");
+	$site = AwkModule::get("site");
 	$site->session("awk_hello", "world");
 
 	$asserts->expect_equal(isset($module->sessions->awk_hello), false);

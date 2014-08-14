@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo controle da suite.
-	class awk_suite_controller extends awk_base {
+	class AwkSuite_Controller extends AwkBase {
 		// Base da masterpage.
 		private function master_base($master_contents) {
 			$this->get_module()->view("home", [
@@ -31,4 +31,4 @@
 	}
 
 	// Registra a classe.
-	$controller->register("awk_suite_controller");
+	$controller->register("AwkSuite_Controller");

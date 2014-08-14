@@ -1,18 +1,18 @@
 <?php
 
 	// Carrega as classes básicas do motor.
-	require_once "engine/awk.php";
-	require_once "engine/awk_module_base.php";
-	require_once "engine/awk_module_feature.php";
-	require_once "engine/awk_module.php";
-	require_once "engine/awk_router_feature.php";
-	require_once "engine/awk_router_driver_stack.php";
-	require_once "engine/awk_router_driver.php";
-	require_once "engine/awk_router_route_part.php";
-	require_once "engine/awk_router_route.php";
-	require_once "engine/awk_router.php";
-	require_once "engine/awk_settings_feature.php";
-	require_once "engine/awk_settings.php";
+	require_once "engine/Awk.php";
+	require_once "engine/AwkModuleBase.php";
+	require_once "engine/AwkModuleFeature.php";
+	require_once "engine/AwkModule.php";
+	require_once "engine/AwkRouterFeature.php";
+	require_once "engine/AwkRouterDriverStack.php";
+	require_once "engine/AwkRouterDriver.php";
+	require_once "engine/AwkRouterRoutePart.php";
+	require_once "engine/AwkRouterRoute.php";
+	require_once "engine/AwkRouter.php";
+	require_once "engine/AwkSettingsFeature.php";
+	require_once "engine/AwkSettings.php";
 
 	// Inicia o autoloader do composer, se houver.
 	$composer_autoloader = __DIR__ . "/../vendor/autoload.php";

@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelas unidades de testes.
-	class awk_suite_asserts_file_unit_library extends awk_base {
+	class AwkSuite_Asserts_File_Unit_Library extends AwkBase {
 		// Armazena a linha do teste no arquivo.
 		//@type int;
 		private $line;
@@ -26,7 +26,7 @@
 		// Define o arquivo.
 		public function __construct() {
 			foreach(debug_backtrace() as $debug_line) {
-				if($debug_line["class"] === "awk_suite_asserts_file_library") {
+				if($debug_line["class"] === "AwkSuite_Asserts_File_Library") {
 					$this->line = $debug_line["line"];
 					break;
 				}
@@ -81,4 +81,4 @@
 	}
 
 	// Registra a library.
-	$library->register("awk_suite_asserts_file_unit_library");
+	$library->register("AwkSuite_Asserts_File_Unit_Library");

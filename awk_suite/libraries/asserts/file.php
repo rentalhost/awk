@@ -1,7 +1,7 @@
 <?php
 
 	// Esta library é responsável pelo controle de execução de um arquivo.
-	class awk_suite_asserts_file_library extends awk_base {
+	class AwkSuite_Asserts_File_Library extends AwkBase {
 		// Armazena uma referência a library de unidades.
 		//@type library("asserts/file_unit");
 		private $unit_library;
@@ -155,4 +155,4 @@
 	}
 
 	// Registra a library.
-	$library->register("awk_suite_asserts_file_library");
+	$library->register("AwkSuite_Asserts_File_Library");

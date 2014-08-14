@@ -1,1 +1,1 @@
-<?php $controller->register("unexistent_class");
+<?php $controller->register("Unexistent_Class");

@@ -19,4 +19,4 @@
 	// Code Coverage.
 	$library_instance = $module->library("tests/valid_unique");
 	$class_instance = $library_instance->unique();
-	$asserts->expect_equal(get_class($class_instance->get_module()), "awk_module");
+	$asserts->expect_equal(get_class($class_instance->get_module()), "AwkModule");

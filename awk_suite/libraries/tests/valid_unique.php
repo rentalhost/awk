@@ -1,9 +1,9 @@
 <?php
 
-	class awk_suite_test_valid_unique_library extends awk_base {
+	class AwkSuite_Test_Valid_Unique_Library extends AwkBase {
 		static public function library_unique() {
 			return new self;
 		}
 	}
 
-	$library->register("awk_suite_test_valid_unique_library");
+	$library->register("AwkSuite_Test_Valid_Unique_Library");

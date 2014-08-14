@@ -1,8 +1,8 @@
 <?php
 
-	class awk_suite_invalid3_test {
+	class AwkSuite_Invalid3_Test {
 		public function __construct($test) {
 		}
 	}
 
-	$library->register("awk_suite_invalid3_test");
+	$library->register("AwkSuite_Invalid3_Test");

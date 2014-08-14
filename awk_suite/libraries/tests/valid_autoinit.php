@@ -1,6 +1,6 @@
 <?php
 
-	class awk_suite_test_valid_autoinit_library extends awk_base {
+	class AwkSuite_Test_Valid_AutoInit_Library extends AwkBase {
 		static private $init_counter = 0;
 		public $init_number = 0;
 
@@ -9,4 +9,4 @@
 		}
 	}
 
-	$library->register("awk_suite_test_valid_autoinit_library", true);
+	$library->register("AwkSuite_Test_Valid_AutoInit_Library", true);

@@ -1,1 +1,1 @@
-<?php $library->register("unexistent_class");
+<?php $library->register("Unexistent_Class");

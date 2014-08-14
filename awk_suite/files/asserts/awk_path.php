@@ -1,3 +1,3 @@
 <?php
 
-	$asserts->expect_equal(awk_path::normalize("abc/../abc"), "abc");
+	$asserts->expect_equal(AwkPath::normalize("abc/../abc"), "abc");

@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pela inicialização do motor e alguns recursos essenciais.
-	class awk {
+	class Awk {
 		/** MÓDULO */
 		// Instância do módulo do próprio motor.
 		static private $module;
@@ -11,47 +11,47 @@
 		// @type array<string>;
 		static private $class_mapper = [
 			// Classes view.
-			"awk_view_feature",
-			"awk_view",
+			"AwkViewFeature",
+			"AwkView",
 
 			// Classes controller.
-			"awk_controller_feature",
-			"awk_controller",
+			"AwkControllerFeature",
+			"AwkController",
 
 			// Classes library.
-			"awk_library_feature",
-			"awk_library",
+			"AwkLibraryFeature",
+			"AwkLibrary",
 
 			// Classes helper.
-			"awk_helper_feature",
-			"awk_helper",
+			"AwkHelperFeature",
+			"AwkHelper",
 
 			// Classes type.
-			"awk_type_feature",
-			"awk_type",
+			"AwkTypeFeature",
+			"AwkType",
 
 			// Classes database.
-			"awk_database_feature",
-			"awk_database",
+			"AwkDatabaseFeature",
+			"AwkDatabase",
 
 			// Classes public.
-			"awk_public_feature",
-			"awk_public",
+			"AwkPublicFeature",
+			"AwkPublic",
 
 			// Classes file.
-			"awk_file_feature",
-			"awk_file",
+			"AwkFileFeature",
+			"AwkFile",
 
 			// Classes session.
-			"awk_session_feature",
+			"AwkSessionFeature",
 
 			// Classes error.
-			"awk_error",
-			"awk_error_exception",
+			"AwkError",
+			"AwkErrorException",
 
 			// Classes diversas.
-			"awk_base",
-			"awk_path",
+			"AwkBase",
+			"AwkPath",
 		];
 
 		// Carrega as classes do motor via SPL.
@@ -73,7 +73,7 @@
 			spl_autoload_register("self::load_class");
 
 			// Inicia o módulo do próprio motor.
-			self::$module = awk_module::get(self::class);
+			self::$module = AwkModule::get("awk");
 
 			// Carrega as configurações do motor.
 			$engine_settings = self::$module->settings();
@@ -88,12 +88,12 @@
 			// Se o roteador existir, ele será utilizado.
 			$router_identify = self::$module->identify($router_id, "router", null, true, true);
 			if($router_identify["module"]->routers->exists($router_identify["name"])) {
-				$router_driver = new awk_router_driver(awk_router::get_url(), $router_identify["module"], true);
+				$router_driver = new AwkRouterDriver(AwkRouter::get_url(), $router_identify["module"], true);
 				$router_driver->redirect($router_id);
 				return;
 			}
 
 			// Caso contrário, será forçado um erro de página (404).
-			awk_error::force_404();
+			AwkError::force_404();
 		}
 	}

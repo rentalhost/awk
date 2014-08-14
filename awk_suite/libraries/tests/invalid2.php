@@ -1,9 +1,9 @@
 <?php
 
-	class awk_suite_invalid2_test {
+	class AwkSuite_Invalid2_Test {
 		static public function library_unique() {
 			return new stdclass;
 		}
 	}
 
-	$library->register("awk_suite_invalid2_test");
+	$library->register("AwkSuite_Invalid2_Test");
