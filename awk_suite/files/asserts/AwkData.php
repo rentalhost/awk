@@ -1,6 +1,6 @@
 <?php
 
-	$asserts->expect_equal($module->globals->get_all(), []);
+	$asserts->expect_equal($module->globals->get_all(), [ "test" => "ok" ]);
 
 	$module->globals->set("a", "a");
 	$module->globals->b = "b";

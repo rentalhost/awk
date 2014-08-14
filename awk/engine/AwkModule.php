@@ -223,8 +223,11 @@
 			if(isset(self::$modules[$module_id]))
 				return self::$modules[$module_id];
 
-			// Caso contrário, cria sua instância e retorna.
-			return self::$modules[$module_id] = new self($module_id);
+			// Caso contrário, cria sua instância.
+			self::$modules[$module_id] = new self($module_id);
+			self::$modules[$module_id]->settings();
+
+			return self::$modules[$module_id];
 		}
 
 		/** INCLUDE */

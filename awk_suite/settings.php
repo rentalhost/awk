@@ -15,3 +15,7 @@
 	$settings->coverage_enabled = is_dir($settings->coverage_output_dir)
 		&& is_writable($settings->coverage_output_dir)
 		&& class_exists("PHP_CodeCoverage");
+
+	/** TESTS */
+	// Define uma variável global.
+	$module->globals->set("test", "ok");
