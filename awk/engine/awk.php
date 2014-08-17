@@ -34,6 +34,10 @@
 			"Awk_Database_Feature",
 			"Awk_Database",
 
+			// Classes model.
+			"Awk_Model_Feature",
+			"Awk_Model",
+
 			// Classes public.
 			"Awk_Public_Feature",
 			"Awk_Public",

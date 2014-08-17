@@ -74,6 +74,7 @@
 			"publics" => "Awk_Public_Feature",
 			"files" => "Awk_File_Feature",
 			"sessions" => "Awk_Session_Feature",
+			"models" => "Awk_Model_Feature",
 		];
 
 		// Armazena definições de plurais não linear.
