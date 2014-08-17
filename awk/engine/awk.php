@@ -11,48 +11,48 @@
 		// @type array<string>;
 		static private $class_mapper = [
 			// Classes view.
-			"AwkViewFeature",
-			"AwkView",
+			"Awk_View_Feature",
+			"Awk_View",
 
 			// Classes controller.
-			"AwkControllerFeature",
-			"AwkController",
+			"Awk_Controller_Feature",
+			"Awk_Controller",
 
 			// Classes library.
-			"AwkLibraryFeature",
-			"AwkLibrary",
+			"Awk_Library_Feature",
+			"Awk_Library",
 
 			// Classes helper.
-			"AwkHelperFeature",
-			"AwkHelper",
+			"Awk_Helper_Feature",
+			"Awk_Helper",
 
 			// Classes type.
-			"AwkTypeFeature",
-			"AwkType",
+			"Awk_Type_Feature",
+			"Awk_Type",
 
 			// Classes database.
-			"AwkDatabaseFeature",
-			"AwkDatabase",
+			"Awk_Database_Feature",
+			"Awk_Database",
 
 			// Classes public.
-			"AwkPublicFeature",
-			"AwkPublic",
+			"Awk_Public_Feature",
+			"Awk_Public",
 
 			// Classes file.
-			"AwkFileFeature",
-			"AwkFile",
+			"Awk_File_Feature",
+			"Awk_File",
 
 			// Classes session.
-			"AwkSessionFeature",
+			"Awk_Session_Feature",
 
 			// Classes error.
-			"AwkError",
-			"AwkErrorException",
+			"Awk_Error",
+			"Awk_Error_Exception",
 
 			// Classes diversas.
-			"AwkBase",
-			"AwkData",
-			"AwkPath",
+			"Awk_Base",
+			"Awk_Data",
+			"Awk_Path",
 		];
 
 		// Carrega as classes do motor via SPL.
@@ -74,7 +74,7 @@
 			spl_autoload_register("self::load_class");
 
 			// Inicia o módulo do próprio motor.
-			self::$module = AwkModule::get("awk");
+			self::$module = Awk_Module::get("awk");
 
 			// Carrega as configurações do motor.
 			$engine_settings = self::$module->settings();
@@ -89,12 +89,12 @@
 			// Se o roteador existir, ele será utilizado.
 			$router_identify = self::$module->identify($router_id, "router", null, true, true);
 			if($router_identify["module"]->routers->exists($router_identify["name"])) {
-				$router_driver = new AwkRouterDriver(AwkRouter::get_url(), $router_identify["module"], true);
+				$router_driver = new Awk_Router_Driver(Awk_Router::get_url(), $router_identify["module"], true);
 				$router_driver->redirect($router_id);
 				return;
 			}
 
 			// Caso contrário, será forçado um erro de página (404).
-			AwkError::force_404();
+			Awk_Error::force_404();
 		}
 	}

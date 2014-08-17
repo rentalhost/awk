@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelas unidades de testes.
-	class AwkSuite_Asserts_File_Unit_Library extends AwkBase {
+	class AwkSuite_Asserts_File_Unit_Library extends Awk_Base {
 		// Armazena a linha do teste no arquivo.
 		//@type int;
 		private $line;

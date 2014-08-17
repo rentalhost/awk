@@ -1,6 +1,6 @@
 <?php
 
-	class AwkSuite_Test_Valid_AutoInit_Library extends AwkBase {
+	class AwkSuite_Test_Valid_AutoInit_Library extends Awk_Base {
 		static private $init_counter = 0;
 		public $init_number = 0;
 

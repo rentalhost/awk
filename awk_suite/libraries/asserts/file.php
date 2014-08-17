@@ -1,7 +1,7 @@
 <?php
 
 	// Esta library é responsável pelo controle de execução de um arquivo.
-	class AwkSuite_Asserts_File_Library extends AwkBase {
+	class AwkSuite_Asserts_File_Library extends Awk_Base {
 		// Armazena uma referência a library de unidades.
 		//@type library("asserts/file_unit");
 		private $unit_library;

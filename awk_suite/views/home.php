@@ -12,7 +12,7 @@
 <html>
 	<head>
 		<title>Awk Suite :: <?php echo $framework_version; ?></title>
-		<base href="<?php echo AwkRouter::get_baseurl(); ?>" />
+		<base href="<?php echo Awk_Router::get_baseurl(); ?>" />
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css" />
 		<link href="<?php echo $module->public("vendor/reset.css")->get_url(); ?>" rel="stylesheet" type="text/css" />
 		<link href="<?php echo $module->public("app/home.css")->get_url(); ?>" rel="stylesheet" type="text/css" />

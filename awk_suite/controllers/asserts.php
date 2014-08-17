@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo controle de asserts.
-	class AwkSuite_Asserts_Controller extends AwkBase {
+	class AwkSuite_Asserts_Controller extends Awk_Base {
 		// Armazena o grupo de asserts.
 		//@type array<library("asserts/file")>;
 		private $asserts_files = [];

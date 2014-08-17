@@ -1,7 +1,7 @@
 <?php
 
 	// Responsável pelo controle da suite.
-	class AwkSuite_Controller extends AwkBase {
+	class AwkSuite_Controller extends Awk_Base {
 		// Base da masterpage.
 		private function master_base($master_contents) {
 			$this->get_module()->view("home", [
