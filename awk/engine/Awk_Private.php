@@ -1,8 +1,8 @@
 <?php
 
-	// Responsável pelo controle de arquivos internos.
-	class Awk_File extends Awk_Module_Base {
-		static protected $feature_type = "file";
+	// Responsável pelo controle de arquivos privados.
+	class Awk_Private extends Awk_Module_Base {
+		static protected $feature_type = "private";
 
 		// Armazena se o caminho do arquivo remete a um arquivo acessível.
 		// @type boolean;
@@ -11,9 +11,9 @@
 		/** LOAD */
 		// Carrega a definição do arquivo e retorna.
 		// @return self;
-		public function load($file_name) {
-			$this->name = $file_name;
-			$this->path = $this->module->get_path() . "/files/" . $file_name;
+		public function load($private_name) {
+			$this->name = $private_name;
+			$this->path = $this->module->get_path() . "/privates/" . $private_name;
 			$this->exists = file_exists($this->path);
 		}
 

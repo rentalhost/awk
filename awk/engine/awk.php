@@ -44,9 +44,9 @@
 			"Awk_Public_Feature",
 			"Awk_Public",
 
-			// Classes file.
-			"Awk_File_Feature",
-			"Awk_File",
+			// Classes private.
+			"Awk_Private_Feature",
+			"Awk_Private",
 
 			// Classes session.
 			"Awk_Session_Feature",

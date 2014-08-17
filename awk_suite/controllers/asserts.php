@@ -22,7 +22,7 @@
 				$coverage->start("AwkSuite");
 			}
 
-			$asserts_dir = $this->get_module()->file("asserts");
+			$asserts_dir = $this->get_module()->private("asserts");
 			foreach($asserts_dir->get_files() as $assert_file) {
                 $assert_file_instance = $this->get_module()->library("asserts/file")->create();
 

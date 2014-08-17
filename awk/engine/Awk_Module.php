@@ -72,7 +72,7 @@
 			"modules" => "Awk_Module_Feature",
 			"types" => "Awk_Type_Feature",
 			"publics" => "Awk_Public_Feature",
-			"files" => "Awk_File_Feature",
+			"privates" => "Awk_Private_Feature",
 			"sessions" => "Awk_Session_Feature",
 			"models" => "Awk_Model_Feature",
 		];
