@@ -36,7 +36,9 @@
 
 			// Classes model.
 			"Awk_Model_Feature",
+			"Awk_Model_Query",
 			"Awk_Model",
+			"Awk_Model_Row",
 
 			// Classes public.
 			"Awk_Public_Feature",

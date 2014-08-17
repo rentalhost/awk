@@ -16,6 +16,10 @@
 		// @type string;
 		private $table_name;
 
+		// Armazena as queries.
+		// @type array<string, Awk_Model_Query>
+		private $queries = [];
+
 		/** LOAD */
 		// Carrega o model e o retorna.
 		// @return self;
@@ -66,5 +70,38 @@
 		// Obtém o nome da tabela.
 		public function get_table() {
 			return $this->table_name;
+		}
+
+		/** CONTROL QUERIES */
+		// Adiciona uma nova query.
+		public function add_query($query_name, $query_type, $query_definer) {
+			// Se há houver uma chave com o mesmo nome, lança um erro.
+			if(array_key_exists($query_name, $this->queries)) {
+				Awk_Error::create([
+					"message" => "A query \"{$query_name}\" já foi definida no model \"" . $this->get_name()
+						. "\" do módulo \"" . $this->module->get_name() . "\"."
+				]);
+			} // @codeCoverageIgnore
+
+			// Define a query.
+			return $this->queries[$query_name] = new Awk_Model_Query($this, $query_name, $query_type, $query_definer);
+		}
+
+		/** MAGIC METHODS */
+		// Executa uma query através do seu nome definido.
+		public function __call($query_name, $call_args) {
+			// Se não foi definido, lança uma exceção.
+			if(!array_key_exists($query_name, $this->queries)) {
+				Awk_Error::create([
+					"message" => "A query \"{$query_name}\" não foi definida no model \"" . $this->get_name()
+						. "\" do módulo \"" . $this->module->get_name() . "\"."
+				]);
+			} // @codeCoverageIgnore
+
+			// Define os argumentos que serão enviados à query.
+			$query_args = isset($call_args[0]) ? $call_args[0] : [];
+
+			// Caso contrário, carrega a query e executa.
+			return $this->queries[$query_name]->execute($query_args);
 		}
 	}
