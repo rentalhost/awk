@@ -21,4 +21,4 @@
 	}
 
 	// Inicia o processo.
-	awk::init();
+	Awk::init();

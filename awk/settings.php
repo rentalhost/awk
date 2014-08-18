@@ -3,7 +3,7 @@
 	/** FRAMEWORK */
 	// Nome do framework.
 	//@type string;
-	$settings->framework_name = "awk";
+	$settings->framework_name = "Awk";
 
 	// Versão do framework.
 	//@type array[int $max, int $min, int $path];
