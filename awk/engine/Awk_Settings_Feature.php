@@ -8,6 +8,7 @@
 
 		/** FEATURE CALL */
 		// Carrega um settings imediatamente.
+		/** @codeCoverageIgnore */
 		public function feature_call() {
 			// Se as configurações já foram iniciadas, retorna seu controlador.
 			if(isset($this->settings)) {

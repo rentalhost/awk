@@ -54,7 +54,7 @@
 			Awk_Error::create([
 				"message" => "Falha ao executar a query."
 			]);
-		}
+		} // @codeCoverageIgnore
 
 		/** QUERY */
 		// Executa uma query especializada.

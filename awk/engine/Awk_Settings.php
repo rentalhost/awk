@@ -21,6 +21,7 @@
 		/** LOAD */
 		// Carrega as settings e o retorna.
 		// @return self;
+		/** @codeCoverageIgnore */
 		public function load() {
 			$this->path = $this->module->get_path() . "/settings.php";
 

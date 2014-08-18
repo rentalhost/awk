@@ -6,3 +6,4 @@
 
 	// Adiciona uma nova query ao model.
 	$model->add_query("load_test", "one", "SELECT 1;");
+	$model->add_query("load_fail", "one", "SELECT FAIL();");

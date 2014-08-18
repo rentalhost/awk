@@ -30,3 +30,8 @@
 	$asserts->expect_exception(function() use($indirect_model) {
 		$indirect_model->load_unknow();
 	}, "Awk_Error_Exception", "A query \"load_unknow\" não foi definida no model \"tests/suite/test\" do módulo \"awk_suite\".");
+
+	// Exceções.
+	$asserts->expect_exception(function() use($module) {
+		$module->model("unexistent");
+	}, "Awk_Error_Exception", "O módulo \"awk_suite\" não possui o model \"unexistent\".");

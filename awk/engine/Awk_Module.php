@@ -219,6 +219,7 @@
 
 		/** LOADER */
 		// Carrega e retorna um módulo.
+		/** @codeCoverageIgnore */
 		static public function get($module_id) {
 			// Se o módulo já foi carregado, retorna sua instância.
 			if(isset(self::$modules[$module_id]))
