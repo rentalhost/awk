@@ -21,3 +21,8 @@
 	$asserts->expect_equal($type_helper->call("normalize", new mysqli), "object(mysqli)");
 	$asserts->expect_equal($type_helper->call("normalize", acos(8)), "float(nan)");
 	$asserts->expect_equal($type_helper->call("normalize", stream_context_create()), "resource(stream-context)");
+
+	// Exceções.
+	$asserts->expect_exception(function() use($module) {
+		$module->helper("unexistent");
+	}, "Awk_Error_Exception", "O módulo \"awk_suite\" não possui o helper \"unexistent\".");

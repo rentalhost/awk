@@ -140,3 +140,8 @@
 	$test_type = $module->type("test");
 	$asserts->expect_equal($test_type->validate(true), false);
 	$asserts->expect_equal($test_type->transform(true), null);
+
+	// Exceções.
+	$asserts->expect_exception(function() use($module) {
+		$module->type("unexistent");
+	}, "Awk_Error_Exception", "O módulo \"awk_suite\" não possui o tipo \"unexistent\".");
