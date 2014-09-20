@@ -1,5 +1,9 @@
 {
+	"name": "rentalhost/awk-framework",
+	"description": "Awk Framework",
+	"license": "MIT",
+
 	"require-dev": {
-		"phpunit/php-code-coverage": "~2"
+		"phpunit/phpunit": "4.2.*@dev"
 	}
 }
