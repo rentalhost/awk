@@ -21,4 +21,5 @@
 	}
 
 	// Inicia o processo.
+	Awk::register();
 	Awk::init();

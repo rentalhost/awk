@@ -219,11 +219,11 @@
 
 		/** LOADER */
 		// Carrega e retorna um módulo.
-		/** @codeCoverageIgnore */
 		static public function get($module_id) {
 			// Se o módulo já foi carregado, retorna sua instância.
-			if(isset(self::$modules[$module_id]))
+			if(isset(self::$modules[$module_id])){
 				return self::$modules[$module_id];
+			}
 
 			// Caso contrário, cria sua instância.
 			self::$modules[$module_id] = new self($module_id);
@@ -236,7 +236,7 @@
 		// Inclui um arquivo com referência no módulo.
 		// Nota: o nome dos parâmetros estarão disponível também no arquivo.
 		// @return mixed;
-		public function include_clean($include_file, $include_args = null) {
+		public function include_clean($include_file, $include_args = null, $include_once = null) {
 			// Define algumas variáveis básicas.
 			$include_args = $include_args ?: [];
 			$include_args["awk"] = self::$modules["awk"];
@@ -247,7 +247,9 @@
 			extract($include_args);
 
 			// Inclui e retorna o valor do arquivo.
-			return include $include_file;
+			return $include_once !== true
+				? include $include_file
+				: include_once $include_file;
 		}
 
 		/** LOCALHOST */

@@ -26,7 +26,7 @@
 			$connection_password = $connection_options["password"];
 
 			// Define os argumentos da conexão (DSN).
-			$connection_args = array_intersect_key($connection_options, [ "host", "port", "dbname", "charset" ]);
+			$connection_args = array_intersect_key($connection_options, array_flip([ "host", "port", "dbname", "charset" ]));
 			$connection_args_string = http_build_query($connection_args, null, ";");
 
 			// Define o DSN que será usado.
@@ -38,8 +38,22 @@
 			]);
 		}
 
+		// Força a conexão.
+		public function connect() {
+			try {
+				$this->get_connection();
+				return $this->connection->errorCode() == 0;
+			}
+			catch(PDOException $e) {
+				return false;
+			}
+		}
+
 		// Configura a conexão.
 		public function configure($connection_options = null) {
+			// Destrói a conexão atual, se houver.
+			$this->connection = null;
+
 			// Define as opções padrões para uma conexão.
 			$connection_options = $connection_options ?: [];
 			$this->connection_options = array_replace([
@@ -49,7 +63,7 @@
 
 				// Porta que será utilizada no host.
 				// @type int;
-				"port" => 3307,
+				"port" => 3306,
 
 				// Usuário a ser utilizado na conexão.
 				// @type string;

@@ -30,7 +30,7 @@
 					"message" => "Atualmente, não há suporte para a query do tipo \"{$query_type}\" em um model."
 				]);
 			} // @codeCoverageIgnore
-		}
+		} // @codeCoverageIgnore
 
 		/** EXECUTE */
 		// Executa a query com os argumentos passados.

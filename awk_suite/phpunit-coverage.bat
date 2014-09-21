@@ -1,11 +1,13 @@
-@echo off
-cls
+@ECHO off
+CLS
+
+SET "filter=%1"
+IF [%filter%] == [] (
+	SET "filter=."
+)
 
 "../vendor/bin/phpunit" ^
-	--strict ^
-	--process-isolation ^
-	--no-globals-backup ^
-	--coverage-html "publics/coverage" ^
-	--verbose ^
-	--debug ^
+	--configuration "phpunit-settings.xml" ^
+	--coverage-html "coverage" ^
+	--filter %filter% ^
 	tests

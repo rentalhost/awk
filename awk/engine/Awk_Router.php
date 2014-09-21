@@ -23,12 +23,10 @@
 			} // @codeCoverageIgnore
 
 			// Se a rota for um arquivo público, define o Content-type da página.
-			// @codeCoverageIgnoreStart
 			if($this->is_file()) {
 				$finfo = new finfo(FILEINFO_MIME | FILEINFO_PRESERVE_ATIME);
 				header("Content-type: " . $finfo->file($this->file_path()));
 			}
-			// @codeCoverageIgnoreEnd
 
 			// Carrega o arquivo do roteador.
 			// É neste ponto que as rotas devem ser definidas no roteador.
@@ -71,7 +69,13 @@
 		// Retorna o caminho do arquivo.
 		// @return string;
 		public function file_path() {
-			return $_SERVER["DOCUMENT_ROOT"] . ltrim($_SERVER["REDIRECT_URL"], "/");
+			$result = rtrim($_SERVER["DOCUMENT_ROOT"], "/") . "/";
+
+			if(!empty($_SERVER["REDIRECT_URL"])) {
+				$result.= ltrim($_SERVER["REDIRECT_URL"], "/");
+			}
+
+			return $result;
 		}
 
 		/** HELPER */
@@ -81,7 +85,7 @@
 			// Verificação simplificada.
 			if(!empty($_SERVER["HTTPS"])
 			&& $_SERVER["HTTPS"] !== "off") {
-				return true; // @codeCoverageIgnore
+				return true;
 			}
 
 			// Caso contrário, será necessário verificar as configurações do HTTPS.
@@ -93,7 +97,7 @@
 		static public function get_baseurl() {
 			return ( self::is_secure() ? "https://" : "http://" )
 				. $_SERVER["SERVER_NAME"]
-				. dirname($_SERVER["SCRIPT_NAME"]) . "/";
+				. ltrim(dirname($_SERVER["SCRIPT_NAME"]), DIRECTORY_SEPARATOR) . "/";
 		}
 
 		// Retorna a URL acessada.
@@ -103,9 +107,9 @@
 			$router_url = null;
 
 			// Se houver PATH_INFO, será utilizado.
-			// Ex. /index.php/example => example
+			// Ex. /index.php/example/ => example
 			if(isset($_SERVER["PATH_INFO"])) {
-				return ltrim($_SERVER["PATH_INFO"], "/"); // @codeCoverageIgnore
+				return trim($_SERVER["PATH_INFO"], "/");
 			}
 
 			// Caso contrário, utilizará o método padrão, através da REQUEST_URI.

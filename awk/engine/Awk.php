@@ -2,11 +2,9 @@
 
 	// Responsável pela inicialização do motor e alguns recursos essenciais.
 	class Awk {
-		/** MÓDULO */
 		// Instância do módulo do próprio motor.
 		static private $module;
 
-		/** AUTOLOADER */
 		// Mapa de classes que podem ser carregadas através do motor.
 		// @type array<string>;
 		static private $class_mapper = [
@@ -59,6 +57,20 @@
 			"Awk_Base",
 			"Awk_Data",
 			"Awk_Path",
+
+			// Classes auto-inicializáveis.
+			// Usado no PHPUnit.
+			"Awk_Module_Base",
+			"Awk_Module_Feature",
+			"Awk_Module",
+			"Awk_Router_Feature",
+			"Awk_Router_Driver_Stack",
+			"Awk_Router_Driver",
+			"Awk_Router_Route_Part",
+			"Awk_Router_Route",
+			"Awk_Router",
+			"Awk_Settings_Feature",
+			"Awk_Settings",
 		];
 
 		// Carrega as classes do motor via SPL.
@@ -72,16 +84,21 @@
 			}
 		}
 
-		/** INIT */
-		// Inicializa o motor.
-		/** @codeCoverageIgnore: se falhar neste ponto, nada funcionará. */
-		static public function init() {
+		// Registra o motor.
+		/** @codeCoverageIgnore */
+		static public function register() {
 			// Registra o método de autoloader.
 			spl_autoload_register("self::load_class");
 
 			// Inicia o módulo do próprio motor.
 			self::$module = Awk_Module::get("awk");
+		}
 
+		/**
+		 * Responsável pelo processo inicial de rota.
+		 * @return void
+		 */
+		static public function init() {
 			// Carrega as configurações do motor.
 			$engine_settings = self::$module->settings();
 
@@ -102,5 +119,5 @@
 
 			// Caso contrário, será forçado um erro de página (404).
 			Awk_Error::force_404();
-		}
+		} // @codeCoverageIgnore
 	}

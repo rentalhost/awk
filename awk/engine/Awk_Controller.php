@@ -29,7 +29,7 @@
 
 			// Carrega o arquivo do controller.
 			// É esperado que o controlador registre uma classe.
-			$this->module->include_clean($this->path, [ "controller" => $this ]);
+			$this->module->include_clean($this->path, [ "controller" => $this ], true);
 
 			// Se não foi registrado uma classe neste controlador, gera um erro.
 			if(!$this->classname) {

@@ -33,7 +33,7 @@
 
 			// Carrega o arquivo da library.
 			// É esperado que a library registre uma classe.
-			$this->module->include_clean($this->path, [ "library" => $this ]);
+			$this->module->include_clean($this->path, [ "library" => $this ], true);
 
 			// Se não foi registrado uma classe nesta library, gera um erro.
 			if(!$this->classname) {
@@ -59,6 +59,11 @@
 			if($autoinit_unique === true) {
 				$this->unique();
 			}
+		}
+
+		// Obtém o nome da classe registrada.
+		public function get_registered_classname() {
+			return $this->classname;
 		}
 
 		/** REFLECTION */

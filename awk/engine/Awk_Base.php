@@ -12,10 +12,4 @@
 		public function set_base($module) {
 			$this->module = $module;
 		}
-
-		/** MODULE */
-		// Obtém o módulo.
-		public function get_module() {
-			return $this->module;
-		}
 	}

@@ -25,34 +25,61 @@
 				// Mensagem do erro.
 				// @type string?;
 				"message" => null,
+
+				// Código do erro.
+				// @type int?;
+				"code" => null,
 			], $error_options);
 
 			// Determina o tipo da execução do erro.
-			// @codeCoverageIgnoreStart
 			switch($error_options["type"]) {
 				// Lança uma exceção.
 				case self::TYPE_EXCEPTION:
 					$exception_classname = $error_options["exception"];
-					throw new $exception_classname($error_options["message"]);
+					throw new $exception_classname($error_options["message"], $error_options["code"]);
 					break;
 
 				// Lança um erro fatal via E_USER_ERROR.
 				case self::TYPE_FATAL:
+					// Depuração artificial.
+					if(defined("UNIT_TESTING")) {
+						throw new Exception("OK");
+					}
+
+					// @codeCoverageIgnoreStart
 					trigger_error($error_options["message"], E_USER_ERROR);
 					break;
+					// @codeCoverageIgnoreEnd
 
 				// Lança um erro não-fatal via E_USER_WARNING.
 				case self::TYPE_WARNING:
+					// Depuração artificial.
+					if(defined("UNIT_TESTING")) {
+						throw new Exception("OK");
+					}
+
+					// @codeCoverageIgnoreStart
 					trigger_error($error_options["message"], E_USER_WARNING);
 					break;
+					// @codeCoverageIgnoreEnd
 			}
-		} // @codeCoverageIgnoreEnd
+
+			// Se não for possível, indica um erro desconhecido.
+			self::create([
+				"type" => self::TYPE_EXCEPTION,
+				"message" => "Um erro do tipo \"{$error_options["type"]}\" foi criado, porém, este tipo não é suportado."
+			]);
+		} // @codeCoverageIgnore
 
 		/** 404 ERROR */
 		// Força um erro de objeto não encontrado.
-		/** @codeCoverageIgnore */
 		static public function force_404() {
 			$location_error = dirname($_SERVER["SCRIPT_NAME"]) . "/404";
 			header("Location: {$location_error}");
-		}
+
+			// Depuração artificial.
+			if(defined("UNIT_TESTING")) {
+				throw new Exception($location_error);
+			}
+		} // @codeCoverageIgnore
 	}

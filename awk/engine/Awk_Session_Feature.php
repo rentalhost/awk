@@ -17,7 +17,7 @@
 				}
 
 				// Define a chave da sessão.
-				$this->session_key = getcwd() . DIRECTORY_SEPARATOR . $this->get_module()->get_name();
+				$this->session_key = $this->get_module()->get_path();
 
 				// Define a chave da sessão.
 				if(!array_key_exists($this->session_key, $_SESSION)) {
@@ -46,7 +46,24 @@
 			$_SESSION[$this->session_key][$session_key] = $session_value;
 		}
 
-		/** MAGIC */
+		// Obtém a chave da sessão.
+		public function get_session_key() {
+			$this->init_session_key();
+			return $this->session_key;
+		}
+
+		// Define uma sessão.
+		public function __set($session_key, $value) {
+			$this->init_session_key();
+			$_SESSION[$this->session_key][$session_key] = $value;
+		}
+
+		// Obtém uma sessão.
+		public function __get($session_key) {
+			$this->init_session_key();
+			return $_SESSION[$this->session_key][$session_key];
+		}
+
 		// Verifica se uma sessão foi definida.
 		public function __isset($session_key) {
 			$this->init_session_key();
