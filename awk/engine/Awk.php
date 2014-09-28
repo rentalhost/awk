@@ -51,7 +51,7 @@
 
 			// Classes error.
 			"Awk_Error",
-			"Awk_Error_Exception",
+			"Awk_Exception",
 
 			// Classes diversas.
 			"Awk_Base",

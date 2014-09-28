@@ -208,7 +208,7 @@
 
 		/**
 		 * Rota inexistente.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage O módulo "awk_suite" não possui o roteador "unexistent".
 		 * @return void
 		 */

@@ -39,7 +39,7 @@
 
 		/**
 		 * Tenta carregar um controller inexistente.
-		 * @expectedException        Awk_Error_Exception
+		 * @expectedException        Awk_Exception
 		 * @expectedExceptionMessage O módulo "awk_suite" não possui o controller "unexistent".
 		 * @return [type] [description]
 		 */
@@ -49,7 +49,7 @@
 
 		/**
 		 * Tenta carregar um controller que registrou uma classe inexistente.
-		 * @expectedException        Awk_Error_Exception
+		 * @expectedException        Awk_Exception
 		 * @expectedExceptionMessage O controller "test2_unexistent_class" do módulo "awk_suite" registrou uma classe inexistente ("Unexistent_Class").
 		 * @return [type] [description]
 		 */
@@ -59,7 +59,7 @@
 
 		/**
 		 * Tenta carregar um controller que não registrou a classe.
-		 * @expectedException        Awk_Error_Exception
+		 * @expectedException        Awk_Exception
 		 * @expectedExceptionMessage O controller "test3_unregistered_class" do módulo "awk_suite" não efetuou o registro de classe.
 		 * @return [type] [description]
 		 */

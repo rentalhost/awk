@@ -6,7 +6,7 @@
 	class Awk_ErrorTest extends PHPUnit_Framework_TestCase {
 		/**
 		 * Testa uma exceção.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Message
 		 * @expectedExceptionMessage 1000
 		 * @return void
@@ -40,7 +40,7 @@
 
 		/**
 		 * Testa um erro de tipo desconhecido.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Um erro do tipo "unknow" foi criado, porém, este tipo não é suportado.
 		 * @return void
 		 */

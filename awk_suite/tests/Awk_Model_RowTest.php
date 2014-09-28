@@ -56,7 +56,7 @@
 		/**
 		 * Testa uma exceção quando um tipo não suportado é vinculado ao model.
 		 * @depends testModelLoad
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Atualmente, não há suporte para a query do tipo "unsupported_type" em um model.
 		 * @return void
 		 */
@@ -67,7 +67,7 @@
 		/**
 		 * Testa uma exceção há uma falha ao carregar uma query.
 		 * @depends testModelLoad
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Falha ao executar a query.
 		 * @return void
 		 */

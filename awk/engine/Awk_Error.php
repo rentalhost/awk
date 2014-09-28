@@ -20,7 +20,7 @@
 
 				// Tipo de exceção que será lançada.
 				// @type string;
-				"exception" => "Awk_Error_Exception",
+				"exception" => "Awk_Exception",
 
 				// Mensagem do erro.
 				// @type string?;

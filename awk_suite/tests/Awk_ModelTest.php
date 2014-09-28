@@ -64,7 +64,7 @@
 
 		/**
 		 * Exceção quando um model não existe.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage O módulo "awk_suite" não possui o model "unexistent".
 		 * @return void
 		 */
@@ -74,7 +74,7 @@
 
 		/**
 		 * Exceção quando uma query é re-definida.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage A query "load_test" já foi definida no model "test3_extends" do módulo "awk_suite".
 		 * @depends testModelExtended
 		 * @return void
@@ -85,7 +85,7 @@
 
 		/**
 		 * Exceção quando uma query não definida é executada.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage A query "load_unknow" não foi definida no model "test3_extends" do módulo "awk_suite".
 		 * @depends testModelExtended
 		 * @return void

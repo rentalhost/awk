@@ -99,7 +99,7 @@
 
 		/**
 		 * Testa um módulo inexistente.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage O módulo "unexistent" não existe.
 		 * @return void
 		 */
@@ -109,7 +109,7 @@
 
 		/**
 		 * Cria um módulo inválido, pois não possui um arquivo de configuração.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage O módulo "unexistent" não definiu o arquivo de configuração.
 		 * @return void
 		 */
@@ -131,7 +131,7 @@
 
 		/**
 		 * Testa uma feature inexistente para um módulo.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage O recurso "unexistent_features" não está disponível.
 		 * @return void
 		 */
@@ -141,7 +141,7 @@
 
 		/**
 		 * Tenta uma identificação que não define um módulo.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Não foi possível identificar "test". A definição do módulo é obrigatória.
 		 * @return void
 		 */
@@ -151,7 +151,7 @@
 
 		/**
 		 * Tenta uma identificação que não define uma feature.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Não foi possível identificar "test". A definição do recurso é obrigatória.
 		 * @return void
 		 */
@@ -161,7 +161,7 @@
 
 		/**
 		 * Tenta uma identificação que possui uma feature obrigatória.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Não foi possível identificar "router@test". O recurso deve ser "type".
 		 * @return void
 		 */
@@ -171,7 +171,7 @@
 
 		/**
 		 * Tenta uma identificação inválida.
-		 * @expectedException Awk_Error_Exception
+		 * @expectedException Awk_Exception
 		 * @expectedExceptionMessage Não foi possível identificar "%invalid%".
 		 * @return void
 		 */
