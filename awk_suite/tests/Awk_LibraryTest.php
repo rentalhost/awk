@@ -65,6 +65,16 @@
 		}
 
 		/**
+		 * Testa a base de uma library.
+		 * @covers  Awk_Base::get_module
+		 * @depends testLibraryLoad
+		 * @return void
+		 */
+		public function testLibraryBase($library_instance) {
+			$this->assertSame("awk_suite", $library_instance->create()->get_module_name());
+		}
+
+		/**
 		 * Testa uma library com o método library_unique válido.
 		 * @return void
 		 */
