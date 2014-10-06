@@ -9,4 +9,5 @@ IF [%filter%] == [] (
 "../vendor/bin/phpunit" ^
 	--configuration "phpunit-settings.xml" ^
 	--filter %filter% ^
+	--colors ^
 	tests

@@ -10,4 +10,5 @@ IF [%filter%] == [] (
 	--configuration "phpunit-settings.xml" ^
 	--coverage-html "coverage" ^
 	--filter %filter% ^
+	--colors ^
 	tests
