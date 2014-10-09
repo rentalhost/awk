@@ -11,4 +11,4 @@
     $settings->test_overwrited = "before";
 
     // Define uma variável global.
-    $module->globals->set("test", "ok");
+    $module->get_globals()->set("test", "ok");

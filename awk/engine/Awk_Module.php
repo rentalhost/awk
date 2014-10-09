@@ -26,7 +26,7 @@
          * Caminho dos dados globais.
          * @var Awk_Data
          */
-        public $globals;
+        private $globals;
 
         /**
          * Retorna o identificador do módulo.
@@ -269,6 +269,14 @@
             self::$modules[$module_id]->settings();
 
             return self::$modules[$module_id];
+        }
+
+        /**
+         * Obtém os dados globais do módulo.
+         * @return Awk_Data
+         */
+        public function &get_globals() {
+            return $this->globals;
         }
 
         /**

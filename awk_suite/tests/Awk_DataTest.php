@@ -22,7 +22,7 @@
          * @return void
          */
         public function testGlobalGetAll() {
-            $this->assertSame([ "test" => "ok" ], self::$module->globals->get_all());
+            $this->assertSame([ "test" => "ok" ], self::$module->get_globals()->get_all());
         }
 
         /**
@@ -31,12 +31,12 @@
          */
         public function testSimpleSetGet() {
             // Define alguns valores.
-            self::$module->globals->set("a", "a");
-            self::$module->globals->b = "b";
+            self::$module->get_globals()->set("a", "a");
+            self::$module->get_globals()->b = "b";
 
             // Verifica as informações.
-            $this->assertSame("a", self::$module->globals->get("a"));
-            $this->assertSame("b", self::$module->globals->b);
+            $this->assertSame("a", self::$module->get_globals()->get("a"));
+            $this->assertSame("b", self::$module->get_globals()->b);
         }
 
         /**
@@ -48,12 +48,12 @@
             $value = 1;
 
             // Globaliza a variável com bind e verifica.
-            self::$module->globals->bind("value", $value);
-            $this->assertSame(1, self::$module->globals->get("value"));
+            self::$module->get_globals()->bind("value", $value);
+            $this->assertSame(1, self::$module->get_globals()->get("value"));
 
             // Altera a variável e verifica se o bind foi afetado.
             $value = 2;
-            $this->assertSame(2, self::$module->globals->get("value"));
+            $this->assertSame(2, self::$module->get_globals()->get("value"));
         }
 
         /**
@@ -62,11 +62,11 @@
          */
         public function testMagics() {
             // Verifica se o isset() corresponde.
-            $this->assertTrue(isset(self::$module->globals->value));
+            $this->assertTrue(isset(self::$module->get_globals()->value));
 
             // Remove a variável e verifica novamente.
-            unset(self::$module->globals->value);
-            $this->assertFalse(isset(self::$module->globals->value));
+            unset(self::$module->get_globals()->value);
+            $this->assertFalse(isset(self::$module->get_globals()->value));
         }
 
         /**
@@ -74,7 +74,7 @@
          * @return void
          */
         public function testClear() {
-            self::$module->globals->clear();
-            $this->assertEmpty(self::$module->globals->get_all());
+            self::$module->get_globals()->clear();
+            $this->assertEmpty(self::$module->get_globals()->get_all());
         }
     }
