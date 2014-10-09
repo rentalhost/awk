@@ -1,12 +1,19 @@
 <?php
 
-	// Responsável pela inicialização do motor e alguns recursos essenciais.
+	/**
+	 * Responsável pela inicialização do motor e alguns recursos essenciais.
+	 */
 	class Awk {
-		// Instância do módulo do próprio motor.
+		/**
+		 * Instância do módulo do próprio motor.
+		 * @var Awk_Module
+		 */
 		static private $module;
 
-		// Mapa de classes que podem ser carregadas através do motor.
-		// @type array<string>;
+		/**
+		 * Mapa de classes que podem ser carregadas através do motor.
+		 * @var string[]
+		 */
 		static private $class_mapper = [
 			// Classes view.
 			"Awk_View_Feature",
@@ -73,19 +80,25 @@
 			"Awk_Settings",
 		];
 
-		// Carrega as classes do motor via SPL.
-		/** @codeCoverageIgnore: o método é mapeado. */
+		/**
+		 * Carrega as classes do motor via SPL.
+		 * @codeCoverageIgnore
+		 * @param  string $classname Nome da classe esperada.
+		 * @return void
+		 */
 		static private function load_class($classname) {
 			// Se localizar a classe no mapa, então será possível carregá-la.
 			// Caso contrário, deixará que o PHP verifique em outro SPL, se houver.
 			if(in_array($classname, self::$class_mapper)) {
 				require_once __DIR__ . "/{$classname}.php";
-				return;
 			}
 		}
 
-		// Registra o motor.
-		/** @codeCoverageIgnore */
+		/**
+		 * Registra o motor.
+		 * @codeCoverageIgnore
+		 * @return void
+		 */
 		static public function register() {
 			// Registra o método de autoloader.
 			spl_autoload_register("self::load_class");

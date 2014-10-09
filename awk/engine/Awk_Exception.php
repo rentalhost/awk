@@ -1,5 +1,7 @@
 <?php
 
-	// Registra uma exceção lançada pelo motor.
+	/**
+	 * Registra uma exceção lançada pelo motor.
+	 */
 	class Awk_Exception extends Exception {
 	}

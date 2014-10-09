@@ -1,45 +1,68 @@
 <?php
 
-	// Responsável pela definição de uma parte de uma rota.
+	/**
+	 * Responsável pela definição de uma parte de uma rota.
+	 */
 	class Awk_Router_Route_Part {
-		// Armazena a rota responsável pela parte.
-		// @type Awk_Router_Route;
+		/**
+		 * Armazena a rota responsável pela parte.
+		 * @var Awk_Router_Route
+		 */
 		public $route;
 
-		// Armazena o tipo de método de validação.
-		// @type string;
+		/**
+		 * Armazena o tipo de método de validação.
+		 * @var string
+		 */
 		public $method = "static";
 
-		// Armazena o valor que será validado.
-		// @type string;
+		/**
+		 * Armazena o valor que será validado.
+		 * @var string
+		 */
 		public $match;
 
-		// Armazena o gestor de tipo.
-		// @type Awk_Type;
+		/**
+		 * Armazena o gestor de tipo.
+		 * @var Awk_Type
+		 */
 		public $match_type;
 
-		// Armazena o nome do atributo.
-		// @type string;
+		/**
+		 * Armazena o nome do atributo.
+		 * @var string
+		 */
 		public $match_attr;
 
-		// Indica se a validação é opcional.
-		// @type boolean;
+		/**
+		 * Indica se a validação é opcional.
+		 * @var boolean
+		 */
 		public $optional = false;
 
-		// Indica se a parte poderá ser repetida.
-		// @type boolean;
+		/**
+		 * Indica se a parte poderá ser repetida.
+		 * @var boolean
+		 */
 		public $repeat = false;
 
-		// Armazena o número mínimo de repetições da parte.
-		// @type int;
+		/**
+		 * Armazena o número mínimo de repetições da parte.
+		 * @var integer
+		 */
 		public $repeat_min;
 
-		// Armazena o número máximo de repetições da parte.
-		// @type int;
+		/**
+		 * Armazena o número máximo de repetições da parte.
+		 * @var integer
+		 */
 		public $repeat_max;
 
-		/** CONSTRUCT */
-		// Constrói a definição da parte.
+		/**
+		 * Constrói a definição da parte.
+		 * @param Awk_Router_Route $route      Instância da rota responsável pela parte.
+		 * @param string           $definition Definição da parte.
+		 */
 		public function __construct($route, $definition) {
 			$this->route = $route;
 
@@ -127,8 +150,11 @@
 			$this->match = $definition;
 		}
 
-		/** MATCH */
-		// Verifica se uma parte da URL pode ser processada pela definição.
+		/**
+		 * Verifica se uma parte da URL pode ser processada pela definição.
+		 * @param  string $url Parte da URL que será verificada.
+		 * @return boolean
+		 */
 		public function match($url) {
 			// Se for o método "static", é uma validação simples.
 			if($this->method === "static"

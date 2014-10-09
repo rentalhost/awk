@@ -1,21 +1,34 @@
 <?php
 
-	// Responsável por uma query definida em um model.
+	/**
+	 * Responsável por uma query definida em um model.
+	 */
 	class Awk_Model_Query extends Awk_Module_Base {
-		// Armazena o nome da query.
-		// @type string;
+		/**
+		 * Armazena o nome da query.
+		 * @var string
+		 */
 		private $query_name;
 
-		// Armazena o tipo da query.
-		// @type string;
+		/**
+		 * Armazena o tipo da query.
+		 * @var string
+		 */
 		private $query_type;
 
-		// Armazena o definidor da query.
-		// @type (callable, string);
+		/**
+		 * Armazena o definidor da query.
+		 * @var string
+		 */
 		private $query_definer;
 
-		/** CONSTRUCT */
-		// Constrói uma nova query.
+		/**
+		 * Constrói uma nova query.
+		 * @param Awk_Model $parent        Model que construiu a query.
+		 * @param string    $query_name    Nome de referência da query.
+		 * @param string    $query_type    Tipo específico da query.
+		 * @param string    $query_definer Definição da query.
+		 */
 		public function __construct($parent, $query_name, $query_type, $query_definer) {
 			parent::__construct($parent->get_module(), $parent);
 
@@ -32,8 +45,11 @@
 			} // @codeCoverageIgnore
 		} // @codeCoverageIgnore
 
-		/** EXECUTE */
-		// Executa a query com os argumentos passados.
+		/**
+		 * Executa a query com os argumentos passados.
+		 * @param  mixed[] $query_args Argumentos que serão passados para a query.
+		 * @return Awk_Model_Row
+		 */
 		public function execute($query_args) {
 			// Verifica o retorno, baseado no tipo de query.
 			switch($this->query_type) {
@@ -56,8 +72,12 @@
 			]);
 		} // @codeCoverageIgnore
 
-		/** QUERY */
-		// Executa uma query especializada.
+		/**
+		 * Executa uma query especializada.
+		 * @param  string  $query_definer Definição da query.
+		 * @param  mixed[] $query_args    Argumentos que serão passados a query.
+		 * @return PDO_Statement
+		 */
 		private function query($query_definer, $query_args) {
 			return $this->get_module()->database()->query($query_definer);
 		}

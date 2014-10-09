@@ -1,13 +1,20 @@
 <?php
 
-	// Responsável pelo controle da feature model.
+	/**
+	 * Responsável pelo controle da feature model.
+	 */
 	class Awk_Model_Feature extends Awk_Module_Feature {
-		// Armazena as instâncias das models.
-		// @type array<string, Awk_Model>;
+		/**
+		 * Armazena as instâncias das models.
+		 * @var Awk_Model[]
+		 */
 		private $models = [];
 
-		/** FEATURE CALL */
-		// Retorna o controle da model.
+		/**
+		 * Retorna o controle da model.
+		 * @param  string $model_id Identificador do model.
+		 * @return Awk_Model
+		 */
 		public function feature_call($model_id) {
 			// Se já foi registrado, retorna.
 			// Caso contrário será necessário carregá-lo.

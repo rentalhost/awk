@@ -1,18 +1,31 @@
 <?php
 
-	// Responsável por gerir a conexão com o banco de dados via PDO.
+	/**
+	 * Responsável por gerir a conexão com o banco de dados via PDO.
+	 */
 	class Awk_Database extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "database";
 
-		// Armazena a instãncia da conexão.
-		// @type PDO;
+		/**
+		 * Armazena a instãncia da conexão.
+		 * @var PDO
+		 */
 		private $connection;
 
-		// Armazena os dados da conexão.
-		// @type array<string, mixed>;
+		/**
+		 * Armazena os dados da conexão.
+		 * @var mixed[]
+		 */
 		private $connection_options;
 
-		// Obtém a instância da conexão.
+		/**
+		 * Obtém a instância da conexão.
+		 * @return PDO
+		 */
 		private function get_connection() {
 			// Se a conexão já foi iniciada, retorna.
 			// Caso contrário será necessário iniciá-la.
@@ -38,7 +51,10 @@
 			]);
 		}
 
-		// Força a conexão.
+		/**
+		 * Força a conexão.
+		 * @return boolean Indica se a conexão foi bem-sucedida.
+		 */
 		public function connect() {
 			try {
 				$this->get_connection();
@@ -49,7 +65,10 @@
 			}
 		}
 
-		// Configura a conexão.
+		/**
+		 * Configura a conexão.
+		 * @param  mixed[] $connection_options Configurações da conexão.
+		 */
 		public function configure($connection_options = null) {
 			// Destrói a conexão atual, se houver.
 			$this->connection = null;
@@ -57,37 +76,55 @@
 			// Define as opções padrões para uma conexão.
 			$connection_options = $connection_options ?: [];
 			$this->connection_options = array_replace([
-				// Host que será conectado.
-				// @type string;
+				/**
+				 * Host que será conectado.
+				 * @var string
+				 */
 				"host" => "127.0.0.1",
 
-				// Porta que será utilizada no host.
-				// @type int;
+				/**
+				 * Porta que será utilizada no host.
+				 * @var integer
+				 */
 				"port" => 3306,
 
-				// Usuário a ser utilizado na conexão.
-				// @type string;
+				/**
+				 * Usuário a ser utilizado na conexão.
+				 * @var string
+				 */
 				"user" => "root",
 
-				// Senha a ser utilizada.
-				// @type string;
+				/**
+				 * Senha a ser utilizada.
+				 * @var string
+				 */
 				"password" => null,
 
-				// Database ao conectar.
-				// @type string;
+				/**
+				 * Database ao conectar.
+				 * @var string
+				 */
 				"dbname" => null,
 
-				// Charset padrão.
-				// @type string;
+				/**
+				 * Charset padrão.
+				 * @var string
+				 */
 				"charset" => "UTF8",
 
-				// Se haverá persistência na conexão.
-				// @type boolean;
+				/**
+				 * Se haverá persistência na conexão.
+				 * @var boolean
+				 */
 				"persistent" => true
 			], $connection_options);
 		}
 
-		// Executa uma query na conexão.
+		/**
+		 * Executa uma query na conexão.
+		 * @param  string        $query Query a ser executada na conexão.
+		 * @return PDO_Statement        Resposta da query.
+		 */
 		public function query($query) {
 			return $this->get_connection()->query($query);
 		}

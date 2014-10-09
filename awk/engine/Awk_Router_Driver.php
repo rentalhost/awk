@@ -1,25 +1,39 @@
 <?php
 
-	// Responsável pela interação com as rotas.
+	/**
+	 * Responsável pela interação com as rotas.
+	 */
 	class Awk_Router_Driver {
-		// Armazena a pilha de execução do driver.
-		// @type array<Awk_Router_Driver_Stack>;
+		/**
+		 * Armazena a pilha de execução do driver.
+		 * @var Awk_Router_Driver_Stack[]
+		 */
 		private $stacks = [];
 
-		// Armazena o index de execução do driver.
-		// @type int;
+		/**
+		 * Armazena o index de execução do driver.
+		 * @var integer
+		 */
 		private $stack_index = -1;
 
-		// Indica se a pilha de execução do driver já foi iniciada.
-		// @type boolean;
+		/**
+		 * Indica se a pilha de execução do driver já foi iniciada.
+		 * @var boolean
+		 */
 		private $stack_processing = false;
 
-		// Indica se deverá lançar um erro 404 em caso de falha total.
-		// @type boolean;
+		/**
+		 * Indica se deverá lançar um erro 404 em caso de falha total.
+		 * @var boolean
+		 */
 		private $apache_error;
 
-		/** CONSTRUCT */
-		// Constrói um novo driver, definindo a rota inicial.
+		/**
+		 * Constrói um novo driver, definindo a rota inicial.
+		 * @param string     $url             URL inicial.
+		 * @param Awk_Module $module_instance Instância do módulo que criou o driver.
+		 * @param boolean    $apache_error    Indica se deverá lançar um erro 404 em caso de falha total.
+		 */
 		public function __construct($url, $module_instance, $apache_error = null) {
 			$this->apache_error = $apache_error;
 
@@ -29,8 +43,10 @@
 			$stack_next->url_array = array_filter(explode("/", $url), "strlen");
 		}
 
-		/** STACK */
-		// Obtém a próxima pilha de processamento.
+		/**
+		 * Obtém a próxima pilha de processamento.
+		 * @return Awk_Router_Driver_Stack
+		 */
 		private function get_stack_next() {
 			// Se a stack já foi gerada, apenas retorna.
 			// Caso contrário será necessário iniciá-la.
@@ -55,12 +71,17 @@
 			return $this->stacks[$stack_next_index] = new Awk_Router_Driver_Stack;
 		}
 
-		// Obtém a pilha de processamento atual.
+		/**
+		 * Obtém a pilha de processamento atual.
+		 * @return Awk_Router_Driver_Stack
+		 */
 		private function get_stack() {
 			return $this->stacks[$this->stack_index];
 		}
 
-		// Resolve a stack atual.
+		/**
+		 * Resolve a stack atual.
+		 */
 		private function stack_solver() {
 			// Carrega a pilha atual.
 			$stack_current = $this->get_stack();
@@ -93,12 +114,14 @@
 					// Indica que a rota atual foi processada com sucesso.
 					$stack_current->url_processed = true;
 					$stack_current->stack_status[] = "accepted";
-					return;
+					break;
 				}
 			}
 		}
 
-		// Inicia o processo nas stacks existentes.
+		/**
+		 * Inicia o processo nas stacks existentes.
+		 */
 		private function stack_process() {
 			// Se o processo já foi iniciado, então ignora um reprocesso.
 			if($this->stack_processing === true) {
@@ -125,15 +148,18 @@
 			// @codeCoverageIgnoreEnd
 		}
 
-		/** PRESERVE */
-		// Indica que a URL deverá ser preservada (não sofrer slice) \
-		// após iniciar a próxima stack.
+		/**
+		 * Indica que a URL deverá ser preservada (não sofrer slice) após iniciar a próxima stack.
+		 * @param  boolean $preserve Se deve preservar a URL.
+		 */
 		public function preserve_url($preserve = null) {
 			$this->get_stack()->url_array_preserve = $preserve !== false;
 		}
 
-		/** REDIRECT */
-		// Redireciona para um roteador através da id.
+		/**
+		 * Redireciona para um roteador através da id.
+		 * @param  string $router_id Identificador do roteador.
+		 */
 		public function redirect($router_id) {
 			// Define o roteador da próxima pilha de execução.
 			$stack_next = $this->get_stack_next();
@@ -147,26 +173,35 @@
 			$this->stack_process();
 		}
 
-		/** ROUTER */
-		// Retorna o roteador da pilha atual.
+		/**
+		 * Retorna o roteador da pilha atual.
+		 * @return Awk_Router
+		 */
 		public function get_router() {
 			return $this->get_stack()->router_instance;
 		}
 
-		/** INVALIDATE */
-		// Determina que a rota atual é inválida e permite o avanço para a próxima rota.
+		/**
+		 * Determina que a rota atual é inválida e permite o avanço para a próxima rota.
+		 */
 		public function invalidate() {
-			return $this->get_stack()->stack_status[] = "invalidated";
+			$this->get_stack()->stack_status[] = "invalidated";
 		}
 
-		/** ATTR */
-		// Retorna um valor de um atributo capturado na pilha atual.
+		/**
+		 * Retorna um valor de um atributo capturado na pilha atual.
+		 * @param  string $key Chave que será obtida.
+		 * @return mixed
+		 */
 		public function get_attr($key) {
 			return $this->get_stack()->url_attrs[$key];
 		}
 
-		/** CALLBACK */
-		// Executa uma callback e retorna o status da operação.
+		/**
+		 * Executa uma callback e retorna o status da operação.
+		 * @param  callable $callback      Função que será chamada.
+		 * @param  mixed[]  $callback_args Argumentos que serão enviados a função.
+		 */
 		private function callback_execute($callback, $callback_args = null) {
 			// Se a callback for uma string, é necessário identificá-la.
 			if(is_string($callback)) {

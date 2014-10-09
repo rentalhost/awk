@@ -1,21 +1,32 @@
 <?php
 
-	// Responsável pelo modelo de dados do controller.
+	/**
+	 * Responsável pelo modelo de dados do controller.
+	 */
 	class Awk_Controller extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "controller";
 
-		/** CONTROLLER */
-		// Armazena o nome da classe do controller registrado.
-		// @type string;
+		/**
+		 * Armazena o nome da classe do controller registrado.
+		 * @var string
+		 */
 		private $classname;
 
-		// Armazena a instância do controller.
-		// @type instance;
+		/**
+		 * Armazena a instância do controller.
+		 * @var self
+		 */
 		private $instance;
 
-		/** LOAD */
-		// Carrega o controller e a retorna.
-		// @return self;
+		/**
+		 * Carrega o controller e a retorna.
+		 * @param  string $controller_name Identificador do controller a ser carregado.
+		 * @return self
+		 */
 		public function load($controller_name) {
 			$this->name = $controller_name;
 			$this->path = $this->module->get_path() . "/controllers/{$this->name}.php";
@@ -56,15 +67,18 @@
 			}
 		}
 
-		/** REGISTER */
-		// Registra a classe do controller.
+		/**
+		 * Registra a classe do controller.
+		 * @param string $classname Nome da classe registrada.
+		 */
 		public function register($classname) {
 			$this->classname = $classname;
 		}
 
-		/** PROPRIEDADES */
-		// Retorna a instância do controller.
-		// @return instance;
+		/**
+		 * Retorna a instância do controller.
+		 * @return $this
+		 */
 		public function get_instance() {
 			return $this->instance;
 		}

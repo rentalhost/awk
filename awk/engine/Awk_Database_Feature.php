@@ -1,14 +1,20 @@
 <?php
 
-	// Responsável pelo controle da feature database.
+	/**
+	 * Responsável pelo controle da feature database.
+	 */
 	class Awk_Database_Feature extends Awk_Module_Feature {
-		// Armazena as instâncias das databases.
-		// @type array<string, Awk_Database>;
-		private $databases = [
-		];
+		/**
+		 * Armazena as instâncias das databases.
+		 * @var Awk_Database[]
+		 */
+		private $databases = [];
 
-		/** FEATURE CALL */
-		// Retorna o controle da database.
+		/**
+		 * Retorna o controle da database.
+		 * @param  string $database_id Identificador do database.
+		 * @return Awk_Database
+		 */
 		public function feature_call($database_id = null) {
 			$database_id = $database_id ?: "default";
 

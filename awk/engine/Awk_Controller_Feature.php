@@ -1,14 +1,21 @@
 <?php
 
-	// Responsável pelo controle da feature controller.
+	/**
+	 * Responsável pelo controle da feature controller.
+	 */
 	class Awk_Controller_Feature extends Awk_Module_Feature {
-		// Armazena as instâncias dos controllers.
-		// @type array<string, Awk_Controller>;
+		/**
+		 * Armazena as instâncias dos controllers.
+		 * @var Awk_Controller[]
+		 */
 		private $controllers = [
 		];
 
-		/** FEATURE CALL */
-		// Carrega um controller imediatamente.
+		/**
+		 * Carrega um controller imediatamente.
+		 * @param  string $controller_id Identificador do controller.
+		 * @return Awk_Controller
+		 */
 		public function feature_call($controller_id) {
 			// Se o controller já foi registrado, retorna.
 			// Caso contrário será necessário carregá-lo.

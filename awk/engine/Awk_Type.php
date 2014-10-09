@@ -1,20 +1,32 @@
 <?php
 
-	// Responsável pelo modelo de dados do type.
+	/**
+	 * Responsável pelo modelo de dados do type.
+	 */
 	class Awk_Type extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "type";
 
-		// Armazena o validador de tipo.
-		// @type callback;
+		/**
+		 * Armazena o validador de tipo.
+		 * @var callable
+		 */
 		private $validate_callback;
 
-		// Armazena o transformador de tipo.
-		// @type callback;
+		/**
+		 * Armazena o transformador de tipo.
+		 * @var callable
+		 */
 		private $transform_callback;
 
-		/** LOAD */
-		// Carrega o type e o retorna.
-		// @return self;
+		/**
+		 * Carrega o type e o retorna.
+		 * @param  string $type_name Identificador do tipo.
+		 * @return self
+		 */
 		public function load($type_name) {
 			$this->name = $type_name;
 			$this->path = $this->module->get_path() . "/types/{$this->name}.php";
@@ -30,14 +42,20 @@
 			$this->module->include_clean($this->path, [ "type" => $this ]);
 		}
 
-		/** VALIDATE */
-		// Define o validador do tipo.
+		/**
+		 * Define o validador do tipo.
+		 * @param callable $callback Definição do callable.
+		 */
 		public function set_validate($callback) {
 			$this->validate_callback = $callback;
 		}
 
-		// Executa um teste de validação.
-		// @note se um validador não foi definido, sempre falhará.
+		/**
+		 * Executa um teste de validação.
+		 * Se um validador não foi definido, sempre falhará.
+		 * @param  mixed $value Valor a ser testado.
+		 * @return boolean
+		 */
 		public function validate($value) {
 			if($this->validate_callback) {
 				return call_user_func($this->validate_callback, $value);
@@ -46,14 +64,20 @@
 			return false;
 		}
 
-		/** TRANSFORM */
-		// Define o transformador do tipo.
+		/**
+		 * Define o transformador do tipo.
+		 * @param callable $callback Definição do callable.
+		 */
 		public function set_transform($callback) {
 			$this->transform_callback = $callback;
 		}
 
-		// Executa uma transformação.
-		// @note se uma transformação não foi definida, sempre retornará null.
+		/**
+		 * Executa uma transformação.
+		 * Se uma transformação não foi definida, sempre retornará null.
+		 * @param  string $value Valor que será transformado.
+		 * @return mixed|null
+		 */
 		public function transform($value) {
 			if($this->transform_callback) {
 				return call_user_func($this->transform_callback, $value);

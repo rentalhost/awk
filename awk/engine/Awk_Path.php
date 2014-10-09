@@ -1,8 +1,14 @@
 <?php
 
-	// Responsável pela resolução e controle de paths.
+	/**
+	 * Responsável pela resolução e controle de paths.
+	 */
 	class Awk_Path {
-		// Normaliza um caminho absoluto quando o `php:realpath()` não for capaz.
+		/**
+		 * Normaliza um caminho absoluto quando o `php:realpath()` não for capaz.
+		 * @param  string $path Caminho a ser normalizado.
+		 * @return string
+		 */
 		static private function normalize_unreal($path) {
 			$original_parts = preg_split("/[\\\\\\/]+/", $path);
 
@@ -35,7 +41,11 @@
 			return rtrim(join("/", $result_parts), "/");
 		}
 
-		// Normaliza um caminho de arquivo ou pasta.
+		/**
+		 * Normaliza um caminho de arquivo ou pasta.
+		 * @param  string $path Caminho a ser normalizado.
+		 * @return string
+		 */
 		static public function normalize($path) {
 			// Se o caminho real existir, executará o processo através de um `php:preg_replace()`.
 			// Caso contrário, será necessário a utilização do método de normalização de *irreais*.

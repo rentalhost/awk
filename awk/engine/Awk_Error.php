@@ -1,8 +1,9 @@
 <?php
 
-	// Responsável pelo controle de erros.
+	/**
+	 * Responsável pelo controle de erros.
+	 */
 	class Awk_Error {
-		/** CONST TYPE */
 		// Indica um erro do tipo E_USER_ERROR.
 		const TYPE_FATAL = "fatal";
 		// Indica um erro do tipo E_USER_WARNING.
@@ -10,7 +11,10 @@
 		// Indica um erro lançado por uma exceção.
 		const TYPE_EXCEPTION = "exception";
 
-		// Cria um erro com as especificações fornecidas.
+		/**
+		 * Cria um erro com as especificações fornecidas.
+		 * @param  mixed[] $error_options Definições do erro.
+		 */
 		static public function create($error_options) {
 			// Definições padrões de um erro.
 			$error_options = array_replace([
@@ -71,8 +75,9 @@
 			]);
 		} // @codeCoverageIgnore
 
-		/** 404 ERROR */
-		// Força um erro de objeto não encontrado.
+		/**
+		 * Força um erro de objeto não encontrado.
+		 */
 		static public function force_404() {
 			$location_error = dirname($_SERVER["SCRIPT_NAME"]) . "/404";
 			header("Location: {$location_error}");

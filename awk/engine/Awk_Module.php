@@ -1,38 +1,53 @@
 <?php
 
-	// Responsável por gerenciar os módulos e suas propriedades.
+	/**
+	 * Responsável por gerenciar os módulos e suas propriedades.
+	 */
 	class Awk_Module {
-		// Armazena as instâncias dos módulos carregados.
-		// @type array<string, self>;
+		/**
+		 * Armazena as instâncias dos módulos carregados.
+		 * @var self
+		 */
 		static private $modules = [];
 
-		// Nome do módulo.
-		// @type string;
+		/**
+		 * Nome do módulo.
+		 * @var string
+		 */
 		private $name;
 
-		// Caminho absoluto do módulo.
-		// @type string;
+		/**
+		 * Caminho absoluto do módulo.
+		 * @var string
+		 */
 		private $path;
 
-		// Caminho dos dados globais.
-		// @type Awk_Data;
+		/**
+		 * Caminho dos dados globais.
+		 * @var Awk_Data
+		 */
 		public $globals;
 
-		/** ID */
-		// Retorna o identificador do módulo.
-		// @return string;
+		/**
+		 * Retorna o identificador do módulo.
+		 * @return string
+		 */
 		public function get_name() {
 			return $this->name;
 		}
 
-		// Retorna o caminho absoluto do módulo.
-		// @return string;
+		/**
+		 * Retorna o caminho absoluto do módulo.
+		 * @return string
+		 */
 		public function get_path() {
 			return $this->path;
 		}
 
-		/** CONSTRUCT */
-		// Constrói uma nova instância de módulo.
+		/**
+		 * Constrói uma nova instância de módulo.
+		 * @param string $module_name Identificador do módulo.
+		 */
 		private function __construct($module_name) {
 			$this->name = $module_name;
 			$this->path = __DIR__ . "/../../{$module_name}";
@@ -57,10 +72,11 @@
 			} // @codeCoverageIgnore
 		} // @codeCoverageIgnore
 
-		/** FEATURE */
-		// Define um mapa de features, ligando a sua classe.
-		// Os dados são informados pluralizados.
-		// @type array<string, string>;
+		/**
+		 * Define um mapa de features, ligando a sua classe.
+		 * Os dados são informados pluralizados.
+		 * @var string[]
+		 */
 		static private $features_mapper = [
 			"routers" => "Awk_Router_Feature",
 			"controllers" => "Awk_Controller_Feature",
@@ -77,21 +93,27 @@
 			"models" => "Awk_Model_Feature",
 		];
 
-		// Armazena definições de plurais não linear.
-		// Exemplo: library -> libraries;
-		// @type array<string, string>;
+		/**
+		 * Armazena definições de plurais não linear.
+		 * @example "library" -> "libraries"
+		 * @var string[]
+		 */
 		static private $features_normalizers = [
 			"library" => "libraries",
 			"settings" => "settings"
 		];
 
-		// Armazena as classes de features mapeadas do módulo.
-		// @type array<string, instance>;
-		private $features_instances = [
-		];
+		/**
+		 * Armazena as classes de features mapeadas do módulo.
+		 * @var object[]
+		 */
+		private $features_instances = [];
 
-		// Carrega uma feature através do seu nome singular.
-		// @return instance;
+		/**
+		 * Carrega uma feature através do seu nome singular.
+		 * @param  string $name Identificador do recurso.
+		 * @return object
+		 */
 		private function load_feature($name) {
 			// Se a feature já foi carregada, a retorna.
 			// Caso contrário será necessário carregá-la.
@@ -112,8 +134,12 @@
 			return $this->features_instances[$name] = $feature_reflection->newInstance($this);
 		}
 
-		// Carrega e retorna a resposta da instância de uma feature via método.
-		// @return mixed;
+		/**
+		 * Carrega e retorna a resposta da instância de uma feature via método.
+		 * @param  string  $method      Identificador da feature.
+		 * @param  mixed[] $method_args Argumentos que serão enviados.
+		 * @return mixed
+		 */
 		public function __call($method, $method_args) {
 			// Determina a pluralização do método para acessar o mapper.
 			// Exemplo: view -> views;
@@ -129,14 +155,24 @@
 			return call_user_func_array([ $feature_instance, "feature_call" ], $method_args);
 		}
 
-		// Carrega e retorna a instância de uma feature via propriedade.
-		// @return instance;
+		/**
+		 * Carrega e retorna a instância de uma feature via propriedade.
+		 * @param  string $key Identificador da feature.
+		 * @return object
+		 */
 		public function __get($key) {
 			return $this->load_feature($key);
 		}
 
-		/** IDENTIFY */
-		// Identifica uma string e retorna o callback.
+		/**
+		 * Identifica uma string e retorna o callback.
+		 * @param  string  $id                   Informação que será identificada.
+		 * @param  string  $feature_type         Tipo de recurso padrão, quando não informado.
+		 * @param  boolean $feature_type_blocked Se o recurso padrão não deve ser alterado.
+		 * @param  boolean $module_required      Se o módulo deve ser explicito na informação.
+		 * @param  boolean $return_parts         Se as partes devem ser retornadas como um array, ao invés de um objeto.
+		 * @return object|mixed[]
+		 */
 		public function identify($id, $feature_type = null, $feature_type_blocked = null, $module_required = null, $return_parts = null) {
 			// Executa a tarefa de identificação, separando cada parte.
 			$id_validate = preg_match("/^
@@ -217,8 +253,11 @@
 			]);
 		} // @codeCoverageIgnore
 
-		/** LOADER */
-		// Carrega e retorna um módulo.
+		/**
+		 * Carrega e retorna um módulo.
+		 * @param  string $module_id Identificador do módulo.
+		 * @return Awk_Module
+		 */
 		static public function get($module_id) {
 			// Se o módulo já foi carregado, retorna sua instância.
 			if(isset(self::$modules[$module_id])){
@@ -232,10 +271,14 @@
 			return self::$modules[$module_id];
 		}
 
-		/** INCLUDE */
-		// Inclui um arquivo com referência no módulo.
-		// Nota: o nome dos parâmetros estarão disponível também no arquivo.
-		// @return mixed;
+		/**
+		 * Inclui um arquivo com referência no módulo.
+		 * Nota: o nome dos parâmetros estarão disponível também no arquivo.
+		 * @param  string  $include_file Caminho do arquivo a ser incluído.
+		 * @param  mixed[] $include_args Argumentos que serão enviados ao arquivo (como variáveis).
+		 * @param  boolean $include_once Se deve limitar a inclusão do arquivo.
+		 * @return mixed
+		 */
 		public function include_clean($include_file, $include_args = null, $include_once = null) {
 			// Define algumas variáveis básicas.
 			$include_args = $include_args ?: [];
@@ -252,23 +295,27 @@
 				: include_once $include_file;
 		}
 
-		/** LOCALHOST */
-		// Retorna se está em um ambiente local de desenvolvimento.
-		// @return boolean;
+		/**
+		 * Retorna se está em um ambiente local de desenvolvimento.
+		 * @return boolean
+		 */
 		public function is_localhost() {
 			return is_readable($_SERVER["DOCUMENT_ROOT"] . "/awk.localhost");
 		}
 
-		/** DEVELOPMENT */
-		// Verifica se está em um ambiente de desenvolvimento.
+		/**
+		 * Verifica se está em um ambiente de desenvolvimento.
+		 * @return boolean
+		 */
 		public function is_development() {
 			return Awk_Module::get("awk")->settings()->project_development_mode === true;
 		}
 
-		/** EXISTS */
-		// Retorna se um determinado módulo existe.
-		// @param string $module_id: identificador do módulo;
-		// @return boolean;
+		/**
+		 * Retorna se um determinado módulo existe.
+		 * @param  string $module_id Identificador do módulo.
+		 * @return boolean
+		 */
 		static public function exists($module_id) {
 			return is_readable(getcwd() . "/{$module_id}/settings.php");
 		}

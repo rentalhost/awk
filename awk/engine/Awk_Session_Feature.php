@@ -1,13 +1,18 @@
 <?php
 
-	// Responsável pelo controle da feature session.
+	/**
+	 * Responsável pelo controle da feature session.
+	 */
 	class Awk_Session_Feature extends Awk_Module_Feature {
-		// Armazena a chave da sessão para o módulo.
-		// @type string;
+		/**
+		 * Armazena a chave da sessão para o módulo.
+		 * @var string
+		 */
 		private $session_key;
 
-		/** SESSION KEY */
-		// Inicia a chave da sessão.
+		/**
+		 * Inicia a chave da sessão.
+		 */
 		private function init_session_key() {
 			// Define o caminho base, se não houver.
 			if(!$this->session_key) {
@@ -26,8 +31,12 @@
 			}
 		}
 
-		/** FEATURE CALL */
-		// Retorna o valor de uma sessão ou define o seu valor.
+		/**
+		 * Retorna o valor de uma sessão ou define o seu valor.
+		 * @param  string $session_key   Chave que será obtida/definida.
+		 * @param  mixed  $session_value Valor que será aplicado na chave.
+		 * @return mixed
+		 */
 		public function feature_call($session_key = null, $session_value = null) {
 			$this->init_session_key();
 
@@ -46,37 +55,57 @@
 			$_SESSION[$this->session_key][$session_key] = $session_value;
 		}
 
-		// Obtém a chave da sessão.
+		/**
+		 * Obtém a chave da sessão.
+		 * @return string
+		 */
 		public function get_session_key() {
 			$this->init_session_key();
 			return $this->session_key;
 		}
 
-		// Define uma sessão.
+		/**
+		 * Define uma sessão.
+		 * @param string $session_key Chave que será obtida.
+		 * @param mixed  $value       Valor que será aplicado na chave.
+		 */
 		public function __set($session_key, $value) {
 			$this->init_session_key();
 			$_SESSION[$this->session_key][$session_key] = $value;
 		}
 
-		// Obtém uma sessão.
+		/**
+		 * Obtém uma sessão.
+		 * @param  string $session_key Chave que será obtida.
+		 * @return mixed
+		 */
 		public function __get($session_key) {
 			$this->init_session_key();
 			return $_SESSION[$this->session_key][$session_key];
 		}
 
-		// Verifica se uma sessão foi definida.
+		/**
+		 * Verifica se uma sessão foi definida.
+		 * @param  string  $session_key Chave que será verificada.
+		 * @return boolean
+		 */
 		public function __isset($session_key) {
 			$this->init_session_key();
 			return array_key_exists($session_key, $_SESSION[$this->session_key]);
 		}
 
-		// Remove a definição de uma sessão.
+		/**
+		 * Remove a definição de uma sessão.
+		 * @param string $session_key Chave que será removida.
+		 */
 		public function __unset($session_key) {
 			$this->init_session_key();
 			unset($_SESSION[$this->session_key][$session_key]);
 		}
 
-		// Elimina todos os dados da sessão.
+		/**
+		 * Elimina todos os dados da sessão.
+		 */
 		public function clear() {
 			$this->init_session_key();
 			$_SESSION[$this->session_key] = [];

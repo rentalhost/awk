@@ -1,14 +1,20 @@
 <?php
 
-	// Responsável pelo controle da feature helper.
+	/**
+	 * Responsável pelo controle da feature helper.
+	 */
 	class Awk_Helper_Feature extends Awk_Module_Feature {
-		// Armazena as instâncias das helpers.
-		// @type array<string, Awk_Helper>;
-		private $helpers = [
-		];
+		/**
+		 * Armazena as instâncias das helpers.
+		 * @var Awk_Helper[]
+		 */
+		private $helpers = [];
 
-		/** FEATURE CALL */
-		// Retorna o controle da helper.
+		/**
+		 * Retorna o controle da helper.
+		 * @param  string $helper_id Identificador do helper.
+		 * @return Awk_Helper
+		 */
 		public function feature_call($helper_id) {
 			// Se já foi registrado, retorna.
 			// Caso contrário será necessário carregá-lo.

@@ -1,18 +1,25 @@
 <?php
 
-	// Responsável pelo modelo de dados do helper.
+	/**
+	 * Responsável pelo modelo de dados do helper.
+	 */
 	class Awk_Helper extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "helper";
 
-		/** HELPER */
-		// Armazena os métodos registrados para o helper.
-		// @type array<string, callback>;
-		private $methods = [
-		];
+		/**
+		 * Armazena os métodos registrados para o helper.
+		 * @var callable[]
+		 */
+		private $methods = [];
 
-		/** LOAD */
-		// Carrega o helper e o retorna.
-		// @return self;
+		/**
+		 * Carrega o helper.
+		 * @param  string $helper_name Identificador do helper.
+		 */
 		public function load($helper_name) {
 			$this->name = $helper_name;
 			$this->path = $this->module->get_path() . "/helpers/{$this->name}.php";
@@ -28,26 +35,32 @@
 			$this->module->include_clean($this->path, [ "helper" => $this ]);
 		}
 
-		/** ADD */
-		// Adiciona um novo helper.
+		/**
+		 * Adiciona um novo helper.
+		 * @param string   $method   Nome da nova função.
+		 * @param callable $callback Definição da função.
+		 */
 		public function add($method, $callback) {
 			$this->methods[$method] = $callback;
 		}
 
-		/** CALL */
-		// Chama um método do helper.
-		// @param string $method: nome do método a ser chamado;
-		// @param optional ...mixed $method_args: argumentos que serão enviados ao helper;
-		// @return mixed;
-		public function call($method) {
+		/**
+		 * Chama um método do helper, recebendo argumentos.
+		 * @param  string $method   Nome do método que será executado.
+		 * @param  mixed  $args,... Argumentos que serão enviados ao método.
+		 * @return mixed
+		 */
+		public function call($method, $args = null) {
 			return $this->call_array($method, array_slice(func_get_args(), 1));
 		}
 
-		// Chama um método do helper passando um array como argumento.
-		// @param string $method: nome do método a ser chamado;
-		// @param array<mixed> $method_args: argumentos que serão enviados ao helper;
-		// @return mixed;
-		public function call_array($method, $method_args) {
-			return call_user_func_array($this->methods[$method], $method_args);
+		/**
+		 * Chama um método do helper, recebendo argumentos através de um array.
+		 * @param  string  $method  Nome do método que será executado.
+		 * @param  mixed[] $args    Argumentos que serão enviados ao método.
+		 * @return mixed
+		 */
+		public function call_array($method, $args) {
+			return call_user_func_array($this->methods[$method], $args);
 		}
 	}

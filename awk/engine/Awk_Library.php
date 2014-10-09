@@ -2,24 +2,34 @@
 
 	// Responsável pelo modelo de dados da library.
 	class Awk_Library extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "library";
 
-		/** LIBRARY */
-		// Armazena o nome da classe da library registrada.
-		// @type string;
+		/**
+		 * Armazena o nome da classe da library registrada.
+		 * @var string
+		 */
 		private $classname;
 
-		// Armazena a reflexão da classe registrada.
-		// @type ReflectionClass;
+		/**
+		 * Armazena a reflexão da classe registrada.
+		 * @var ReflectionClass
+		 */
 		private $reflection;
 
-		// Armazena a instância única da library.
-		// @type instance;
+		/**
+		 * Armazena a instância única da library.
+		 * @var object
+		 */
 		private $unique_instance;
 
-		/** LOAD */
-		// Carrega a library e a retorna.
-		// @return self;
+		/**
+		 * Carrega a library e a retorna.
+		 * @param  string $library_name Identificador da library.
+		 */
 		public function load($library_name) {
 			$this->name = $library_name;
 			$this->path = $this->module->get_path() . "/libraries/{$this->name}.php";
@@ -50,8 +60,11 @@
 			} // @codeCoverageIgnore
 		}
 
-		/** REGISTER */
-		// Registra a classe da library.
+		/**
+		 * Registra a classe da library.
+		 * @param  string  $classname       Nome da classe que será registrada.
+		 * @param  boolean $autoinit_unique Se deve auto-iniciar a classe registrada.
+		 */
 		public function register($classname, $autoinit_unique = null) {
 			$this->classname = $classname;
 
@@ -61,13 +74,18 @@
 			}
 		}
 
-		// Obtém o nome da classe registrada.
+		/**
+		 * Obtém o nome da classe registrada.
+		 * @return string
+		 */
 		public function get_registered_classname() {
 			return $this->classname;
 		}
 
-		/** REFLECTION */
-		// Obtém a reflexão da classe.
+		/**
+		 * Obtém a reflexão da classe.
+		 * @return ReflectionClass
+		 */
 		private function get_reflection() {
 			// Se já foi iniciada, apenas retorna.
 			// Caso contrário será necessário inicializá-la.
@@ -79,10 +97,12 @@
 			return $this->reflection = new ReflectionClass($this->classname);
 		}
 
-		/** CREATE */
-		// Cria uma nova instância da classe.
-		// Os argumentos serão enviados diretamente ao construtor.
-		public function create() {
+		/**
+		 * Cria uma nova instância da classe.
+		 * @param  mixed $args,... Argumentos que serão enviados ao construtor.
+		 * @return object
+		 */
+		public function create($args = null) {
 			$reflection_instance = $this->get_reflection();
 			$library_instance = $reflection_instance->newInstanceArgs(func_get_args());
 
@@ -95,11 +115,13 @@
 			return $library_instance;
 		}
 
-		/** UNIQUE */
-		// Cria uma instância única da classe.
-		// Os argumentos serão enviados ao método `library_unique()`, se disponível. \
-		// Neste caso, o próprio método deverá retornar a nova instância da classe. \
-		// Se isso não acontecer, o construtor será executado sem argumentos.
+		/**
+		 * Cria uma instância única da classe.
+		 * Os argumentos serão enviados ao método `library_unique()`, se disponível.
+		 * Neste caso, o próprio método deverá retornar a nova instância da classe.
+		 * Se isso não acontecer, o construtor será executado sem argumentos.
+		 * @return object
+		 */
 		public function unique() {
 			// Se a instância já foi criada, retorna.
 			if($this->unique_instance) {

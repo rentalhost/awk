@@ -1,16 +1,25 @@
 <?php
 
-	// Responsável pela definição das rotas.
+	/**
+	 * Responsável pela definição das rotas.
+	 */
 	class Awk_Router extends Awk_Module_Base {
+		/**
+		 * Define o tipo de recurso.
+		 * @var string
+		 */
 		static protected $feature_type = "router";
 
-		// Armazena as rotas gerenciáveis por este roteador.
-		// @type array<string, Awk_Router_Route>;
-		private $routes = [
-		];
+		/**
+		 * Armazena as rotas gerenciáveis por este roteador.
+		 * @var Awk_Router_Route[]
+		 */
+		private $routes = [];
 
-		/** LOAD */
-		// Carrega o arquivo da rota.
+		/**
+		 * Carrega o arquivo da rota.
+		 * @param  string $router_name Identificador do roteador.
+		 */
 		public function load($router_name) {
 			$this->name = $router_name;
 			$this->path = $this->module->get_path() . "/routers/{$this->name}.php";
@@ -33,18 +42,27 @@
 			$this->module->include_clean($this->path, [ "router" => $this ]);
 		}
 
-		/** ROUTES */
-		// Adiciona uma rota de raíz, que só é executada quando não há mais argumentos na URL Array.
+		/**
+		 * Adiciona uma rota de raíz, que só é executada quando não há mais argumentos na URL Array.
+		 * @param callable $root_callback Definição do callable.
+		 */
 		public function add_root($root_callback) {
 			$this->add_route("[awk->null]", $root_callback);
 		}
 
-		// Adiciona uma nova rota de passagem.
+		/**
+		 * Adiciona uma nova rota de passagem.
+		 * @param callable $passage_callback Definição do callable.
+		 */
 		public function add_passage($passage_callback) {
 			$this->add_route(null, $passage_callback);
 		}
 
-		// Adiciona uma nova rota ao roteador.
+		/**
+		 * Adiciona uma nova rota ao roteador.
+		 * @param string   $route_definition Definição da rota.
+		 * @param callable $route_callback   Definição do callable.
+		 */
 		public function add_route($route_definition, $route_callback) {
 			$router_instance = new Awk_Router_Route($this);
 			$router_instance->set_definition($route_definition);
@@ -53,21 +71,27 @@
 			$this->routes[] = $router_instance;
 		}
 
-		// Obtém todas as rotas definidas no roteador.
+		/**
+		 * Obtém todas as rotas definidas no roteador.
+		 * @return Awk_Router_Route[]
+		 */
 		public function get_routes() {
 			return $this->routes;
 		}
 
-		/** FILE */
-		// Informa se é o roteador está gerenciando um arquivo.
-		// @return boolean;
+		/**
+		 * Informa se é o roteador está gerenciando um arquivo.
+		 * @return boolean
+		 */
 		public function is_file() {
 			return isset($_SERVER["REDIRECT_PUBLICS"])
 				&& is_readable($this->file_path());
 		}
 
-		// Retorna o caminho do arquivo.
-		// @return string;
+		/**
+		 * Retorna o caminho do arquivo.
+		 * @return string
+		 */
 		public function file_path() {
 			$result = rtrim($_SERVER["DOCUMENT_ROOT"], "/") . "/";
 
@@ -78,9 +102,10 @@
 			return $result;
 		}
 
-		/** HELPER */
-		// Verifica se a conexão utilizada com o roteador é segura (HTTPS).
-		// @return boolean;
+		/**
+		 * Verifica se a conexão utilizada com o roteador é segura (HTTPS).
+		 * @return boolean
+		 */
 		static public function is_secure() {
 			// Verificação simplificada.
 			if(!empty($_SERVER["HTTPS"])
@@ -92,16 +117,20 @@
 			return $_SERVER["SERVER_PORT"] === getservbyname("https", "tcp");
 		}
 
-		// Retorna a URL base.
-		// @return string;
+		/**
+		 * Retorna a URL base.
+		 * @return string
+		 */
 		static public function get_baseurl() {
 			return ( self::is_secure() ? "https://" : "http://" )
 				. $_SERVER["SERVER_NAME"]
 				. ltrim(dirname($_SERVER["SCRIPT_NAME"]), DIRECTORY_SEPARATOR) . "/";
 		}
 
-		// Retorna a URL acessada.
-		// @return string;
+		/**
+		 * Retorna a URL acessada.
+		 * @return string
+		 */
 		static public function get_url() {
 			// Armazena a informação aqui.
 			$router_url = null;

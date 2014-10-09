@@ -1,37 +1,53 @@
 <?php
 
-	// Responsável pela definição e verificação de rotas de roteador.
+	/**
+	 * Responsável pela definição e verificação de rotas de roteador.
+	 */
 	class Awk_Router_Route {
-		// Armazena o roteador responsável pela rota.
-		// @type Awk_Router;
+		/**
+		 * Armazena o roteador responsável pela rota.
+		 * @var Awk_Router
+		 */
 		private $router;
 
-		// Armazena a definição da rota.
-		// @type string;
+		/**
+		 * Armazena a definição da rota.
+		 * @var string
+		 */
 		private $definition;
 
-		// Armazena a definição compilada da rota.
-		// @type array<mixed>;
+		/**
+		 * Armazena a definição compilada da rota.
+		 * @var mixed[]
+		 */
 		private $definition_compiled;
 
-		// Armazena o callback da rota.
-		// @type callback;
+		/**
+		 * Armazena o callback da rota.
+		 * @var callable
+		 */
 		private $callback;
 
-		/** CONSTRUCT */
-		// Construtor.
+		/**
+		 * Construtor.
+		 * @param Awk_Router $router Roteador responsável pela construção.
+		 */
 		public function __construct($router) {
 			$this->router = $router;
 		}
 
-		/** ROUTER */
-		// Retorna o roteador da rota.
+		/**
+		 * Retorna o roteador da rota.
+		 * @return Awk_Router
+		 */
 		public function get_router() {
 			return $this->router;
 		}
 
-		/** BUILD */
-		// Compila a definição da rota, para que seja mais fácil verificar a URL.
+		/**
+		 * Compila a definição da rota, para que seja mais fácil verificar a URL.
+		 * @return mixed[]
+		 */
 		private function get_compiled() {
 			// Se a definição já foi compilada, apenas a retorna.
 			// Caso contrário, será necessário compilá-la.
@@ -53,8 +69,20 @@
 			return $this->definition_compiled = $definition_compiled;
 		}
 
-		/** MATCH */
-		// Executa um teste de rota com a URL Array informada.
+		/**
+		 * Executa um teste de rota com a URL Array informada.
+		 * Retorna true se o processo foi validado com sucesso.
+		 *
+			 * Argumentos e atributos se diferem que, argumentos são gerados automaticamente,
+		 * em ordem do que foi solicitado. Enquanto atributos só são gerados quando
+		 * explicitamente são definidos.
+		 *
+		 * @param  string[] $url_array       Partes da URL que será testada.
+		 * @param  mixed[]  $output_args     Argumentos gerados pela URL.
+		 * @param  mixed[]  $output_attrs    Atributos gerados pela URL.
+		 * @param  integer  $url_array_index Ponto em que foi possível processar a URL.
+		 * @return boolean
+		 */
 		public function match($url_array, &$output_args, &$output_attrs, &$url_array_index) {
 			// Definição de parâmetros.
 			$url_array_index = 0;
@@ -167,19 +195,26 @@
 			return true;
 		}
 
-		/** DEFINITION */
-		// Define a rota.
+		/**
+		 * Define a rota.
+		 * @param string $definition Definição da rota.
+		 */
 		public function set_definition($definition) {
 			$this->definition = $definition;
 		}
 
-		/** CALLBACK */
-		// Define a callback.
+		/**
+		 * Define a callback.
+		 * @param callable $callback Definição do callable.
+		 */
 		public function set_callback($callback) {
 			$this->callback = $callback;
 		}
 
-		// Retorna a callback armazenada.
+		/**
+		 * Retorna a callback armazenada.
+		 * @return callable
+		 */
 		public function get_callback() {
 			return $this->callback;
 		}

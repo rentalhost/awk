@@ -1,56 +1,90 @@
 <?php
 
-	// Responsável pro gerir dados.
+	/**
+	 * Responsável pro gerir dados.
+	 */
 	class Awk_Data {
-		// Armazena os dados.
+		//
 		// @type array<string, mixed>;
+		/**
+		 * Armazena os dados.
+		 * @var mixed[]
+		 */
 		private $data = [];
 
-		/** DATA */
-		// Define uma variável.
+		/**
+		 * Define uma variável.
+		 * @param string $key   Nome da chave a ser definida.
+		 * @param mixed  $value Valor a ser definido.
+		 */
 		public function set($key, $value) {
 			$this->data[$key] = $value;
 		}
 
-		// Define uma variável com referência.
+		/**
+		 * Define uma variável com referência.
+		 * @param  string $key   Nome da chave a ser definida.
+		 * @param  mixed  $value Valor a ser definido.
+		 */
 		public function bind($key, &$value) {
 			$this->data[$key] = &$value;
 		}
 
-		// Obtém uma variável.
+		/**
+		 * Obtém uma variável.
+		 * @param  string $key Nome da chave a ser obtida.
+		 * @return mixed
+		 */
 		public function get($key) {
 			return $this->data[$key];
 		}
 
-		/** GET ALL */
-		// Retorna todas as variáveis definidas.
+		/**
+		 * Retorna todas as variáveis definidas.
+		 * @return mixed[]
+		 */
 		public function get_all() {
 			return $this->data;
 		}
 
-		/** CLEAR */
-		// Remove todos os dados armazenados.
+		/**
+		 * Remove todos os dados armazenados.
+		 */
 		public function clear() {
 			$this->data = [];
 		}
 
-		/** MAGIC */
-		// Define uma variável.
+		/**
+		 * Define uma variável.
+		 * @param string $key   Nome da chave a ser definida.
+		 * @param mixed  $value Valor a ser definido.
+		 */
 		public function __set($key, $value) {
 			$this->data[$key] = $value;
 		}
 
-		// Obtém uma variável.
+		/**
+		 * Obtém uma variável.
+		 * @param  string $key Nome da chave a ser obtida.
+		 * @return mixed
+		 */
 		public function __get($key) {
 			return $this->data[$key];
 		}
 
-		// Verifica se uma variável existe.
+		/**
+		 * Verifica se uma variável existe.
+		 * @param  string  $key Nome da chave a ser verificada.
+		 * @return boolean
+		 */
 		public function __isset($key) {
 			return array_key_exists($key, $this->data);
 		}
 
-		// Remove uma variavel.
+		/**
+		 * Remove uma variavel.
+		 * @param string $key Nome da chave a ser removida.
+		 */
 		public function __unset($key) {
 			unset($this->data[$key]);
 		}

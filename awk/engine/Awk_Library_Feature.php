@@ -1,14 +1,20 @@
 <?php
 
-	// Responsável pelo controle da feature library.
+	/**
+	 * Responsável pelo controle da feature library.
+	 */
 	class Awk_Library_Feature extends Awk_Module_Feature {
-		// Armazena as instâncias das libraries.
-		// @type array<string, Awk_Library>;
-		private $libraries = [
-		];
+		/**
+		 * Armazena as instâncias das libraries.
+		 * @var Awk_Library[]
+		 */
+		private $libraries = [];
 
-		/** FEATURE CALL */
-		// Retorna o gerador de instâncias da library.
+		/**
+		 * Retorna o gerador de instâncias da library.
+		 * @param  string $library_id Identificador da library.
+		 * @return Awk_Library
+		 */
 		public function feature_call($library_id) {
 			// Se o gerador já foi registrado, retorna.
 			// Caso contrário será necessário carregá-lo.

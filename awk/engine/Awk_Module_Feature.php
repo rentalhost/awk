@@ -1,25 +1,34 @@
 <?php
 
-	// Responsável pela definição das features dos módulos.
+	/**
+	 * Responsável pela definição das features dos módulos.
+	 */
 	class Awk_Module_Feature {
-		// Armazena o módulo responsável.
-		// @type Awk_Module;
+		/**
+		 * Armazena o módulo responsável.
+		 * @var Awk_Module
+		 */
 		protected $module;
 
-		/** CONSTRUCT */
-		// Constrói uma feature.
+		/**
+		 * Constrói uma feature.
+		 * @param Awk_Module $module Instâncoa do módulo.
+		 */
 		public function __construct($module) {
 			$this->module = $module;
 		}
 
-		/** MODULE */
-		// Retorna o módulo da feature.
+		/**
+		 * Retorna o módulo da feature.
+		 * @return Awk_Module
+		 */
 		public function get_module() {
 			return $this->module;
 		}
 
-		/** FEATURE CALL */
-		// Este método precisa ser sobrescrito pela finalidade da feature.
+		/**
+		 * Este método precisa ser sobrescrito pela finalidade da feature.
+		 */
 		public function feature_call() {
 		} // @codeCoverageIgnore
 	}
