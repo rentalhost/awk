@@ -1,4 +1,4 @@
 <?php
 
-	// Define um modelo base.
-	$model->set_prefix("suite_");
+    // Define um modelo base.
+    $model->set_prefix("suite_");

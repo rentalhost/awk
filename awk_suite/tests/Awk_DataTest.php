@@ -1,80 +1,80 @@
 <?php
 
-	/**
-	 * @covers Awk_Data
-	 */
-	class Awk_DataTest extends PHPUnit_Framework_TestCase {
-		/**
-		 * Módulo atual.
-		 * @var Awk_Module
-		 */
-		static private $module;
+    /**
+     * @covers Awk_Data
+     */
+    class Awk_DataTest extends PHPUnit_Framework_TestCase {
+        /**
+         * Módulo atual.
+         * @var Awk_Module
+         */
+        static private $module;
 
-		/**
-		 * Configurações antes da classe.
-		 */
-		static public function setUpBeforeClass() {
-			self::$module = Awk_Module::get("awk_suite");
-		}
+        /**
+         * Configurações antes da classe.
+         */
+        static public function setUpBeforeClass() {
+            self::$module = Awk_Module::get("awk_suite");
+        }
 
-		/**
-		 * Obtém todos os dados armazenados globalmente do módulo.
-		 * @return void
-		 */
-		public function testGlobalGetAll() {
-			$this->assertSame([ "test" => "ok" ], self::$module->globals->get_all());
-		}
+        /**
+         * Obtém todos os dados armazenados globalmente do módulo.
+         * @return void
+         */
+        public function testGlobalGetAll() {
+            $this->assertSame([ "test" => "ok" ], self::$module->globals->get_all());
+        }
 
-		/**
-		 * Verifica de forma simplificada se é possível definir e obter valores.
-		 * @return void
-		 */
-		public function testSimpleSetGet() {
-			// Define alguns valores.
-			self::$module->globals->set("a", "a");
-			self::$module->globals->b = "b";
+        /**
+         * Verifica de forma simplificada se é possível definir e obter valores.
+         * @return void
+         */
+        public function testSimpleSetGet() {
+            // Define alguns valores.
+            self::$module->globals->set("a", "a");
+            self::$module->globals->b = "b";
 
-			// Verifica as informações.
-			$this->assertSame("a", self::$module->globals->get("a"));
-			$this->assertSame("b", self::$module->globals->b);
-		}
+            // Verifica as informações.
+            $this->assertSame("a", self::$module->globals->get("a"));
+            $this->assertSame("b", self::$module->globals->b);
+        }
 
-		/**
-		 * Verifica se o método de binding está funcionando corretamente.
-		 * @return void
-		 */
-		public function testBind() {
-			// Define uma variável para binding.
-			$value = 1;
+        /**
+         * Verifica se o método de binding está funcionando corretamente.
+         * @return void
+         */
+        public function testBind() {
+            // Define uma variável para binding.
+            $value = 1;
 
-			// Globaliza a variável com bind e verifica.
-			self::$module->globals->bind("value", $value);
-			$this->assertSame(1, self::$module->globals->get("value"));
+            // Globaliza a variável com bind e verifica.
+            self::$module->globals->bind("value", $value);
+            $this->assertSame(1, self::$module->globals->get("value"));
 
-			// Altera a variável e verifica se o bind foi afetado.
-			$value = 2;
-			$this->assertSame(2, self::$module->globals->get("value"));
-		}
+            // Altera a variável e verifica se o bind foi afetado.
+            $value = 2;
+            $this->assertSame(2, self::$module->globals->get("value"));
+        }
 
-		/**
-		 * Testa os métodos mágicos.
-		 * @return void
-		 */
-		public function testMagics() {
-			// Verifica se o isset() corresponde.
-			$this->assertTrue(isset(self::$module->globals->value));
+        /**
+         * Testa os métodos mágicos.
+         * @return void
+         */
+        public function testMagics() {
+            // Verifica se o isset() corresponde.
+            $this->assertTrue(isset(self::$module->globals->value));
 
-			// Remove a variável e verifica novamente.
-			unset(self::$module->globals->value);
-			$this->assertFalse(isset(self::$module->globals->value));
-		}
+            // Remove a variável e verifica novamente.
+            unset(self::$module->globals->value);
+            $this->assertFalse(isset(self::$module->globals->value));
+        }
 
-		/**
-		 * Verifica a limpeza total de dados.
-		 * @return void
-		 */
-		public function testClear() {
-			self::$module->globals->clear();
-			$this->assertEmpty(self::$module->globals->get_all());
-		}
-	}
+        /**
+         * Verifica a limpeza total de dados.
+         * @return void
+         */
+        public function testClear() {
+            self::$module->globals->clear();
+            $this->assertEmpty(self::$module->globals->get_all());
+        }
+    }

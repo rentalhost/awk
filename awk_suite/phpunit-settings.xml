@@ -1,10 +1,10 @@
 <phpunit
-	bootstrap="phpunit-bootstrap.php"
-	forceCoversAnnotation="true"
-	verbose="true">
-	<filter>
-		<whitelist addUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">../awk/engine</directory>
-		</whitelist>
-	</filter>
+    bootstrap="phpunit-bootstrap.php"
+    forceCoversAnnotation="true"
+    verbose="true">
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../awk/engine</directory>
+        </whitelist>
+    </filter>
 </phpunit>
