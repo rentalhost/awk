@@ -11,12 +11,6 @@
         static protected $feature_type = "view";
 
         /**
-         * Armazena se o caminho da view remete a um arquivo acessível.
-         * @var boolean
-         */
-        private $exists = false;
-
-        /**
          * Armazena a informação retornada pela view.
          * @var mixed
          */
@@ -45,13 +39,13 @@
          */
         public function load($view_name, $view_args = null, $view_avoid_print = null) {
             $this->name = $view_name;
-            $this->path = $this->module->get_path() . "/views/{$view_name}.php";
-            $this->exists = is_readable($this->path);
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/views/{$view_name}.php");
 
             // Carrega o arquivo, armazenando sua saída.
-            if($this->exists) {
+            if($this->path->is_file()
+            && $this->path->is_readable()) {
                 ob_start();
-                $this->return = $this->module->include_clean($this->path, $view_args);
+                $this->return = $this->module->include_clean($this->path->get(), $view_args);
                 $this->contents = ob_get_clean();
             }
 
@@ -102,13 +96,5 @@
          */
         public function __toString() {
             return $this->get_contents();
-        }
-
-        /**
-         * Retorna se o arquivo da view existe.
-         * @return boolean
-         */
-        public function exists() {
-            return $this->exists;
         }
     }

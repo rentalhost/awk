@@ -18,7 +18,7 @@
 
         /**
          * Caminho absoluto do módulo.
-         * @var string
+         * @var Awk_Path
          */
         private $path;
 
@@ -38,7 +38,7 @@
 
         /**
          * Retorna o caminho absoluto do módulo.
-         * @return string
+         * @return Awk_Path
          */
         public function get_path() {
             return $this->path;
@@ -50,13 +50,14 @@
          */
         private function __construct($module_name) {
             $this->name = $module_name;
-            $this->path = __DIR__ . "/../../{$module_name}";
+            $this->path = new Awk_Path(__DIR__ . "/../../{$module_name}");
 
             // Inicia a variável global do módulo.
             $this->globals = new Awk_Data;
 
             // Se o caminho informado não existir, gera um erro.
-            if(!is_dir($this->path)) {
+            if(!$this->path->is_dir()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"{$module_name}\" não existe."
                 ]);
@@ -64,8 +65,9 @@
 
             // Se o arquivo de configuração (settings.php) não existe, gera um erro.
             // Módulos devem possuir este arquivo para indicar um módulo valido.
-            $module_settings_path = "{$this->path}/settings.php";
-            if(!is_file($module_settings_path)) {
+            $module_settings_path = new Awk_Path($this->path->get() . "/settings.php");
+            if(!$module_settings_path->is_file()
+            || !$module_settings_path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"{$module_name}\" não definiu o arquivo de configuração."
                 ]);

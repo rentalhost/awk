@@ -19,26 +19,11 @@
         }
 
         /**
-         * Executa testes em um diretório privado com apenas um arquivo.
-         * @return void
+         * Testa um arquivo privado.
          */
-        public function testPrivateOneFileDirectory() {
-            $private_instance = self::$module->private("test1_one_file");
+        public function testPrivateFile() {
+            $private_instance = self::$module->private("test1_file.php");
 
-            $this->assertCount(1, iterator_to_array($private_instance->get_files(true)));
-            $this->assertCount(1, iterator_to_array($private_instance->get_files(false)));
-            $this->assertTrue($private_instance->exists());
-        }
-
-        /**
-         * Executa testes em um diretório privado com dois arquivos (um arquivo e uma pasta).
-         * @return void
-         */
-        public function testPrivateMoreFilesDirectory() {
-            $private_instance = self::$module->private("test2_files");
-
-            $this->assertCount(2, iterator_to_array($private_instance->get_files(true)));
-            $this->assertCount(1, iterator_to_array($private_instance->get_files(false)));
-            $this->assertTrue($private_instance->exists());
+            $this->assertTrue($private_instance->get_path()->exists());
         }
     }

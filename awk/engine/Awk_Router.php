@@ -22,10 +22,11 @@
          */
         public function load($router_name) {
             $this->name = $router_name;
-            $this->path = $this->module->get_path() . "/routers/{$this->name}.php";
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/routers/{$this->name}.php");
 
             // Se o arquivo do roteador não existir, lança um erro.
-            if(!is_readable($this->path)) {
+            if(!$this->path->is_file()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o roteador \"{$this->name}\"."
                 ]);
@@ -39,7 +40,7 @@
 
             // Carrega o arquivo do roteador.
             // É neste ponto que as rotas devem ser definidas no roteador.
-            $this->module->include_clean($this->path, [ "router" => $this ]);
+            $this->module->include_clean($this->path->get(), [ "router" => $this ]);
         }
 
         /**

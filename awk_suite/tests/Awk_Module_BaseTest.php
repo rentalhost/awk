@@ -32,6 +32,6 @@
             $this->assertSame("library@awk_suite->test1_valid_autoinit", $library_instance->get_id());
 
             $this->assertTrue(strpos($library_instance->get_path(false), "..") !== false);
-            $this->assertSame(str_replace("\\", "/", realpath($library_instance->get_path(false))), $library_instance->get_path());
+            $this->assertSame(str_replace("\\", "/", realpath($library_instance->get_path()->get())), $library_instance->get_path()->get_normalized());
         }
     }

@@ -22,17 +22,18 @@
          */
         public function load($helper_name) {
             $this->name = $helper_name;
-            $this->path = $this->module->get_path() . "/helpers/{$this->name}.php";
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/helpers/{$this->name}.php");
 
             // Se o arquivo do helper não existir, lança um erro.
-            if(!is_readable($this->path)) {
+            if(!$this->path->is_file()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o helper \"{$this->name}\"."
                 ]);
             } // @codeCoverageIgnore
 
             // Carrega o arquivo do helper.
-            $this->module->include_clean($this->path, [ "helper" => $this ]);
+            $this->module->include_clean($this->path->get(), [ "helper" => $this ]);
         }
 
         /**

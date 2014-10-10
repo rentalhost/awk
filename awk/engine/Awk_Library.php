@@ -32,10 +32,11 @@
          */
         public function load($library_name) {
             $this->name = $library_name;
-            $this->path = $this->module->get_path() . "/libraries/{$this->name}.php";
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/libraries/{$this->name}.php");
 
             // Se o arquivo da library não existir, lança um erro.
-            if(!is_readable($this->path)) {
+            if(!$this->path->is_file()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."
                 ]);
@@ -43,7 +44,7 @@
 
             // Carrega o arquivo da library.
             // É esperado que a library registre uma classe.
-            $this->module->include_clean($this->path, [ "library" => $this ], true);
+            $this->module->include_clean($this->path->get(), [ "library" => $this ], true);
 
             // Se não foi registrado uma classe nesta library, gera um erro.
             if(!$this->classname) {

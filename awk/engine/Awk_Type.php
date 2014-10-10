@@ -29,17 +29,18 @@
          */
         public function load($type_name) {
             $this->name = $type_name;
-            $this->path = $this->module->get_path() . "/types/{$this->name}.php";
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/types/{$this->name}.php");
 
             // Se o arquivo do type não existir, lança um erro.
-            if(!is_readable($this->path)) {
+            if(!$this->path->is_file()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o tipo \"{$this->name}\"."
                 ]);
             } // @codeCoverageIgnore
 
             // Carrega o arquivo do type.
-            $this->module->include_clean($this->path, [ "type" => $this ]);
+            $this->module->include_clean($this->path->get(), [ "type" => $this ]);
         }
 
         /**

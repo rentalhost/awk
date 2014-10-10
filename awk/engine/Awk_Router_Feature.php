@@ -34,6 +34,6 @@
          * @return boolean
          */
         public function exists($router_id) {
-            return is_readable($this->module->get_path() . "/routers/{$router_id}.php");
+            return is_readable($this->module->get_path()->get() . "/routers/{$router_id}.php");
         }
     }

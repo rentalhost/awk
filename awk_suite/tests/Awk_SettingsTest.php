@@ -58,7 +58,9 @@
          * @return void
          */
         public function testOverwritedMethods() {
-            $this->assertSame("settings.awk_suite.php", basename(self::$module_settings->overwrite_path()));
-            $this->assertTrue(self::$module_settings->overwrite_exists());
+            $overwrited_path = self::$module_settings->get_overwrited_path();
+
+            $this->assertSame("settings.awk_suite.php", $overwrited_path->get_basename());
+            $this->assertTrue($overwrited_path->exists());
         }
     }

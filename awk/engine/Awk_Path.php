@@ -35,6 +35,14 @@
         }
 
         /**
+         * Retorna se o objeto é legível.
+         * @return boolean
+         */
+        public function is_readable() {
+            return is_readable($this->path);
+        }
+
+        /**
          * Obtém o caminho armazenado no objeto.
          * A informação é recebida sem normalização.
          * @return string

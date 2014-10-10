@@ -12,15 +12,9 @@
 
         /**
          * Armazena o path de sobreposição de configurações.
-         * @var string
+         * @var Awk_Path
          */
         private $overwrite_path;
-
-        /**
-         * Armazena se o caminho de sobreposição existe.
-         * @var boolean
-         */
-        private $overwrite_exists;
 
         /**
          * Armazena as configurações.
@@ -33,37 +27,29 @@
          * @codeCoverageIgnore
          */
         public function load() {
-            $this->path = $this->module->get_path() . "/settings.php";
+            $module_path = $this->module->get_path()->get();
+            $this->path = new Awk_Path("{$module_path}/settings.php");
 
-            // Para ser um módulo válido, é esperado que o arquivo "settings.php" exista,\
+            // Para ser um módulo válido, é esperado que o arquivo "settings.php" exista,
             // então, carrega o arquivo.
-            $this->module->include_clean($this->path, [ "settings" => $this ]);
+            $this->module->include_clean($this->path->get(), [ "settings" => $this ]);
 
             // Define o caminho de sobreposição.
-            $this->overwrite_path = $this->module->get_path() . "/../settings." . $this->module->get_name() . ".php";
-            $this->overwrite_exists = is_readable($this->overwrite_path);
+            $this->overwrite_path = new Awk_Path("{$module_path}/../settings." . $this->module->get_name() . ".php");
 
             // Se o arquivo de sobreposição existe, ele é executado.
-            if($this->overwrite_exists) {
-                $this->module->include_clean($this->overwrite_path, [ "settings" => $this ]);
+            if($this->overwrite_path->is_file()
+            && $this->overwrite_path->is_readable()) {
+                $this->module->include_clean($this->overwrite_path->get(), [ "settings" => $this ]);
             }
         }
 
         /**
          * Retorna o caminho do arquivo de sobreposição.
-         * @return string
+         * @return Awk_Path
          */
-        public function overwrite_path() {
-            return Awk_Path::normalize($this->overwrite_path);
-        }
-
-        /**
-         * Retorna se há um arquivo de sobreposição.
-         * Não necessariamente indicará se houve alguma sobreposição de dados.
-         * @return boolean
-         */
-        public function overwrite_exists() {
-            return $this->overwrite_exists;
+        public function get_overwrited_path() {
+            return $this->overwrite_path;
         }
 
         /**

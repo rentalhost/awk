@@ -29,10 +29,11 @@
          */
         public function load($controller_name) {
             $this->name = $controller_name;
-            $this->path = $this->module->get_path() . "/controllers/{$this->name}.php";
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/controllers/{$this->name}.php");
 
-            // Se o arquivo do controller não existir, lança um erro.
-            if(!is_readable($this->path)) {
+            // Se o arquivo do controller não existir ou não for legível, lança um erro.
+            if(!$this->path->is_file()
+            || !$this->path->is_readable()) {
                 Awk_Error::create([
                     "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o controller \"{$this->name}\"."
                 ]);
@@ -40,7 +41,7 @@
 
             // Carrega o arquivo do controller.
             // É esperado que o controlador registre uma classe.
-            $this->module->include_clean($this->path, [ "controller" => $this ], true);
+            $this->module->include_clean($this->path->get(), [ "controller" => $this ], true);
 
             // Se não foi registrado uma classe neste controlador, gera um erro.
             if(!$this->classname) {

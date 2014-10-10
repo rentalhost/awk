@@ -13,6 +13,7 @@
             $this->assertTrue($path->exists());
             $this->assertTrue($path->is_dir());
             $this->assertFalse($path->is_file());
+            $this->assertTrue($path->is_readable());
 
             $this->assertSame(getcwd(), $path->get());
         }
@@ -26,6 +27,7 @@
             $this->assertTrue($path->exists());
             $this->assertTrue($path->is_file());
             $this->assertFalse($path->is_dir());
+            $this->assertTrue($path->is_readable());
 
             $this->assertSame("index.php", $path->get_basename());
             $this->assertSame("php", $path->get_extension());
@@ -40,6 +42,7 @@
             $this->assertFalse($path->exists());
             $this->assertFalse($path->is_file());
             $this->assertFalse($path->is_dir());
+            $this->assertFalse($path->is_readable());
 
             $this->assertSame("dir", $path->get_basename());
             $this->assertSame("/fake", $path->get_dirname());

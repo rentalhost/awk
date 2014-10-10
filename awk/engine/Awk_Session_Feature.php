@@ -22,7 +22,7 @@
                 }
 
                 // Define a chave da sessão.
-                $this->session_key = $this->get_module()->get_path();
+                $this->session_key = $this->get_module()->get_path()->get_normalized();
 
                 // Define a chave da sessão.
                 if(!array_key_exists($this->session_key, $_SESSION)) {

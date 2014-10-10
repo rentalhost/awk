@@ -30,7 +30,7 @@
 
         /**
          * Armazena o path da base.
-         * @var string
+         * @var Awk_Path
          */
         protected $path;
 
@@ -79,15 +79,10 @@
         }
 
         /**
-         * Obtém o caminho normalizado da base.
-         * @param  string $normalized Se deverá normalizar o caminho.
-         * @return string
+         * Obtém a instância do controlador de caminho.
+         * @return Awk_Path
          */
         public function get_path($normalized = null) {
-            if($normalized === false) {
-                return $this->path;
-            }
-
-            return Awk_Path::normalize($this->path);
+            return $this->path;
         }
     }

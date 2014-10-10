@@ -5,7 +5,7 @@
      * @covers Awk_Controller_Feature
      * @covers Awk_Module_Base::__construct
      */
-    class Awk_ControllerText extends PHPUnit_Framework_TestCase {
+    class Awk_ControllerTest extends PHPUnit_Framework_TestCase {
         /**
          * Módulo atual.
          * @var Awk_Module
