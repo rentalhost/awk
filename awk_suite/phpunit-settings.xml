@@ -4,7 +4,7 @@
     verbose="true">
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../awk/engine</directory>
+            <directory suffix=".php">../awk/classes</directory>
         </whitelist>
     </filter>
 </phpunit>

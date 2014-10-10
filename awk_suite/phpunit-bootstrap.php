@@ -7,7 +7,7 @@
     $basedir = realpath("../awk/");
 
     // Carrega as classes básicas do motor.
-    require_once "{$basedir}/engine/Awk.php";
+    require_once "{$basedir}/classes/Awk.php";
 
     // Registra o motor.
     Awk::register();

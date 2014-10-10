@@ -15,69 +15,72 @@
          * @var string[]
          */
         static private $class_mapper = [
+            // Classes module.
+            "Awk_Module_Base"           => "classes",
+            "Awk_Module_Feature"        => "classes",
+            "Awk_Module"                => "classes",
+
+            // Classes router.
+            "Awk_Router_Feature"        => "classes",
+            "Awk_Router_Driver_Stack"   => "classes",
+            "Awk_Router_Driver"         => "classes",
+            "Awk_Router_Route_Part"     => "classes",
+            "Awk_Router_Route"          => "classes",
+            "Awk_Router"                => "classes",
+
+            // Classes settings.
+            "Awk_Settings_Feature"      => "classes",
+            "Awk_Settings"              => "classes",
+
             // Classes view.
-            "Awk_View_Feature",
-            "Awk_View",
+            "Awk_View_Feature"          => "classes",
+            "Awk_View"                  => "classes",
 
             // Classes controller.
-            "Awk_Controller_Feature",
-            "Awk_Controller",
+            "Awk_Controller_Feature"    => "classes",
+            "Awk_Controller"            => "classes",
 
             // Classes library.
-            "Awk_Library_Feature",
-            "Awk_Library",
+            "Awk_Library_Feature"       => "classes",
+            "Awk_Library"               => "classes",
 
             // Classes helper.
-            "Awk_Helper_Feature",
-            "Awk_Helper",
+            "Awk_Helper_Feature"        => "classes",
+            "Awk_Helper"                => "classes",
 
             // Classes type.
-            "Awk_Type_Feature",
-            "Awk_Type",
+            "Awk_Type_Feature"          => "classes",
+            "Awk_Type"                  => "classes",
 
             // Classes database.
-            "Awk_Database_Feature",
-            "Awk_Database",
+            "Awk_Database_Feature"      => "classes",
+            "Awk_Database"              => "classes",
 
             // Classes model.
-            "Awk_Model_Feature",
-            "Awk_Model_Query",
-            "Awk_Model",
-            "Awk_Model_Row",
+            "Awk_Model_Feature"         => "classes",
+            "Awk_Model_Query"           => "classes",
+            "Awk_Model"                 => "classes",
+            "Awk_Model_Row"             => "classes",
 
             // Classes public.
-            "Awk_Public_Feature",
-            "Awk_Public",
+            "Awk_Public_Feature"        => "classes",
+            "Awk_Public"                => "classes",
 
             // Classes private.
-            "Awk_Private_Feature",
-            "Awk_Private",
+            "Awk_Private_Feature"       => "classes",
+            "Awk_Private"               => "classes",
 
             // Classes session.
-            "Awk_Session_Feature",
+            "Awk_Session_Feature"       => "classes",
 
             // Classes error.
-            "Awk_Error",
-            "Awk_Exception",
+            "Awk_Error"                 => "classes",
+            "Awk_Exception"             => "classes",
 
             // Classes diversas.
-            "Awk_Base",
-            "Awk_Data",
-            "Awk_Path",
-
-            // Classes auto-inicializáveis.
-            // Usado no PHPUnit.
-            "Awk_Module_Base",
-            "Awk_Module_Feature",
-            "Awk_Module",
-            "Awk_Router_Feature",
-            "Awk_Router_Driver_Stack",
-            "Awk_Router_Driver",
-            "Awk_Router_Route_Part",
-            "Awk_Router_Route",
-            "Awk_Router",
-            "Awk_Settings_Feature",
-            "Awk_Settings",
+            "Awk_Base"                  => "classes",
+            "Awk_Data"                  => "classes",
+            "Awk_Path"                  => "classes",
         ];
 
         /**
@@ -89,8 +92,8 @@
         static private function load_class($classname) {
             // Se localizar a classe no mapa, então será possível carregá-la.
             // Caso contrário, deixará que o PHP verifique em outro SPL, se houver.
-            if(in_array($classname, self::$class_mapper)) {
-                require_once __DIR__ . "/{$classname}.php";
+            if(array_key_exists($classname, self::$class_mapper)) {
+                require_once __DIR__ . "/../" . self::$class_mapper[$classname] . "/{$classname}.php";
             }
         }
 
