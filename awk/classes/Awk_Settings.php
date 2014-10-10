@@ -3,7 +3,7 @@
     /**
      * Responsável pela definição de configurações.
      */
-    class Awk_Settings extends Awk_Module_Base {
+    class Awk_Settings extends Awk_Module_Base implements Awk_PropertyAccess_Interface {
         /**
          * Define o tipo de recurso.
          * @var string
@@ -53,6 +53,22 @@
         }
 
         /**
+         * Define várias configurações.
+         * @param mixed[] $keys Configurações que serão definidas.
+         */
+        public function set_array($keys) {
+            $this->settings = array_replace($this->settings, $keys);
+        }
+
+        /**
+         * Retorna todas as configurações.
+         * @return mixed[]
+         */
+        public function get_array() {
+            return $this->settings;
+        }
+
+        /**
          * Define uma configuração.
          * @param string $key   Chave de configuração que será definida.
          * @param mixed  $value Valor que será aplicado na chave.
@@ -85,5 +101,12 @@
          */
         public function __unset($key) {
             unset($this->settings[$key]);
+        }
+
+        /**
+         * Remove todas as definições definidas.
+         */
+        public function clear() {
+            $this->settings = [];
         }
     }

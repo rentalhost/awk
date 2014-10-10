@@ -296,7 +296,7 @@
             $include_args["module"] = $this;
 
             // Extrai os argumentos para o arquivo.
-            extract($this->globals->get_all(), EXTR_REFS);
+            extract($this->globals->get_array(), EXTR_REFS);
             extract($include_args);
 
             // Inclui e retorna o valor do arquivo.

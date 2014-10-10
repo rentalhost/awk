@@ -4,7 +4,7 @@
      * @covers Awk_Model
      * @covers Awk_Model_Feature
      */
-    class Awk_ModelText extends PHPUnit_Framework_TestCase {
+    class Awk_ModelTest extends PHPUnit_Framework_TestCase {
         /**
          * Módulo atual.
          * @var Awk_Module

@@ -3,7 +3,7 @@
     /**
      * Responsável pro gerir dados.
      */
-    class Awk_Data {
+    class Awk_Data implements Awk_PropertyAccess_Interface {
         //
         // @type array<string, mixed>;
         /**
@@ -40,18 +40,19 @@
         }
 
         /**
-         * Retorna todas as variáveis definidas.
-         * @return mixed[]
+         * Define várias variáveis.
+         * @param mixed[] $keys Variáveis que serão definidas.
          */
-        public function get_all() {
-            return $this->data;
+        public function set_array($keys) {
+            $this->data = array_replace($this->data, $keys);
         }
 
         /**
-         * Remove todos os dados armazenados.
+         * Retorna todas as variáveis definidas.
+         * @return mixed[]
          */
-        public function clear() {
-            $this->data = [];
+        public function get_array() {
+            return $this->data;
         }
 
         /**
@@ -87,5 +88,12 @@
          */
         public function __unset($key) {
             unset($this->data[$key]);
+        }
+
+        /**
+         * Remove todos os dados armazenados.
+         */
+        public function clear() {
+            $this->data = [];
         }
     }

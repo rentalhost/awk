@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature session.
      */
-    class Awk_Session_Feature extends Awk_Module_Feature {
+    class Awk_Session_Feature extends Awk_Module_Feature implements Awk_PropertyAccess_Interface {
         /**
          * Armazena a chave da sessão para o módulo.
          * @var string
@@ -62,6 +62,24 @@
         public function get_session_key() {
             $this->init_session_key();
             return $this->session_key;
+        }
+
+        /**
+         * Define várias informações.
+         * @param mixed[] $keys Informações que serão definidas.
+         */
+        public function set_array($keys) {
+            $this->init_session_key();
+            $_SESSION[$this->session_key] = array_replace($_SESSION[$this->session_key], $keys);
+        }
+
+        /**
+         * Obtém os dados armazenados como array.
+         * @return mixed[]
+         */
+        public function &get_array() {
+            $this->init_session_key();
+            return $_SESSION[$this->session_key];
         }
 
         /**

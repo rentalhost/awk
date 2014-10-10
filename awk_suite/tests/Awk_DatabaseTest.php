@@ -5,7 +5,7 @@
      * @covers Awk_Database_Feature
      * @requires extension pdo
      */
-    class Awk_DatabaseText extends PHPUnit_Framework_TestCase {
+    class Awk_DatabaseTest extends PHPUnit_Framework_TestCase {
         /**
          * Módulo atual.
          * @var Awk_Module

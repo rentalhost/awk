@@ -39,6 +39,20 @@
             // Altera uma configuração e a testa novamente.
             self::$module_settings->test_created = "abc";
             $this->assertSame("abc", self::$module_settings->test_created);
+
+            // Redefine e define um grupo de configurações.
+            self::$module_settings->set_array([
+                "test_created" => "def",
+                "test_new" => "xyz"
+            ]);
+
+            $this->assertSame("def", self::$module_settings->test_created);
+            $this->assertSame("xyz", self::$module_settings->test_new);
+
+            // Remove todas as configurações.
+            $module_settings_clone = clone self::$module_settings;
+            $module_settings_clone->clear();
+            $this->assertEmpty($module_settings_clone->get_array());
         }
 
         /**

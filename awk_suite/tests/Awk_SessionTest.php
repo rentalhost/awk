@@ -68,11 +68,11 @@
         }
 
         /**
-         * Testa os métodos de get e set.
+         * Testa a testPropertyAccess.
          * @depends testSessionKeyIsDir
          * @return void
          */
-        public function testSessionGetSet() {
+        public function testPropertyAccess() {
             // Define um valor, e verifica.
             self::$module_sessions->test_number = 123;
 
@@ -96,25 +96,42 @@
             // Verificação do método.
             self::$module->session("test_array", [ true ]);
 
-            $this->assertSame([ "test_number" => 456, "test_string" => "hello", "test_array" => [ true ] ], self::$module->session());
+            $this->assertSame([
+                "test_number" => 456,
+                "test_string" => "hello",
+                "test_array" => [ true ]
+            ], self::$module->session());
             $this->assertSame([ true ], self::$module->session("test_array"));
-        }
 
-        /**
-         * Testa os métodos mágicos da sessão.
-         * @depends testSessionKeyIsDir
-         * @return void
-         */
-        public function testSessionMagicMethods() {
+            // Redefine e define informações.
+            self::$module->sessions->set_array([
+                "test_string" => "ok2",
+                "test_other" => "ok3"
+            ]);
+
+            $this->assertSame("ok2", self::$module->session("test_string"));
+            $this->assertSame("ok3", self::$module->session("test_other"));
+
+            self::$module->sessions->test_array = [  true ];
+
+            // Verificações de existencia.
             $this->assertTrue(isset(self::$module->sessions->test_array));
             $this->assertFalse(isset(self::$module_sessions->test_unknow));
 
             // Remove uma definição, e testa.
             unset(self::$module_sessions->test_array);
 
-            $this->assertCount(2, self::$module->session());
-            $this->assertSame([ "test_number" => 456, "test_string" => "hello" ], self::$module->session());
+            $this->assertCount(3, self::$module->session());
+            $this->assertSame([
+                "test_number" => 456,
+                "test_string" => "ok2",
+                "test_other" => "ok3"
+            ], self::$module->session());
             $this->assertFalse(isset(self::$module_sessions->test_array));
+
+            // Altera via referência.
+            $session_reference = &self::$module_sessions->get_array();
+            $session_reference["test_string"] = "ok4";
         }
 
         /**
@@ -151,7 +168,11 @@
          * @return void
          */
         public function testSessionEmptinessAfterExecution() {
-            $this->assertSame([ "test_number" => 456, "test_string" => "hello" ], self::$module->session());
+            $this->assertSame([
+                "test_number" => 456,
+                "test_string" => "ok4",
+                "test_other" => "ok3"
+            ], self::$module->session());
 
             self::$module_sessions->clear();
 

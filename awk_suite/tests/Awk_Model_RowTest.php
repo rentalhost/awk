@@ -4,7 +4,7 @@
      * @covers Awk_Model_Row
      * @covers Awk_Model_Query
      */
-    class Awk_Model_RowText extends PHPUnit_Framework_TestCase {
+    class Awk_Model_RowTest extends PHPUnit_Framework_TestCase {
         /**
          * Módulo atual.
          * @var Awk_Module
@@ -31,11 +31,11 @@
         }
 
         /**
-         * Testa uma query anexada ao model.
+         * Testa a testPropertyAccess.
          * @depends testModelLoad
          * @return void
          */
-        public function testModelQueryInstance($model_instance) {
+        public function testPropertyAccess($model_instance) {
             $result_row_instance = $model_instance->load_test();
 
             // Teste de obtenção de resultado.
@@ -51,6 +51,20 @@
             $result_row_instance->test = "test";
             $this->assertSame("test", $result_row_instance->test);
             $this->assertTrue(isset($result_row_instance->test));
+            $this->assertSame([ "test" => "test" ], $result_row_instance->get_array());
+
+            // Redefine e define informações.
+            $result_row_instance->set_array([
+                "test" => "ok2",
+                "other" => "ok3"
+            ]);
+
+            $this->assertSame("ok2", $result_row_instance->test);
+            $this->assertSame("ok3", $result_row_instance->other);
+
+            // Elimina todas as definições.
+            $result_row_instance->clear();
+            $this->assertEmpty($result_row_instance->get_array());
         }
 
         /**

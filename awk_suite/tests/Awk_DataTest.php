@@ -22,7 +22,7 @@
          * @return void
          */
         public function testGlobalGetAll() {
-            $this->assertSame([ "test" => "ok" ], self::$module->get_globals()->get_all());
+            $this->assertSame([ "test" => "ok" ], self::$module->get_globals()->get_array());
         }
 
         /**
@@ -57,24 +57,36 @@
         }
 
         /**
-         * Testa os métodos mágicos.
+         * Testa a PropertyAccess.
          * @return void
          */
-        public function testMagics() {
+        public function testPropertyAccess() {
             // Verifica se o isset() corresponde.
             $this->assertTrue(isset(self::$module->get_globals()->value));
 
             // Remove a variável e verifica novamente.
             unset(self::$module->get_globals()->value);
             $this->assertFalse(isset(self::$module->get_globals()->value));
-        }
 
-        /**
-         * Verifica a limpeza total de dados.
-         * @return void
-         */
-        public function testClear() {
+            // Redefine e atribui novas informações.
+            self::$module->get_globals()->set_array([
+                "test" => "ok2",
+                "other" => "ok3"
+            ]);
+
+            $this->assertSame("ok2", self::$module->get_globals()->test);
+            $this->assertSame("ok3", self::$module->get_globals()->other);
+
+            // Verifica as informações atuais.
+            $this->assertSame([
+                "test" => "ok2",
+                "a" => "a",
+                "b" => "b",
+                "other" => "ok3"
+            ], self::$module->get_globals()->get_array());
+
+            // Limpa os dados.
             self::$module->get_globals()->clear();
-            $this->assertEmpty(self::$module->get_globals()->get_all());
+            $this->assertEmpty(self::$module->get_globals()->get_array());
         }
     }

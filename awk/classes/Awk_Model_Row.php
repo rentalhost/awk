@@ -3,7 +3,7 @@
     /**
      * Responsável por representar um registro de dados.
      */
-    class Awk_Model_Row extends Awk_Module_Base {
+    class Awk_Model_Row extends Awk_Module_Base implements Awk_PropertyAccess_Interface {
         /**
          * Armazena os resultados obtidos.
          * @var mixed[]
@@ -23,6 +23,14 @@
         public function set_result($query_result) {
             $this->data = $query_result->fetch(PDO::FETCH_ASSOC);
             $this->exists = !empty($this->data);
+        }
+
+        /**
+         * Define várias informações.
+         * @param mixed[] $keys Informações que serão definidas.
+         */
+        public function set_array($keys) {
+            $this->data = array_replace($this->data, $keys);
         }
 
         /**
@@ -66,5 +74,12 @@
          */
         public function __unset($key) {
             unset($this->data[$key]);
+        }
+
+        /**
+         * Remove todas as informações definidas.
+         */
+        public function clear() {
+            $this->data = [];
         }
     }
