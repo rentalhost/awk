@@ -20,7 +20,7 @@
 
         /**
          * Carrega uma library válida.
-         * @covers Awk_Base::set_base
+         * @covers Awk_Base::set_base_module
          * @return void
          */
         public function testLibraryLoad() {
@@ -66,7 +66,7 @@
 
         /**
          * Testa a base de uma library.
-         * @covers  Awk_Base::get_module
+         * @covers  Awk_Base::get_base_module
          * @depends testLibraryLoad
          * @return void
          */

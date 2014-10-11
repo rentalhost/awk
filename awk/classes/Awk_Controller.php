@@ -64,7 +64,7 @@
 
             // Se o controller for uma instância de `Awk_Base`, armazena as informações do módulo.
             if($this->instance instanceof Awk_Base) {
-                $this->instance->set_base($this->module);
+                $this->instance->set_base_module($this->module);
             }
         }
 

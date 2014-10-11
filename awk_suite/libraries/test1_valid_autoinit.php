@@ -9,7 +9,7 @@
         }
 
         public function get_module_name() {
-            return $this->get_module()->get_name();
+            return $this->get_base_module()->get_name();
         }
     }
 

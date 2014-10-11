@@ -9,21 +9,21 @@
          * Armazena o módulo responsável pelo objeto.
          * @var Awk_Module
          */
-        private $module;
+        private $base_module;
 
         /**
-         * Define os dados da base.
-         * @param Awk_Module $module Módulo base que será definido.
+         * Define o módulo base.
+         * @param Awk_Module $base_module Módulo base que será definido.
          */
-        public function set_base($module) {
-            $this->module = $module;
+        public function set_base_module($base_module) {
+            $this->base_module = $base_module;
         }
 
         /**
          * Obtém o módulo base.
          * @return Awk_Module Retorna o módulo base definido.
          */
-        public function get_module() {
-            return $this->module;
+        public function get_base_module() {
+            return $this->base_module;
         }
     }
