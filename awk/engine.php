@@ -1,18 +1,7 @@
 <?php
 
-    // Carrega as classes básicas do motor.
+    // Carrega a classe principal do motor.
     require_once "classes/Awk.php";
-    require_once "classes/Awk_Module_Base.php";
-    require_once "classes/Awk_Module_Feature.php";
-    require_once "classes/Awk_Module.php";
-    require_once "classes/Awk_Router_Feature.php";
-    require_once "classes/Awk_Router_Driver_Stack.php";
-    require_once "classes/Awk_Router_Driver.php";
-    require_once "classes/Awk_Router_Route_Part.php";
-    require_once "classes/Awk_Router_Route.php";
-    require_once "classes/Awk_Router.php";
-    require_once "classes/Awk_Settings_Feature.php";
-    require_once "classes/Awk_Settings.php";
 
     // Inicia o autoloader do composer, se houver.
     $composer_autoloader = __DIR__ . "/../vendor/autoload.php";
