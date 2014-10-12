@@ -5,12 +5,6 @@
      */
     class Awk_Helper extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "helper";
-
-        /**
          * Armazena os métodos registrados para o helper.
          * @var callable[]
          */

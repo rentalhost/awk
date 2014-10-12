@@ -5,12 +5,6 @@
      */
     class Awk_Database extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "database";
-
-        /**
          * Determina o nome da instância.
          * Atualmente, todas as instâncias são chamadas de "default".
          * @var string

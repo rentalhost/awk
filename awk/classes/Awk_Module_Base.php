@@ -5,10 +5,22 @@
      */
     abstract class Awk_Module_Base {
         /**
-         * Armazena o tipo de recurso.
-         * @var string
+         * Mapa de identificadores de recursos.
+         * @var string[]
          */
-        static protected $feature_type;
+        static private $feature_mapper = [
+            "Awk_Controller"    => "controller",
+            "Awk_Database"      => "database",
+            "Awk_Helper"        => "helper",
+            "Awk_Library"       => "library",
+            "Awk_Model"         => "model",
+            "Awk_Private"       => "private",
+            "Awk_Public"        => "public",
+            "Awk_Router"        => "router",
+            "Awk_Settings"      => "settings",
+            "Awk_Type"          => "type",
+            "Awk_View"          => "view",
+        ];
 
         /**
          * Armazena uma referência direta ao módulo.
@@ -73,9 +85,10 @@
          * @return string
          */
         public function get_id() {
-            return static::$feature_type . "@"
-                . $this->module->get_name() . "->"
-                . $this->name;
+            return
+                self::$feature_mapper[get_class($this)] .
+                "@"  . $this->module->get_name() .
+                "->" . $this->name;
         }
 
         /**

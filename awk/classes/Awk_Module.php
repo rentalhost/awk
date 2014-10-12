@@ -79,19 +79,19 @@
          * @var string[]
          */
         static private $features_mapper = [
-            "routers" => "Awk_Router_Feature",
-            "controllers" => "Awk_Controller_Feature",
-            "libraries" => "Awk_Library_Feature",
-            "helpers" => "Awk_Helper_Feature",
-            "views" => "Awk_View_Feature",
-            "databases" => "Awk_Database_Feature",
-            "settings" => "Awk_Settings_Feature",
-            "modules" => "Awk_Module_Feature",
-            "types" => "Awk_Type_Feature",
-            "publics" => "Awk_Public_Feature",
-            "privates" => "Awk_Private_Feature",
-            "sessions" => "Awk_Session_Feature",
-            "models" => "Awk_Model_Feature",
+            "routers"       => "Awk_Router_Feature",
+            "controllers"   => "Awk_Controller_Feature",
+            "libraries"     => "Awk_Library_Feature",
+            "helpers"       => "Awk_Helper_Feature",
+            "views"         => "Awk_View_Feature",
+            "databases"     => "Awk_Database_Feature",
+            "settings"      => "Awk_Settings_Feature",
+            "modules"       => "Awk_Module_Feature",
+            "types"         => "Awk_Type_Feature",
+            "publics"       => "Awk_Public_Feature",
+            "privates"      => "Awk_Private_Feature",
+            "sessions"      => "Awk_Session_Feature",
+            "models"        => "Awk_Model_Feature",
         ];
 
         /**
@@ -100,8 +100,8 @@
          * @var string[]
          */
         static private $features_normalizers = [
-            "library" => "libraries",
-            "settings" => "settings"
+            "library"   => "libraries",
+            "settings"  => "settings"
         ];
 
         /**

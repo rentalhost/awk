@@ -5,12 +5,6 @@
      */
     class Awk_Model extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "model";
-
-        /**
          * Armazena a base da tabela.
          * @var Awk_Model
          */

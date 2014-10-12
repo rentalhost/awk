@@ -5,12 +5,6 @@
      */
     class Awk_View extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "view";
-
-        /**
          * Armazena a informação retornada pela view.
          * @var mixed
          */

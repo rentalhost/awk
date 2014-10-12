@@ -3,12 +3,6 @@
     // Responsável pelo modelo de dados da library.
     class Awk_Library extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "library";
-
-        /**
          * Armazena o nome da classe da library registrada.
          * @var string
          */

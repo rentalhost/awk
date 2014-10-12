@@ -5,12 +5,6 @@
      */
     class Awk_Controller extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "controller";
-
-        /**
          * Armazena o nome da classe do controller registrado.
          * @var string
          */

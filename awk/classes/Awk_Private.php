@@ -5,12 +5,6 @@
      */
     class Awk_Private extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "private";
-
-        /**
          * Carrega a definição do arquivo e retorna.
          * @param  string $private_name Identificador do arquivo privado.
          */

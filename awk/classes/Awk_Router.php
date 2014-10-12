@@ -5,12 +5,6 @@
      */
     class Awk_Router extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "router";
-
-        /**
          * Armazena as rotas gerenciáveis por este roteador.
          * @var Awk_Router_Route[]
          */

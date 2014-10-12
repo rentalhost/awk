@@ -5,12 +5,6 @@
      */
     class Awk_Public extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "public";
-
-        /**
          * Carrega a definição do arquivo e retorna.
          * @param  string $public_name Identificador do arquivo público.
          */

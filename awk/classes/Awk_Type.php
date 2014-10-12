@@ -5,12 +5,6 @@
      */
     class Awk_Type extends Awk_Module_Base {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "type";
-
-        /**
          * Armazena o validador de tipo.
          * @var callable
          */

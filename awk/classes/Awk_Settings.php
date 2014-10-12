@@ -5,12 +5,6 @@
      */
     class Awk_Settings extends Awk_Module_Base implements Awk_PropertyAccess_Interface {
         /**
-         * Define o tipo de recurso.
-         * @var string
-         */
-        static protected $feature_type = "settings";
-
-        /**
          * Determina o nome da instância.
          * Atualmente, todas as instâncias são chamadas de "default".
          * @var string
