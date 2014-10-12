@@ -22,7 +22,7 @@
          * @return void
          */
         public function testGlobalGetAll() {
-            $this->assertSame([ "test" => "ok" ], self::$module->get_globals()->get_array());
+            $this->assertSame([ "test" => "ok" ], self::$module->globals->get_array());
         }
 
         /**
@@ -31,12 +31,12 @@
          */
         public function testSimpleSetGet() {
             // Define alguns valores.
-            self::$module->get_globals()->set("a", "a");
-            self::$module->get_globals()->b = "b";
+            self::$module->globals->set("a", "a");
+            self::$module->globals->b = "b";
 
             // Verifica as informações.
-            $this->assertSame("a", self::$module->get_globals()->get("a"));
-            $this->assertSame("b", self::$module->get_globals()->b);
+            $this->assertSame("a", self::$module->globals->get("a"));
+            $this->assertSame("b", self::$module->globals->b);
         }
 
         /**
@@ -48,12 +48,12 @@
             $value = 1;
 
             // Globaliza a variável com bind e verifica.
-            self::$module->get_globals()->bind("value", $value);
-            $this->assertSame(1, self::$module->get_globals()->get("value"));
+            self::$module->globals->bind("value", $value);
+            $this->assertSame(1, self::$module->globals->get("value"));
 
             // Altera a variável e verifica se o bind foi afetado.
             $value = 2;
-            $this->assertSame(2, self::$module->get_globals()->get("value"));
+            $this->assertSame(2, self::$module->globals->get("value"));
         }
 
         /**
@@ -62,20 +62,20 @@
          */
         public function testPropertyAccess() {
             // Verifica se o isset() corresponde.
-            $this->assertTrue(isset(self::$module->get_globals()->value));
+            $this->assertTrue(isset(self::$module->globals->value));
 
             // Remove a variável e verifica novamente.
-            unset(self::$module->get_globals()->value);
-            $this->assertFalse(isset(self::$module->get_globals()->value));
+            unset(self::$module->globals->value);
+            $this->assertFalse(isset(self::$module->globals->value));
 
             // Redefine e atribui novas informações.
-            self::$module->get_globals()->set_array([
+            self::$module->globals->set_array([
                 "test" => "ok2",
                 "other" => "ok3"
             ]);
 
-            $this->assertSame("ok2", self::$module->get_globals()->test);
-            $this->assertSame("ok3", self::$module->get_globals()->other);
+            $this->assertSame("ok2", self::$module->globals->test);
+            $this->assertSame("ok3", self::$module->globals->other);
 
             // Verifica as informações atuais.
             $this->assertSame([
@@ -83,10 +83,10 @@
                 "a" => "a",
                 "b" => "b",
                 "other" => "ok3"
-            ], self::$module->get_globals()->get_array());
+            ], self::$module->globals->get_array());
 
             // Limpa os dados.
-            self::$module->get_globals()->clear();
-            $this->assertEmpty(self::$module->get_globals()->get_array());
+            self::$module->globals->clear();
+            $this->assertEmpty(self::$module->globals->get_array());
         }
     }
