@@ -14,6 +14,7 @@
         /**
          * Cria um erro com as especificações fornecidas.
          * @param  mixed[] $error_options Definições do erro.
+         * @throws Awk_Error_NotSupportedType_Exception Caso um tipo não suportado seja informado.
          */
         static public function create($error_options) {
             // Definições padrões de um erro.
@@ -69,11 +70,8 @@
             }
 
             // Se não for possível, indica um erro desconhecido.
-            self::create([
-                "type" => self::TYPE_EXCEPTION,
-                "message" => "Um erro do tipo \"{$error_options["type"]}\" foi criado, porém, este tipo não é suportado."
-            ]);
-        } // @codeCoverageIgnore
+            throw new Awk_Error_NotSupportedType_Exception($error_options["type"]);
+        }
 
         /**
          * Força um erro de objeto não encontrado.

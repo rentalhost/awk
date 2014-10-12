@@ -8,8 +8,7 @@
          * Armazena as instâncias dos controllers.
          * @var Awk_Controller[]
          */
-        private $controllers = [
-        ];
+        private $controllers = [];
 
         /**
          * Carrega um controller imediatamente.

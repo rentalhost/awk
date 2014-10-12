@@ -19,6 +19,7 @@
         /**
          * Carrega o helper.
          * @param  string $helper_name Identificador do helper.
+         * @throws Awk_Helper_NotExists_Exception Caso o Helper não exista no módulo.
          */
         public function load($helper_name) {
             $this->name = $helper_name;
@@ -27,10 +28,8 @@
             // Se o arquivo do helper não existir, lança um erro.
             if(!$this->path->is_file()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o helper \"{$this->name}\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Helper_NotExists_Exception($this->module, $this->name);
+            }
 
             // Carrega o arquivo do helper.
             $this->module->include_clean($this->path->get(), [ "helper" => $this ]);

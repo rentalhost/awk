@@ -47,6 +47,9 @@
         /**
          * Constrói uma nova instância de módulo.
          * @param string $module_name Identificador do módulo.
+         * @throws Awk_Module_NotExists_Exception       Caso o módulo não exista.
+         * @throws Awk_Module_WithoutSettings_Exception
+         *         Caso o módulo não tenha definido seu arquivo de configuração.
          */
         private function __construct($module_name) {
             $this->name = $module_name;
@@ -58,21 +61,17 @@
             // Se o caminho informado não existir, gera um erro.
             if(!$this->path->is_dir()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"{$module_name}\" não existe."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Module_NotExists_Exception($module_name);
+            }
 
             // Se o arquivo de configuração (settings.php) não existe, gera um erro.
             // Módulos devem possuir este arquivo para indicar um módulo valido.
             $module_settings_path = new Awk_Path($this->path->get() . "/settings.php");
             if(!$module_settings_path->is_file()
             || !$module_settings_path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"{$module_name}\" não definiu o arquivo de configuração."
-                ]);
-            } // @codeCoverageIgnore
-        } // @codeCoverageIgnore
+                throw new Awk_Module_WithoutSettings_Exception($module_name);
+            }
+        }
 
         /**
          * Define um mapa de features, ligando a sua classe.
@@ -114,6 +113,7 @@
         /**
          * Carrega uma feature através do seu nome singular.
          * @param  string $name Identificador do recurso.
+         * @throws Awk_Module_UnsupportedFeature_Exception Caso o recurso não seja suportado.
          * @return object
          */
         private function load_feature($name) {
@@ -126,10 +126,8 @@
             // Verifica se é uma feature mapeada.
             // Se não for, será necessário lançar um erro.
             if(!isset(self::$features_mapper[$name])) {
-                Awk_Error::create([
-                    "message" => "O recurso \"{$name}\" não está disponível."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Module_UnsupportedFeature_Exception($name);
+            }
 
             // Gera e retorna a instância da feature.
             $feature_reflection = new ReflectionClass(self::$features_mapper[$name]);
@@ -173,6 +171,10 @@
          * @param  boolean $feature_type_blocked Se o recurso padrão não deve ser alterado.
          * @param  boolean $module_required      Se o módulo deve ser explicito na informação.
          * @param  boolean $return_parts         Se as partes devem ser retornadas como um array, ao invés de um objeto.
+         * @throws Awk_Module_IdRequiresModule_Exception    Caso o identificador não tenha definido um módulo obrigatório.
+         * @throws Awk_Module_IdRequiresFeature_Exception   Caso o identificador não tenha definido um recurso obrigatório.
+         * @throws Awk_Module_IdFeatureExpected_Exception   Caso o identificador tenha definido um recurso diferente do esperado.
+         * @throws Awk_Module_IdUnsupportedFormat_Exception Caso o identificador tenha sido definido em um formato não suportado.
          * @return object|mixed[]
          */
         public function identify($id, $feature_type = null, $feature_type_blocked = null, $module_required = null, $return_parts = null) {
@@ -193,28 +195,22 @@
                 }
                 else
                 if($module_required === true) {
-                    Awk_Error::create([
-                        "message" => "Não foi possível identificar \"{$id}\". A definição do módulo é obrigatória."
-                    ]);
-                } // @codeCoverageIgnore
+                    throw new Awk_Module_IdRequiresModule_Exception($id);
+                }
 
                 // Define a feature a ser utilizada.
                 // Se uma feature é obrigatória (null), mas não foi definida, gera um erro.
                 if($feature_type === null
                 && empty($id_match["feature"])) {
-                    Awk_Error::create([
-                        "message" => "Não foi possível identificar \"{$id}\". A definição do recurso é obrigatória."
-                    ]);
-                } // @codeCoverageIgnore
+                    throw new Awk_Module_IdRequiresFeature_Exception($id);
+                }
                 // Se a feature foi definida, mas há necessidade de um bloqueio, gera um erro.
                 if($feature_type_blocked === true
                 && $feature_type !== null
                 && !empty($id_match["feature"])
                 && $feature_type !== substr($id_match["feature"], 0, -1)) {
-                    Awk_Error::create([
-                        "message" => "Não foi possível identificar \"{$id}\". O recurso deve ser \"{$feature_type}\"."
-                    ]);
-                } // @codeCoverageIgnore
+                    throw new Awk_Module_IdFeatureExpected_Exception($id, $feature_type);
+                }
                 // Em último caso, define a feature que será utilizada.
                 else
                 if(!empty($id_match["feature"])) {
@@ -250,10 +246,8 @@
             }
 
             // Se não foi possível validar, lança uma exceção.
-            Awk_Error::create([
-                "message" => "Não foi possível identificar \"{$id}\"."
-            ]);
-        } // @codeCoverageIgnore
+            throw new Awk_Module_IdUnsupportedFormat_Exception($id);
+        }
 
         /**
          * Carrega e retorna um módulo.

@@ -38,8 +38,8 @@
 
         /**
          * Lança uma exceção quando o helper não existir.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O módulo "awk_suite" não possui o helper "unexistent".
+         * @expectedException        Awk_Helper_NotExists_Exception
+         * @expectedExceptionMessage O Helper "unexistent" não existe no módulo "awk_suite".
          * @return void
          */
         public function testUnexistentException() {

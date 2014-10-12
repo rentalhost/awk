@@ -208,8 +208,8 @@
 
         /**
          * Rota inexistente.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage O módulo "awk_suite" não possui o roteador "unexistent".
+         * @expectedException           Awk_Router_NotExists_Exception
+         * @expectedExceptionMessage    O Router "unexistent" não existe no módulo "awk_suite".
          * @return void
          */
         public function testUnexistentRouterException() {

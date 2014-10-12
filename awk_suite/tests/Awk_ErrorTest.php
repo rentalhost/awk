@@ -40,8 +40,8 @@
 
         /**
          * Testa um erro de tipo desconhecido.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Um erro do tipo "unknow" foi criado, porém, este tipo não é suportado.
+         * @expectedException Awk_Error_NotSupportedType_Exception
+         * @expectedExceptionMessage Erro do tipo "unknow" não é suportado.
          * @return void
          */
         public function testUnknowTypeError() {

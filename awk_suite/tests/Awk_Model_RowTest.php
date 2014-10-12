@@ -20,7 +20,6 @@
 
         /**
          * Carrega um model.
-         * @return void
          */
         public function testModelLoad() {
             $model_instance = self::$module->model("test3_extends");
@@ -33,7 +32,6 @@
         /**
          * Testa a testPropertyAccess.
          * @depends testModelLoad
-         * @return void
          */
         public function testPropertyAccess($model_instance) {
             $result_row_instance = $model_instance->load_test();
@@ -68,11 +66,18 @@
         }
 
         /**
+         * Adiciona uma nova Query.
+         * @depends testModelLoad
+         */
+        public function testAddNewQuery($model_instance) {
+            $model_instance->add_query("get_first", "one", "SELECT * FROM [this] LIMIT 1");
+        }
+
+        /**
          * Testa uma exceção quando um tipo não suportado é vinculado ao model.
          * @depends testModelLoad
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Atualmente, não há suporte para a query do tipo "unsupported_type" em um model.
-         * @return void
+         * @expectedException        Awk_Model_UnsupportedQueryType_Exception
+         * @expectedExceptionMessage Não é suportado o tipo "unsupported_type" para Query.
          */
         public function testModelUnsupportedTypeException($model_instance) {
             $model_instance->add_query("unsupported_type", "unsupported_type", null);
@@ -81,9 +86,8 @@
         /**
          * Testa uma exceção há uma falha ao carregar uma query.
          * @depends testModelLoad
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Falha ao executar a query.
-         * @return void
+         * @expectedException        Awk_Model_QueryError_Exception
+         * @expectedExceptionMessage Falha ao executar a Query.
          */
         public function testModelQueryFailException($model_instance) {
             $model_instance->load_fail();

@@ -19,6 +19,7 @@
         /**
          * Carrega o arquivo da rota.
          * @param  string $router_name Identificador do roteador.
+         * @throws Awk_Router_NotExists_Exception Caso o Router não exista no módulo.
          */
         public function load($router_name) {
             $this->name = $router_name;
@@ -27,10 +28,8 @@
             // Se o arquivo do roteador não existir, lança um erro.
             if(!$this->path->is_file()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o roteador \"{$this->name}\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Router_NotExists_Exception($this->module, $this->name);
+            }
 
             // Se a rota for um arquivo público, define o Content-type da página.
             if($this->is_file()) {

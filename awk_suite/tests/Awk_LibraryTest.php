@@ -86,8 +86,8 @@
 
         /**
          * Verifica a exceção de library inexistente.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O módulo "awk_suite" não possui a library "unexistent".
+         * @expectedException        Awk_Library_NotExists_Exception
+         * @expectedExceptionMessage A Library "unexistent" não existe no módulo "awk_suite".
          * @return void
          */
         public function testUnexistentLibraryException() {
@@ -96,8 +96,8 @@
 
         /**
          * Verifica a exceção de classe não registrada.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage A library "test2_unregistered_class" do módulo "awk_suite" não efetuou o registro de classe.
+         * @expectedException        Awk_Library_WasNotRegisteredClass_Exception
+         * @expectedExceptionMessage A Library "test2_unregistered_class" do módulo "awk_suite" não registrou uma classe.
          * @return void
          */
         public function testUnregisteredClassException() {
@@ -106,8 +106,8 @@
 
         /**
          * Verifica a exceção de classe registrada inexistente.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage A library "test3_inexistent_class" do módulo "awk_suite" registrou uma classe inexistente ("Unexistent_Class").
+         * @expectedException        Awk_Library_RegisteredNotFoundClass_Exception
+         * @expectedExceptionMessage A Library "test3_inexistent_class" do módulo "awk_suite" registrou a classe "Unexistent_Class", mas ela não foi encontrada.
          * @return void
          */
         public function testInexistentRegisteredClass() {
@@ -116,9 +116,9 @@
 
         /**
          * Verifica a exceção de library quando library_unique não retorna um objeto da mesma classe.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O método "library_unique" da library "AwkSuite_Invalid2_Test" do módulo "awk_suite"
-         *                           não retornou uma instância da classe "AwkSuite_Invalid2_Test", ao invés disso, retornou "stdClass".
+         * @expectedException        Awk_Library_InvalidUniqueInstanceReturn_Exception
+         * @expectedExceptionMessage O método "library_unique()" da Library "test4_invalid_unique" do módulo "awk_suite"
+         *                           não retornou uma instância da classe registrada.
          * @return void
          */
         public function testInvalidUniqueInstanceException() {
@@ -127,9 +127,9 @@
 
         /**
          * Verifica a exceção de library quando chamado via unique, mas seu construtor requer parâmetros.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage A instância única da library "AwkSuite_Invalid3_Test" do módulo "awk_suite" não pôde ser criada
-         *                           pois seu construtor requer parâmetros. Considere definir o método "library_unique".
+         * @expectedException        Awk_Library_ConstructorRequiresParameters_Exception
+         * @expectedExceptionMessage A instância única da Library "test5_without_unique" do módulo "awk_suite" não pôde ser criada
+         *                           pois seu construtor possui parâmetros obrigatórios.
          * @return void
          */
         public function testWithoutUniqueException() {

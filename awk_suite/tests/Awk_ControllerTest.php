@@ -39,8 +39,8 @@
 
         /**
          * Tenta carregar um controller inexistente.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O módulo "awk_suite" não possui o controller "unexistent".
+         * @expectedException        Awk_Controller_NotExists_Exception
+         * @expectedExceptionMessage O Controller "unexistent" não existe no módulo "awk_suite".
          * @return [type] [description]
          */
         public function testUnexistentException() {
@@ -48,22 +48,22 @@
         }
 
         /**
-         * Tenta carregar um controller que registrou uma classe inexistente.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O controller "test2_unexistent_class" do módulo "awk_suite" registrou uma classe inexistente ("Unexistent_Class").
-         * @return [type] [description]
-         */
-        public function testUnexistentClassException() {
-            self::$module->controller("test2_unexistent_class");
-        }
-
-        /**
          * Tenta carregar um controller que não registrou a classe.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O controller "test3_unregistered_class" do módulo "awk_suite" não efetuou o registro de classe.
+         * @expectedException        Awk_Controller_WasNotRegisteredClass_Exception
+         * @expectedExceptionMessage O Controller "test3_unregistered_class" do módulo "awk_suite" não registrou uma classe.
          * @return [type] [description]
          */
         public function testUnregisteredClassException() {
             self::$module->controller("test3_unregistered_class");
+        }
+
+        /**
+         * Tenta carregar um controller que registrou uma classe inexistente.
+         * @expectedException        Awk_Controller_RegisteredNotFoundClass_Exception
+         * @expectedExceptionMessage O Controller "test2_unexistent_class" do módulo "awk_suite" registrou a classe "Unexistent_Class", mas ela não foi encontrada.
+         * @return [type] [description]
+         */
+        public function testUnexistentClassException() {
+            self::$module->controller("test2_unexistent_class");
         }
     }

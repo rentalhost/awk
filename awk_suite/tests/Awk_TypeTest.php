@@ -212,8 +212,8 @@
 
         /**
          * Uma exceção deve ser lançada quando um teste não existe no módulo.
-         * @expectedException        Awk_Exception
-         * @expectedExceptionMessage O módulo "awk_suite" não possui o tipo "unexistent".
+         * @expectedException        Awk_Type_NotExists_Exception
+         * @expectedExceptionMessage O Type "unexistent" não existe no módulo "awk_suite".
          * @return void
          */
         public function testUnexistentException() {

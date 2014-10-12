@@ -29,6 +29,9 @@
         /**
          * Carrega a library e a retorna.
          * @param  string $library_name Identificador da library.
+         * @throws Awk_Library_NotExists_Exception               A Library não existe no módulo.
+         * @throws Awk_Library_WasNotRegisteredClass_Exception   A Library não registrou uma classe.
+         * @throws Awk_Library_RegisteredNotFoundClass_Exception A Library registrou uma classe que não foi encontrada.
          */
         public function load($library_name) {
             $this->name = $library_name;
@@ -37,10 +40,8 @@
             // Se o arquivo da library não existir, lança um erro.
             if(!$this->path->is_file()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"" . $this->module->get_name() . "\" não possui a library \"{$this->name}\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Library_NotExists_Exception($this->module, $this->name);
+            }
 
             // Carrega o arquivo da library.
             // É esperado que a library registre uma classe.
@@ -48,17 +49,13 @@
 
             // Se não foi registrado uma classe nesta library, gera um erro.
             if(!$this->classname) {
-                Awk_Error::create([
-                    "message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" não efetuou o registro de classe."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Library_WasNotRegisteredClass_Exception($this->module, $this->name);
+            }
 
             // Se a classe não existir, gera um erro.
             if(!class_exists($this->classname)) {
-                Awk_Error::create([
-                    "message" => "A library \"{$this->name}\" do módulo \"" . $this->module->get_name() . "\" registrou uma classe inexistente (\"{$this->classname}\")."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Library_RegisteredNotFoundClass_Exception($this->module, $this->name, $this->classname);
+            }
         }
 
         /**
@@ -121,6 +118,11 @@
          * Os argumentos serão enviados ao método `library_unique()`, se disponível.
          * Neste caso, o próprio método deverá retornar a nova instância da classe.
          * Se isso não acontecer, o construtor será executado sem argumentos.
+         * @throws Awk_Library_InvalidUniqueInstanceReturn_Exception
+         *         Caso o método library_unique() não tenha retornado uma instância da classe registrada.
+         * @throws Awk_Library_ConstructorRequiresParameters_Exception
+         *         Caso tentar gerar uma instância única da classe registrada onde seu construtor
+         *         possui parâmetros obrigatórios.
          * @return object
          */
         public function unique() {
@@ -139,13 +141,8 @@
 
                 // Se não for retornado um objeto, um erro é retornado.
                 if(!$unique_instance instanceof $this->classname) {
-                    $unique_instance_type = is_object($unique_instance) ? get_class($unique_instance) : gettype($unique_instance);
-                    Awk_Error::create([
-                        "message" => "O método \"library_unique\" da library \"{$this->classname}\" do módulo \"" .
-                            $this->module->get_name() . "\" não retornou uma instância da classe \"{$this->classname}\"," .
-                            " ao invés disso, retornou \"{$unique_instance_type}\"."
-                    ]);
-                } // @codeCoverageIgnore
+                    throw new Awk_Library_InvalidUniqueInstanceReturn_Exception($this->module, $this->name);
+                }
 
                 // Se for uma instância de `Awk_Base`, armazena as informações da base.
                 if($unique_instance instanceof Awk_Base) {
@@ -161,12 +158,8 @@
             $reflection_constructor = $reflection_instance->getConstructor();
             if($reflection_constructor) {
                 if($reflection_constructor->getNumberOfRequiredParameters() !== 0) {
-                    Awk_Error::create([
-                        "message" => "A instância única da library \"{$this->classname}\" do módulo \"" .
-                            $this->module->get_name() . "\" não pôde ser criada pois seu construtor requer parâmetros. " .
-                            "Considere definir o método \"library_unique\"."
-                    ]);
-                } // @codeCoverageIgnore
+                    throw new Awk_Library_ConstructorRequiresParameters_Exception($this->module, $this->name);
+                }
             }
 
             // Inicia a instância única.

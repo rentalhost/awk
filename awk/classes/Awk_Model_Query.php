@@ -28,6 +28,7 @@
          * @param string    $query_name    Nome de referência da query.
          * @param string    $query_type    Tipo específico da query.
          * @param string    $query_definer Definição da query.
+         * @throws Awk_Model_Row_UnsupportedQueryType_Exception Caso um tipo não suportado seja usado.
          */
         public function __construct($parent, $query_name, $query_type, $query_definer) {
             parent::__construct($parent->get_module(), $parent);
@@ -39,15 +40,14 @@
 
             // Se não for um tipo de query suportado, lança uma exceção.
             if(!in_array($query_type, [ "one" ])) {
-                Awk_Error::create([
-                    "message" => "Atualmente, não há suporte para a query do tipo \"{$query_type}\" em um model."
-                ]);
-            } // @codeCoverageIgnore
-        } // @codeCoverageIgnore
+                throw new Awk_Model_UnsupportedQueryType_Exception($query_type);
+            }
+        }
 
         /**
          * Executa a query com os argumentos passados.
          * @param  mixed[] $query_args Argumentos que serão passados para a query.
+         * @throws Awk_Model_QueryError_Exception Caso haja falha na execução da Query.
          * @return Awk_Model_Row
          */
         public function execute($query_args) {
@@ -67,10 +67,8 @@
             }
 
             // Se atingir este ponto, signifca que houve um erro na query.
-            Awk_Error::create([
-                "message" => "Falha ao executar a query."
-            ]);
-        } // @codeCoverageIgnore
+            throw new Awk_Model_QueryError_Exception();
+        }
 
         /**
          * Executa uma query especializada.

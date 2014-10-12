@@ -99,8 +99,8 @@
 
         /**
          * Testa um módulo inexistente.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage O módulo "unexistent" não existe.
+         * @expectedException           Awk_Module_NotExists_Exception
+         * @expectedExceptionMessage    O módulo "unexistent" não foi encontrado.
          * @return void
          */
         public function testUnexistentModuleException() {
@@ -109,8 +109,8 @@
 
         /**
          * Cria um módulo inválido, pois não possui um arquivo de configuração.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage O módulo "unexistent" não definiu o arquivo de configuração.
+         * @expectedException           Awk_Module_WithoutSettings_Exception
+         * @expectedExceptionMessage    O módulo "unexistent" não possui um arquivo de configurações.
          * @return void
          */
         public function testNotSettingsModuleException() {
@@ -131,8 +131,8 @@
 
         /**
          * Testa uma feature inexistente para um módulo.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage O recurso "unexistent_features" não está disponível.
+         * @expectedException           Awk_Module_UnsupportedFeature_Exception
+         * @expectedExceptionMessage    O recurso "unexistent_features" não é suportado.
          * @return void
          */
         public function testUnexistentModuleFeatureException() {
@@ -141,8 +141,8 @@
 
         /**
          * Tenta uma identificação que não define um módulo.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Não foi possível identificar "test". A definição do módulo é obrigatória.
+         * @expectedException           Awk_Module_IdRequiresModule_Exception
+         * @expectedExceptionMessage    Falha ao identificar "test". A definição de um módulo é obrigatória.
          * @return void
          */
         public function testFeatureIdentifyNoModuleException() {
@@ -151,8 +151,8 @@
 
         /**
          * Tenta uma identificação que não define uma feature.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Não foi possível identificar "test". A definição do recurso é obrigatória.
+         * @expectedException           Awk_Module_IdRequiresFeature_Exception
+         * @expectedExceptionMessage    Falha ao identificar "test". A definição de um recurso é obrigatório.
          * @return void
          */
         public function testFeatureIdentifyNoFeatureException() {
@@ -161,8 +161,8 @@
 
         /**
          * Tenta uma identificação que possui uma feature obrigatória.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Não foi possível identificar "router@test". O recurso deve ser "type".
+         * @expectedException           Awk_Module_IdFeatureExpected_Exception
+         * @expectedExceptionMessage    Falha ao identificar "router@test". O recurso "type" era esperado.
          * @return void
          */
         public function testFeatureIdentifyFeatureBlockedException() {
@@ -171,8 +171,8 @@
 
         /**
          * Tenta uma identificação inválida.
-         * @expectedException Awk_Exception
-         * @expectedExceptionMessage Não foi possível identificar "%invalid%".
+         * @expectedException           Awk_Module_IdUnsupportedFormat_Exception
+         * @expectedExceptionMessage    Falha ao identificar "%invalid%". O formato utilizado não é suportado.
          * @return void
          */
         public function testFeatureIdentifyInvalidException() {

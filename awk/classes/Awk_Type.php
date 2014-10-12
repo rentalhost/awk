@@ -25,7 +25,7 @@
         /**
          * Carrega o type e o retorna.
          * @param  string $type_name Identificador do tipo.
-         * @return self
+         * @throws Awk_Type_NotExists_Exception Caso o Type não exista no módulo.
          */
         public function load($type_name) {
             $this->name = $type_name;
@@ -34,10 +34,8 @@
             // Se o arquivo do type não existir, lança um erro.
             if(!$this->path->is_file()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o tipo \"{$this->name}\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Type_NotExists_Exception($this->module, $this->name);
+            }
 
             // Carrega o arquivo do type.
             $this->module->include_clean($this->path->get(), [ "type" => $this ]);

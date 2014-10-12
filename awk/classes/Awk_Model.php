@@ -37,6 +37,7 @@
         /**
          * Carrega o model.
          * @param  string $model_name Identificador do model.
+         * @throws Awk_Model_NotExists_Exception Caso o Model não exista.
          */
         public function load($model_name) {
             $this->name = $model_name;
@@ -45,10 +46,8 @@
             // Se o arquivo do model não existir, lança um erro.
             if(!$this->path->is_file()
             || !$this->path->is_readable()) {
-                Awk_Error::create([
-                    "message" => "O módulo \"" . $this->module->get_name() . "\" não possui o model \"{$this->name}\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Model_NotExists_Exception($this->module, $this->name);
+            }
 
             // Carrega o arquivo do model.
             $this->module->include_clean($this->path->get(), [ "model" => $this ]);
@@ -105,15 +104,13 @@
          * @param string $query_name    Nome de referência da query.
          * @param string $query_type    Tipo específico da query.
          * @param string $query_definer Definição da query.
+         * @throws Awk_Model_QueryAlreadyExists_Exception Caso a Query já tenha sido definida.
          */
         public function add_query($query_name, $query_type, $query_definer) {
             // Se há houver uma chave com o mesmo nome, lança um erro.
             if(array_key_exists($query_name, $this->queries)) {
-                Awk_Error::create([
-                    "message" => "A query \"{$query_name}\" já foi definida no model \"" . $this->get_name()
-                        . "\" do módulo \"" . $this->module->get_name() . "\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Model_QueryAlreadyExists_Exception($this->module, $this->name, $query_name);
+            }
 
             // Define a query.
             return $this->queries[$query_name] = new Awk_Model_Query($this, $query_name, $query_type, $query_definer);
@@ -123,16 +120,14 @@
          * Executa uma query através do seu nome definido.
          * @param  string  $query_name Nome de referência da query.
          * @param  mixed[] $call_args  Argumentos que serão transferidos a query.
+         * @throws Awk_Model_QueryNotExists_Exception Caso a Query não tenha sido definida.
          * @return Awk_Model_Row
          */
         public function __call($query_name, $call_args) {
             // Se não foi definido, lança uma exceção.
             if(!array_key_exists($query_name, $this->queries)) {
-                Awk_Error::create([
-                    "message" => "A query \"{$query_name}\" não foi definida no model \"" . $this->get_name()
-                        . "\" do módulo \"" . $this->module->get_name() . "\"."
-                ]);
-            } // @codeCoverageIgnore
+                throw new Awk_Model_QueryNotExists_Exception($this->module, $this->name, $query_name);
+            }
 
             // Define os argumentos que serão enviados à query.
             $query_args = isset($call_args[0]) ? $call_args[0] : [];

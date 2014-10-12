@@ -75,7 +75,6 @@
 
             // Classes error.
             "Awk_Error"                     => "classes",
-            "Awk_Exception"                 => "classes",
 
             // Classes diversas.
             "Awk_Base"                      => "classes",
@@ -84,6 +83,57 @@
 
             // Interfaces.
             "Awk_PropertyAccess_Interface"  => "interfaces",
+
+            // Exceções.
+            "Awk_Exception"                                             => "exceptions",
+
+            // Exceções de Controller.
+            "Awk_Controller_Exception"                                  => "exceptions",
+            "Awk_Controller_NotExists_Exception"                        => "exceptions",
+            "Awk_Controller_WasNotRegisteredClass_Exception"            => "exceptions",
+            "Awk_Controller_RegisteredNotFoundClass_Exception"          => "exceptions",
+
+            // Exceções de Error.
+            "Awk_Error_Exception"                                       => "exceptions",
+            "Awk_Error_NotSupportedType_Exception"                      => "exceptions",
+
+            // Exceções de Helper.
+            "Awk_Helper_Exception"                                      => "exceptions",
+            "Awk_Helper_NotExists_Exception"                            => "exceptions",
+
+            // Exceções de Library.
+            "Awk_Library_Exception"                                     => "exceptions",
+            "Awk_Library_NotExists_Exception"                           => "exceptions",
+            "Awk_Library_WasNotRegisteredClass_Exception"               => "exceptions",
+            "Awk_Library_RegisteredNotFoundClass_Exception"             => "exceptions",
+            "Awk_Library_InvalidUniqueInstanceReturn_Exception"         => "exceptions",
+            "Awk_Library_ConstructorRequiresParameters_Exception"       => "exceptions",
+
+            // Exceções de Model.
+            "Awk_Model_Exception"                                       => "exceptions",
+            "Awk_Model_NotExists_Exception"                             => "exceptions",
+            "Awk_Model_QueryAlreadyExists_Exception"                    => "exceptions",
+            "Awk_Model_QueryNotExists_Exception"                        => "exceptions",
+            "Awk_Model_QueryError_Exception"                            => "exceptions",
+            "Awk_Model_UnsupportedQueryType_Exception"                  => "exceptions",
+
+            // Exceções de Module.
+            "Awk_Module_Exception"                                      => "exceptions",
+            "Awk_Module_NotExists_Exception"                            => "exceptions",
+            "Awk_Module_WithoutSettings_Exception"                      => "exceptions",
+            "Awk_Module_UnsupportedFeature_Exception"                   => "exceptions",
+            "Awk_Module_IdRequiresModule_Exception"                     => "exceptions",
+            "Awk_Module_IdRequiresFeature_Exception"                    => "exceptions",
+            "Awk_Module_IdFeatureExpected_Exception"                    => "exceptions",
+            "Awk_Module_IdUnsupportedFormat_Exception"                  => "exceptions",
+
+            // Exceções de Router.
+            "Awk_Router_Exception"                                      => "exceptions",
+            "Awk_Router_NotExists_Exception"                            => "exceptions",
+
+            // Exceções de Type.
+            "Awk_Type_Exception"                                        => "exceptions",
+            "Awk_Type_NotExists_Exception"                              => "exceptions",
         ];
 
         /**
