@@ -11,6 +11,13 @@
         static protected $feature_type = "settings";
 
         /**
+         * Determina o nome da instância.
+         * Atualmente, todas as instâncias são chamadas de "default".
+         * @var string
+         */
+        protected $name = "default";
+
+        /**
          * Armazena o path de sobreposição de configurações.
          * @var Awk_Path
          */

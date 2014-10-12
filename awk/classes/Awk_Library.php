@@ -106,7 +106,7 @@
 
             // Se for uma instância de `Awk_Base`, armazena as informações da base.
             if($library_instance instanceof Awk_Base) {
-                $library_instance->set_base_module($this->module);
+                $library_instance->set_base($this->module, $this);
             }
 
             // Retorna a instância.
@@ -146,7 +146,7 @@
 
                 // Se for uma instância de `Awk_Base`, armazena as informações da base.
                 if($unique_instance instanceof Awk_Base) {
-                    $unique_instance->set_base_module($this->module);
+                    $unique_instance->set_base($this->module, $this);
                 }
 
                 // Armazena e retorna a instância.
@@ -167,7 +167,7 @@
 
             // Se for uma instância de `Awk_Base`, armazena as informações da base.
             if($this->unique_instance instanceof Awk_Base) {
-                $this->unique_instance->set_base_module($this->module);
+                $this->unique_instance->set_base($this->module, $this);
             }
 
             // Retorna a instância única.
