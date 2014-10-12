@@ -193,10 +193,10 @@
          * @return void
          */
         public function testTypeFromModule() {
-            $type_instance = self::$module->type("test");
+            $type_instance = self::$module->type("test1_complete");
 
             $this->assertInstanceOf("Awk_Type", $type_instance);
-            $this->processTypeResponse($type_instance, true, false, null);
+            $this->processTypeResponse($type_instance, true, true, "ok");
         }
 
         /**
@@ -205,9 +205,7 @@
          * @return void
          */
         public function testTypeReload() {
-            $type_instance = self::$module->type("test");
-
-            $this->assertInstanceOf("Awk_Type", $type_instance);
+            $this->testTypeFromModule();
         }
 
         /**
@@ -218,5 +216,45 @@
          */
         public function testUnexistentException() {
             self::$module->type("unexistent");
+        }
+
+        /**
+         * Caso não tenha definido um método de validação.
+         * @expectedException        Awk_Type_WithoutValidateCallback_Exception
+         * @expectedExceptionMessage O Type "test2_without_validate" do módulo "awk_suite" não definiu um método de validação.
+         * @return void
+         */
+        public function testAwk_Type_WithoutValidateCallback_Exception() {
+            self::$module->type("test2_without_validate");
+        }
+
+        /**
+         * Caso tenha definido um método de validação inválido.
+         * @expectedException        Awk_Type_InvalidValidateCallback_Exception
+         * @expectedExceptionMessage O Type "test3_invalid_validate" do módulo "awk_suite" definiu um método de validação inválido.
+         * @return void
+         */
+        public function testAwk_Type_InvalidValidateCallback_Exception() {
+            self::$module->type("test3_invalid_validate");
+        }
+
+        /**
+         * Caso não tenha definido um método de transformação.
+         * @expectedException        Awk_Type_WithoutTransformCallback_Exception
+         * @expectedExceptionMessage O Type "test4_without_transform" do módulo "awk_suite" não definiu um método de transformação.
+         * @return void
+         */
+        public function testAwk_Type_WithoutTransformCallback_Exception() {
+            self::$module->type("test4_without_transform");
+        }
+
+        /**
+         * Caso tenha definido um método de transformação inválido.
+         * @expectedException        Awk_Type_InvalidTransformCallback_Exception
+         * @expectedExceptionMessage O Type "test5_invalid_transform" do módulo "awk_suite" definiu um método de transformação inválido.
+         * @return void
+         */
+        public function testAwk_Type_InvalidTransformCallback_Exception() {
+            self::$module->type("test5_invalid_transform");
         }
     }

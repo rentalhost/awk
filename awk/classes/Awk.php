@@ -134,6 +134,10 @@
             // Exceções de Type.
             "Awk_Type_Exception"                                        => "exceptions",
             "Awk_Type_NotExists_Exception"                              => "exceptions",
+            "Awk_Type_WithoutValidateCallback_Exception"                => "exceptions",
+            "Awk_Type_InvalidValidateCallback_Exception"                => "exceptions",
+            "Awk_Type_WithoutTransformCallback_Exception"               => "exceptions",
+            "Awk_Type_InvalidTransformCallback_Exception"               => "exceptions",
         ];
 
         /**
