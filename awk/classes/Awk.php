@@ -126,6 +126,7 @@
             "Awk_Module_IdRequiresFeature_Exception"                    => "exceptions",
             "Awk_Module_IdFeatureExpected_Exception"                    => "exceptions",
             "Awk_Module_IdUnsupportedFormat_Exception"                  => "exceptions",
+            "Awk_Module_GetIdIsNotSupported_Exception"                  => "exceptions",
 
             // Exceções de Router.
             "Awk_Router_Exception"                                      => "exceptions",

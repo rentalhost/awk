@@ -82,9 +82,17 @@
 
         /**
          * Obtém o ID do recurso.
+         * @throws Awk_Module_GetIdIsNotSupported_Exception Caso tente obter o identificador de um recurso sem suporte.
          * @return string
          */
         public function get_id() {
+            // Lança uma exceção se o recurso não suportar o recurso.
+            if($this instanceof Awk_Database
+            || $this instanceof Awk_Settings) {
+                throw new Awk_Module_GetIdIsNotSupported_Exception(ucfirst(self::$feature_mapper[get_class($this)]));
+            }
+
+            // Caso contrário, aceita a validação.
             return
                 self::$feature_mapper[get_class($this)] .
                 "@"  . $this->module->get_name() .

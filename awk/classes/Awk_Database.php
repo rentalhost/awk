@@ -5,13 +5,6 @@
      */
     class Awk_Database extends Awk_Module_Base {
         /**
-         * Determina o nome da instância.
-         * Atualmente, todas as instâncias são chamadas de "default".
-         * @var string
-         */
-        protected $name = "default";
-
-        /**
          * Armazena a instãncia da conexão.
          * @var PDO
          */

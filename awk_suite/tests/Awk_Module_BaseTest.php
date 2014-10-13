@@ -38,15 +38,31 @@
          */
         public function testGetId() {
             $this->assertSame("controller@awk_suite->test1_valid", self::$module->controller("test1_valid")->get_id());
-            $this->assertSame("database@awk_suite->default", self::$module->database()->get_id());
             $this->assertSame("helper@awk_suite->test1", self::$module->helper("test1")->get_id());
             $this->assertSame("library@awk_suite->test1_valid_autoinit", self::$module->library("test1_valid_autoinit")->get_id());
             $this->assertSame("model@awk_suite->test1_base", self::$module->model("test1_base")->get_id());
             $this->assertSame("private@awk_suite->test1_file", self::$module->private("test1_file")->get_id());
             $this->assertSame("public@awk_suite->test1_hello", self::$module->public("test1_hello")->get_id());
             $this->assertSame("router@awk_suite->test1_basic", self::$module->router("test1_basic")->get_id());
-            $this->assertSame("settings@awk_suite->default", self::$module->settings()->get_id());
             $this->assertSame("type@awk_suite->test1_complete", self::$module->type("test1_complete")->get_id());
             $this->assertSame("view@awk_suite->test1", self::$module->view("test1", null, true)->get_id());
+        }
+
+        /**
+         * O recurso Database não suporta a obtenção do identificador.
+         * @expectedException           Awk_Module_GetIdIsNotSupported_Exception
+         * @expectedExceptionMessage    O recurso Database não possui suporte a obtenção de identificador.
+         */
+        public function testAwk_Database_GetIdIsNotSupported_Exception() {
+            self::$module->database()->get_id();
+        }
+
+        /**
+         * O recurso Settings não suporta a obtenção do identificador.
+         * @expectedException           Awk_Module_GetIdIsNotSupported_Exception
+         * @expectedExceptionMessage    O recurso Settings não possui suporte a obtenção de identificador.
+         */
+        public function testAwk_Settings_GetIdIsNotSupported_Exception() {
+            self::$module->settings()->get_id();
         }
     }
