@@ -31,7 +31,6 @@
          * @param  mixed    $value            Valor a ser testado pelos métodos da instância.
          * @param  boolean  $valueValidate    Se o valor será validado corretamente.
          * @param  mixed    $valueTransformed Valor esperado após a transformação.
-         * @return void
          */
         private function processTypeResponse($type, $value, $valueValidate, $valueTransformed) {
             $this->assertEquals($valueValidate, $type->validate($value));
@@ -40,7 +39,6 @@
 
         /**
          * Executa testes no tipo padrão boolean.
-         * @return void
          */
         public function testTypeBoolean() {
             $type_instance = self::$awk->type("boolean");
@@ -65,7 +63,6 @@
 
         /**
          * Executa testes no tipo padrão null.
-         * @return void
          */
         public function testTypeNull() {
             $type_instance = self::$awk->type("null");
@@ -90,7 +87,6 @@
 
         /**
          * Executa testes no tipo padrão empty.
-         * @return void
          */
         public function testTypeEmpty() {
             $type_instance = self::$awk->type("empty");
@@ -140,7 +136,6 @@
 
         /**
          * Executa testes no tipo padrão float.
-         * @return void
          */
         public function testTypeFloat() {
             $type_instance = self::$awk->type("float");
@@ -165,7 +160,6 @@
 
         /**
          * Executa testes no tipo padrão string.
-         * @return void
          */
         public function testTypeString() {
             $type_instance = self::$awk->type("string");
@@ -190,7 +184,6 @@
 
         /**
          * Executa testes em um tipo exclusivo do módulo.
-         * @return void
          */
         public function testTypeFromModule() {
             $type_instance = self::$module->type("test1_complete");
@@ -202,7 +195,6 @@
         /**
          * Obtém um mesmo tipo, novamente, para testar o cache.
          * @depends testTypeFromModule
-         * @return void
          */
         public function testTypeReload() {
             $this->testTypeFromModule();
@@ -212,7 +204,6 @@
          * Uma exceção deve ser lançada quando um teste não existe no módulo.
          * @expectedException        Awk_Type_NotExists_Exception
          * @expectedExceptionMessage O Type "unexistent" não existe no módulo "awk_suite".
-         * @return void
          */
         public function testUnexistentException() {
             self::$module->type("unexistent");
@@ -222,7 +213,6 @@
          * Caso não tenha definido um método de validação.
          * @expectedException        Awk_Type_WithoutValidateCallback_Exception
          * @expectedExceptionMessage O Type "test2_without_validate" do módulo "awk_suite" não definiu um método de validação.
-         * @return void
          */
         public function testAwk_Type_WithoutValidateCallback_Exception() {
             self::$module->type("test2_without_validate");
@@ -232,7 +222,6 @@
          * Caso tenha definido um método de validação inválido.
          * @expectedException        Awk_Type_InvalidValidateCallback_Exception
          * @expectedExceptionMessage O Type "test3_invalid_validate" do módulo "awk_suite" definiu um método de validação inválido.
-         * @return void
          */
         public function testAwk_Type_InvalidValidateCallback_Exception() {
             self::$module->type("test3_invalid_validate");
@@ -242,7 +231,6 @@
          * Caso não tenha definido um método de transformação.
          * @expectedException        Awk_Type_WithoutTransformCallback_Exception
          * @expectedExceptionMessage O Type "test4_without_transform" do módulo "awk_suite" não definiu um método de transformação.
-         * @return void
          */
         public function testAwk_Type_WithoutTransformCallback_Exception() {
             self::$module->type("test4_without_transform");
@@ -252,7 +240,6 @@
          * Caso tenha definido um método de transformação inválido.
          * @expectedException        Awk_Type_InvalidTransformCallback_Exception
          * @expectedExceptionMessage O Type "test5_invalid_transform" do módulo "awk_suite" definiu um método de transformação inválido.
-         * @return void
          */
         public function testAwk_Type_InvalidTransformCallback_Exception() {
             self::$module->type("test5_invalid_transform");

@@ -20,7 +20,6 @@
 
         /**
          * Executa testes na classe.
-         * @return void
          */
         public function testHelper() {
             $helper_instance = self::$module->helper("test1");
@@ -30,7 +29,6 @@
 
         /**
          * Teste de cache da classe.
-         * @return void
          */
         public function testHelperReaload() {
             $this->testHelper();
@@ -40,7 +38,6 @@
          * Lança uma exceção quando o helper não existir.
          * @expectedException        Awk_Helper_NotExists_Exception
          * @expectedExceptionMessage O Helper "unexistent" não existe no módulo "awk_suite".
-         * @return void
          */
         public function testUnexistentException() {
             self::$module->helper("unexistent");

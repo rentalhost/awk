@@ -20,7 +20,6 @@
 
         /**
          * Testa os indicadores de modo de desenvolvimento.
-         * @return void
          */
         public function testDevelopmentMode() {
             // Verifica se estamos em localhost.
@@ -39,7 +38,6 @@
 
         /**
          * Verifica se um módulo responde com todas as features disponíveis.
-         * @return void
          */
         public function testModuleFeatures() {
             // Testa as features como propriedades.
@@ -60,7 +58,6 @@
 
         /**
          * Testa o módulo.
-         * @return void
          */
         public function testModuleLoad() {
             $current_directory = getcwd();
@@ -75,7 +72,6 @@
 
         /**
          * Testa o sistema de identificação.
-         * @return void
          */
         public function testIdentifier() {
             $this->assertInstanceOf("Awk_Library", self::$module->identify("library@awk_suite->test6_valid_unique"));
@@ -101,7 +97,6 @@
          * Testa um módulo inexistente.
          * @expectedException           Awk_Module_NotExists_Exception
          * @expectedExceptionMessage    O módulo "unexistent" não foi encontrado.
-         * @return void
          */
         public function testUnexistentModuleException() {
             Awk_Module::get("unexistent");
@@ -111,7 +106,6 @@
          * Cria um módulo inválido, pois não possui um arquivo de configuração.
          * @expectedException           Awk_Module_WithoutSettings_Exception
          * @expectedExceptionMessage    O módulo "unexistent" não possui um arquivo de configurações.
-         * @return void
          */
         public function testNotSettingsModuleException() {
             $tmp_module = getcwd() . "/../unexistent";
@@ -122,7 +116,6 @@
 
         /**
          * Limpeza do teste anterior.
-         * @return void
          */
         public function testNotSettingsModuleExceptionCleanup() {
             $this->assertEmpty(null);
@@ -133,7 +126,6 @@
          * Testa uma feature inexistente para um módulo.
          * @expectedException           Awk_Module_UnsupportedFeature_Exception
          * @expectedExceptionMessage    O recurso "unexistent_features" não é suportado.
-         * @return void
          */
         public function testUnexistentModuleFeatureException() {
             self::$module->unexistent_feature();
@@ -143,7 +135,6 @@
          * Tenta uma identificação que não define um módulo.
          * @expectedException           Awk_Module_IdRequiresModule_Exception
          * @expectedExceptionMessage    Falha ao identificar "test". A definição de um módulo é obrigatória.
-         * @return void
          */
         public function testFeatureIdentifyNoModuleException() {
             self::$module->identify("test", null, null, true);
@@ -153,7 +144,6 @@
          * Tenta uma identificação que não define uma feature.
          * @expectedException           Awk_Module_IdRequiresFeature_Exception
          * @expectedExceptionMessage    Falha ao identificar "test". A definição de um recurso é obrigatório.
-         * @return void
          */
         public function testFeatureIdentifyNoFeatureException() {
             self::$module->identify("test");
@@ -163,7 +153,6 @@
          * Tenta uma identificação que possui uma feature obrigatória.
          * @expectedException           Awk_Module_IdFeatureExpected_Exception
          * @expectedExceptionMessage    Falha ao identificar "router@test". O recurso "type" era esperado.
-         * @return void
          */
         public function testFeatureIdentifyFeatureBlockedException() {
             self::$module->identify("router@test", "type", true);
@@ -173,7 +162,6 @@
          * Tenta uma identificação inválida.
          * @expectedException           Awk_Module_IdUnsupportedFormat_Exception
          * @expectedExceptionMessage    Falha ao identificar "%invalid%". O formato utilizado não é suportado.
-         * @return void
          */
         public function testFeatureIdentifyInvalidException() {
             self::$module->identify("%invalid%", "type", true);
@@ -181,7 +169,6 @@
 
         /**
          * Recarrega um módulo.
-         * @return void
          */
         public function testModuleReload() {
             // Limpa as informações do módulo do cache.

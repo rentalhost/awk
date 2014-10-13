@@ -33,7 +33,6 @@
 
         /**
          * Teste de cache.
-         * @return void
          */
         public function testRouterReload() {
             $this->testRouterLoad();
@@ -42,7 +41,6 @@
         /**
          * Testa os métodos de caminho.
          * @depends testRouterLoad
-         * @return void
          */
         public function testFilePath($router_instance) {
             // Teste UNIX.
@@ -81,7 +79,6 @@
         /**
          * Testa os métodos de URL via PATH_INFO.
          * @depends testRouterLoad
-         * @return void
          */
         public function testGetUrlViaPathInfo($router_instance) {
             $_SERVER["PATH_INFO"] = "/";
@@ -96,7 +93,6 @@
         /**
          * Testa os métodos de URL via REQUEST_URI.
          * @depends testRouterLoad
-         * @return void
          */
         public function testGetUrlViaRequestURI($router_instance) {
             $_SERVER["SCRIPT_NAME"] = "/test/index.php";
@@ -139,7 +135,6 @@
 
         /**
          * Testa a referencia de um arquivo.
-         * @return void
          */
         public function testRouterFileReference() {
             // Cria um arquivo temporário para testes.
@@ -156,7 +151,6 @@
         /**
          * Testa a URL base de uma rota.
          * @depends testRouterLoad
-         * @return void
          */
         public function testRouterBaseURL($router_instance) {
             $_SERVER["SERVER_PORT"] = 80;
@@ -174,7 +168,6 @@
         /**
          * Verifica se uma determinada rota foi definida.
          * @depends testRouterLoad
-         * @return void
          */
         public function testRouterExists($router_instance) {
             $this->assertTrue(self::$module->routers->exists("test1_basic"));
@@ -182,7 +175,6 @@
 
         /**
          * Executa testes no protocolo.
-         * @return void
          */
         public function testSecureProtocol() {
             // Verificação insegura.
@@ -210,7 +202,6 @@
          * Rota inexistente.
          * @expectedException           Awk_Router_NotExists_Exception
          * @expectedExceptionMessage    O Router "unexistent" não existe no módulo "awk_suite".
-         * @return void
          */
         public function testUnexistentRouterException() {
             self::$module->router("unexistent");
@@ -218,7 +209,6 @@
 
         /**
          * Simula a configuração de uma rota.
-         * @return void
          */
         public function testRouterConfigure1() {
             $router = self::$module->router("test5_empty");
@@ -235,7 +225,6 @@
 
         /**
          * Simula a configuração de uma rota.
-         * @return void
          */
         public function testRouterConfigure2() {
             $router = self::$module->router("test5_empty");

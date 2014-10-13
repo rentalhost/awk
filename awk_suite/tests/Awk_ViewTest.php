@@ -26,7 +26,6 @@
 
         /**
          * Carrega a View que será testada.
-         * @return void
          */
         public function testViewLoad() {
             self::$view_instance = self::$module->view("test1", null, true);
@@ -36,7 +35,6 @@
         /**
          * Testa as propriedades que podem ser obtidas da view.
          * @depends testViewLoad
-         * @return void
          */
         public function testGetProperties() {
             $this->assertFalse(self::$view_instance->was_printed());
@@ -49,7 +47,6 @@
         /**
          * Verifica a impressão da View.
          * @depends testViewLoad
-         * @return void
          */
         public function testViewOutput() {
             self::$module->view("test1");
@@ -59,7 +56,6 @@
         /**
          * Verifica a impressão de uma view em um sub-diretório.
          * @depends testViewLoad
-         * @return void
          */
         public function testViewOnSubdir() {
             self::$module->view("subdir/test2");
@@ -69,7 +65,6 @@
         /**
          * Verifica por uma view inexistente.
          * @depends testViewLoad
-         * @return void
          */
         public function testViewUnexistent() {
             $view_instance = self::$module->view("subdir/unexistent");

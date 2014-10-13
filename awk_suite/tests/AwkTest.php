@@ -12,7 +12,6 @@
 
         /**
          * Retorna a instância de Settings do módulo.
-         * @return void
          */
         static private function getAwkSettings() {
             return Awk_Module::get("awk")->settings();
@@ -39,7 +38,6 @@
 
         /**
          * Testa a inicialização padrão (URL).
-         * @return void
          */
         public function testAwkDefaultInit() {
             $awk_settings = self::getAwkSettings();
@@ -54,7 +52,6 @@
 
         /**
          * Testa a inicialização de arquivo.
-         * @return void
          */
         public function testAwkFileInit() {
             $awk_settings = self::getAwkSettings();
@@ -73,7 +70,6 @@
          * Testa um erro de captura inicial.
          * @expectedException Exception
          * @expectedExceptionMessage /test/404
-         * @return void
          */
         public function testAwkFail() {
             $awk_settings = self::getAwkSettings();

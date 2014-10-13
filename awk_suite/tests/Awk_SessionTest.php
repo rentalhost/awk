@@ -40,7 +40,6 @@
 
         /**
          * Obtém o nome da chave da sessão.
-         * @return void
          */
         static private function getSessionKey() {
             return self::$module_sessions->get_session_key();
@@ -48,7 +47,6 @@
 
         /**
          * Testa se a chave da sessão é um diretório.
-         * @return void
          */
         public function testSessionKeyIsDir() {
             $session_key = self::getSessionKey();
@@ -59,7 +57,6 @@
         /**
          * Certifica-se que não há dados na sessão.
          * @depends testSessionKeyIsDir
-         * @return void
          */
         public function testSessionEmptiness() {
             self::$module_sessions->clear();
@@ -70,7 +67,6 @@
         /**
          * Testa a testPropertyAccess.
          * @depends testSessionKeyIsDir
-         * @return void
          */
         public function testPropertyAccess() {
             // Define um valor, e verifica.
@@ -137,7 +133,6 @@
         /**
          * Faz testes com a sessão de outro módulo.
          * @depends testSessionKeyIsDir
-         * @return void
          */
         public function testSessionFromOtherModule() {
             // Carrega um outro módulo para comparação.
@@ -165,7 +160,6 @@
         /**
          * Certifica-se que não há dados após a execução.
          * @depends testSessionKeyIsDir
-         * @return void
          */
         public function testSessionEmptinessAfterExecution() {
             $this->assertSame([
@@ -182,7 +176,6 @@
         /**
          * Neste ponto, deve haver uma chave de sessão para o módulo atual.
          * @depends testSessionKeyIsDir
-         * @return void
          */
         public function testSessionKey() {
             $this->assertTrue(isset($_SESSION[self::getSessionKey()]));

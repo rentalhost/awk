@@ -20,7 +20,6 @@
 
         /**
          * Testa um arquivo público.
-         * @return void
          */
         public function testPublicFileLoad() {
             $public_instance = self::$module->public("test1_hello.php");
@@ -34,7 +33,6 @@
          * Verifica o retorno do método get_url().
          * @depends testPublicFileLoad
          * @param  Awk_Public $public_instance Instância de Awk_Public.
-         * @return void
          */
         public function testGetUrlMethod($public_instance) {
             $this->assertSame("awk_suite/publics/test1_hello.php", $public_instance->get_url());
@@ -44,7 +42,6 @@
          * Obtém a URL completa, preenchendo SERVER_NAME e SCRIPT_NAME.
          * @depends testPublicFileLoad
          * @param  Awk_Public $public_instance Instância de Awk_Public.
-         * @return void
          */
         public function testGetUrlMethodFillingServer($public_instance) {
             // Teste básico.

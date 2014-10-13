@@ -33,7 +33,6 @@
         /**
          * Inicia a conexão com o banco de dados.
          * Se a conexão falhar, todo o teste será ignorado.
-         * @return void
          */
         public function testDatabaseConnect() {
             $this->assertEmpty(null);
@@ -52,7 +51,6 @@
 
         /**
          * Testa novamente a conectividade.
-         * @return void
          */
         public function testDatabaseConnectReload() {
             $this->testDatabaseConnect();
@@ -62,7 +60,6 @@
          * Executa uma simples query.
          * @depends testDatabaseConnect
          * @param  Awk_Database $database_instance Instância da Awk_Database.
-         * @return void
          */
         public function testQuery($database_instance) {
             $this->assertInstanceOf("PDOStatement", $database_instance->query("SELECT TRUE"));
@@ -71,7 +68,6 @@
 
         /**
          * Testa uma conexão inválida.
-         * @return void
          */
         public function testDatabaseInvalidConnection() {
             $database_instance = self::$module->database();
@@ -82,7 +78,6 @@
 
         /**
          * Reinicia a conexão para a conexão válida.
-         * @return void
          */
         public function testDatabaseResetToValid() {
             $database_instance = self::getValidConnection();

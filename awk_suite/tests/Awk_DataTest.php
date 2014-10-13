@@ -19,7 +19,6 @@
 
         /**
          * Obtém todos os dados armazenados globalmente do módulo.
-         * @return void
          */
         public function testGlobalGetAll() {
             $this->assertSame([ "test" => "ok" ], self::$module->globals->get_array());
@@ -27,7 +26,6 @@
 
         /**
          * Verifica de forma simplificada se é possível definir e obter valores.
-         * @return void
          */
         public function testSimpleSetGet() {
             // Define alguns valores.
@@ -41,7 +39,6 @@
 
         /**
          * Verifica se o método de binding está funcionando corretamente.
-         * @return void
          */
         public function testBind() {
             // Define uma variável para binding.
@@ -58,7 +55,6 @@
 
         /**
          * Testa a PropertyAccess.
-         * @return void
          */
         public function testPropertyAccess() {
             // Verifica se o isset() corresponde.

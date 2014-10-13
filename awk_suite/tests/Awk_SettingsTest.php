@@ -57,7 +57,6 @@
 
         /**
          * Testa os métodos mágicos.
-         * @return void
          */
         public function testMagicMethods() {
             // Define uma informação, apaga, e verifica sua existência.
@@ -69,7 +68,6 @@
 
         /**
          * Testa os métodos de overwrite.
-         * @return void
          */
         public function testOverwritedMethods() {
             $overwrited_path = self::$module_settings->get_overwrited_path();

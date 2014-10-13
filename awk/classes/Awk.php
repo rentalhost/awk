@@ -145,7 +145,6 @@
          * Carrega as classes do motor via SPL.
          * @codeCoverageIgnore
          * @param  string $classname Nome da classe esperada.
-         * @return void
          */
         static private function load_class($classname) {
             // Se localizar a classe no mapa, então será possível carregá-la.
@@ -158,7 +157,6 @@
         /**
          * Registra o motor.
          * @codeCoverageIgnore
-         * @return void
          */
         static public function register() {
             // Registra o método de autoloader.
@@ -170,7 +168,6 @@
 
         /**
          * Responsável pelo processo inicial de rota.
-         * @return void
          */
         static public function init() {
             // Carrega as configurações do motor.

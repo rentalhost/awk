@@ -43,7 +43,6 @@
 
         /**
          * Testa novamente, para cache.
-         * @return void
          */
         public function testControllerReload() {
             $this->testControllerLoad();
