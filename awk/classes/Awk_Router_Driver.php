@@ -87,8 +87,9 @@
             $stack_current = $this->get_stack();
 
             // Obtém todas as rotas definidas no roteador atual.
-            // Será necessário testar uma a uma, até encontrar uma que possa ser resolvida.
             $router_routes = $stack_current->router_instance->get_routes();
+
+            // Será necessário testar uma a uma, até encontrar uma que possa ser resolvida.
             foreach($router_routes as $router_route) {
                 // Se não for um arquivo público, e for uma rota específica para esse fim, ignora.
                 if(!isset($_SERVER["REDIRECT_PUBLICS"])
@@ -171,7 +172,7 @@
             $stack_next = $this->get_stack_next();
 
             // Carrega a definição do roteador.
-            $router_instance = $stack_next->module_instance->identify($router_id, "router");
+            $router_instance = $stack_next->module_instance->identify($router_id, "router")->get_instance();
             $stack_next->module_instance = $router_instance->get_module();
             $stack_next->router_instance = $router_instance;
 
@@ -212,10 +213,10 @@
             // Se a callback for uma string, é necessário identificá-la.
             if(is_string($callback)) {
                 $stack_instance = $this->get_stack();
-                $callback_parts = $stack_instance->module_instance->identify($callback, "router", null, null, true);
+                $callback_parts = $stack_instance->module_instance->identify($callback, "router", null, null);
 
                 // Gera um callback a depender do tipo retornado.
-                switch($callback_parts["feature"]) {
+                switch($callback_parts->feature) {
                     // Identifica um redirecionamento de rota.
                     case "router":
                         $callback = function($driver) use($callback) { $driver->redirect($callback); };
@@ -224,14 +225,14 @@
                     // Identifica uma view a ser impressa.
                     case "view":
                         $callback = function($driver) use($callback_parts) {
-                            $callback_parts["module"]->view($callback_parts["name"]);
+                            $callback_parts->module->view($callback_parts->name);
                         };
                         break;
 
                     // Identifica um controller a ser executado.
                     case "controller":
                         $callback = function($driver) use($callback_parts) {
-                            call_user_func([ $callback_parts["module"]->controller($callback_parts["name"]), $callback_parts["method"] ], $driver);
+                            call_user_func([ $callback_parts->module->controller($callback_parts->name), $callback_parts->method ], $driver);
                         };
                         break;
                 }

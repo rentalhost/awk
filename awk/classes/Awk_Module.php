@@ -166,95 +166,31 @@
 
         /**
          * Identifica uma string e retorna o callback.
-         * @param  string  $id                   Informação que será identificada.
-         * @param  string  $feature_type         Tipo de recurso padrão, quando não informado.
-         * @param  boolean $feature_type_blocked Se o recurso padrão não deve ser alterado.
-         * @param  boolean $module_required      Se o módulo deve ser explicito na informação.
-         * @param  boolean $return_parts         Se as partes devem ser retornadas como um array, ao invés de um objeto.
-         * @throws Awk_Module_IdRequiresModule_Exception    Caso o identificador não tenha definido um módulo obrigatório.
-         * @throws Awk_Module_IdRequiresFeature_Exception   Caso o identificador não tenha definido um recurso obrigatório.
-         * @throws Awk_Module_IdFeatureExpected_Exception   Caso o identificador tenha definido um recurso diferente do esperado.
-         * @throws Awk_Module_IdUnsupportedFormat_Exception Caso o identificador tenha sido definido em um formato não suportado.
+         * @param  string  $id              Informação que será identificada.
+         * @param  string  $feature_type    Tipo de recurso padrão, quando não informado.
+         * @param  boolean $feature_blocked Se o recurso padrão não deve ser alterado.
+         * @param  boolean $module_required Se o módulo deve ser explicito na informação.
          * @return object|mixed[]
          */
-        public function identify($id, $feature_type = null, $feature_type_blocked = null, $module_required = null, $return_parts = null) {
-            // Executa a tarefa de identificação, separando cada parte.
-            $id_validate = preg_match("/^
-                (?<feature>\w+\@)?
-                (?<module>\w+\-\>)?
-                (?<name>[\w\/\.]+)
-                (?<method>::\w+)?
-            $/x", $id, $id_match);
+        public function identify($id, $feature_type = null, $feature_blocked = null, $module_required = null) {
+            $identifier_instance = new Awk_Module_Identifier;
+            $identifier_instance->feature = $feature_type;
 
-            if($id_validate) {
-                // Módulo que será utilizado.
-                // Por padrão, o próprio módulo.
-                $module_instance = $this;
-                if(!empty($id_match["module"])) {
-                    $module_instance = self::get(substr($id_match["module"], 0, -2));
-                }
-                else
-                if($module_required === true) {
-                    throw new Awk_Module_IdRequiresModule_Exception($id);
-                }
-
-                // Define a feature a ser utilizada.
-                // Se uma feature é obrigatória (null), mas não foi definida, gera um erro.
-                if($feature_type === null
-                && empty($id_match["feature"])) {
-                    throw new Awk_Module_IdRequiresFeature_Exception($id);
-                }
-                // Se a feature foi definida, mas há necessidade de um bloqueio, gera um erro.
-                if($feature_type_blocked === true
-                && $feature_type !== null
-                && !empty($id_match["feature"])
-                && $feature_type !== substr($id_match["feature"], 0, -1)) {
-                    throw new Awk_Module_IdFeatureExpected_Exception($id, $feature_type);
-                }
-                // Em último caso, define a feature que será utilizada.
-                else
-                if(!empty($id_match["feature"])) {
-                    $feature_type = substr($id_match["feature"], 0, -1);
-                }
-
-                // Identifica um método.
-                $method_name = null;
-                if(!empty($id_match["method"])) {
-                    $method_name = substr($id_match["method"], 2);
-                }
-
-                // Retorna as instâncias das partes identificadas.
-                if($return_parts === true) {
-                    return [
-                        "feature" => $feature_type,
-                        "module" => $module_instance,
-                        "name" => $id_match["name"],
-                        "method" => $method_name
-                    ];
-                }
-
-                // Após coletar todos os dados necessários, carrega o objeto.
-                // Se a feature for view, impede que ela seja processada.
-                if($feature_type === "view") {
-                    $object_instance = $module_instance->__call($feature_type, [ $id_match["name"], null, null, true ]);
-                }
-                // Caso contrário, processa o objeto normalmente.
-                else {
-                    $object_instance = $module_instance->__call($feature_type, [ $id_match["name"] ]);
-                }
-
-
-                // Se um método foi informado, retorna um callable.
-                if($method_name !== null) {
-                    return [ $object_instance, $method_name ];
-                }
-
-                // Caso contrário, apenas retorna o objeto.
-                return $object_instance;
+            // Indica se haverá o bloqueio da feature.
+            if($feature_blocked === true) {
+                $identifier_instance->set_feature_blocked();
             }
 
-            // Se não foi possível validar, lança uma exceção.
-            throw new Awk_Module_IdUnsupportedFormat_Exception($id);
+            // Indica se um módulo é esperado.
+            if($module_required === true) {
+                $identifier_instance->set_module_required();
+            }
+            // Caso contrário, aplica o próprio módulo.
+            else {
+                $identifier_instance->module = $this;
+            }
+
+            return $identifier_instance->identify($id);
         }
 
         /**

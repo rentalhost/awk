@@ -38,7 +38,7 @@
 
         /**
          * Adiciona uma rota de raíz, que só é executada quando não há mais argumentos na URL Array.
-         * @param callable $root_callback Definição do callable.
+         * @param callable|string $root_callback Definição do callable ou de um identificador.
          */
         public function add_root($root_callback) {
             $this->add_route("[awk->null]", $root_callback);
@@ -46,7 +46,7 @@
 
         /**
          * Adiciona uma nova rota de passagem.
-         * @param callable $passage_callback Definição do callable.
+         * @param callable|string $passage_callback Definição do callable ou de um identificador.
          */
         public function add_passage($passage_callback) {
             $this->add_route(null, $passage_callback);
@@ -54,7 +54,7 @@
 
         /**
          * Adiciona uma rota exclusiva para arquivos.
-         * @param callable $route_callback Definição do callable.
+         * @param callable|string $route_callback Definição do callable ou de um identificador.
          */
         public function add_file_passage($route_callback) {
             $router_instance = new Awk_Router_Route($this);
@@ -67,7 +67,7 @@
         /**
          * Adiciona uma nova rota ao roteador.
          * @param string   $route_definition Definição da rota.
-         * @param callable $route_callback   Definição do callable.
+         * @param callable|string $route_callback   Definição do callable ou de um identificador.
          */
         public function add_route($route_definition, $route_callback) {
             $router_instance = new Awk_Router_Route($this);

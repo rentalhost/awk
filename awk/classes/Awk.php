@@ -16,59 +16,60 @@
          */
         static private $class_mapper = [
             // Classes module.
+            "Awk_Module"                    => "classes",
             "Awk_Module_Base"               => "classes",
             "Awk_Module_Feature"            => "classes",
-            "Awk_Module"                    => "classes",
+            "Awk_Module_Identifier"         => "classes",
 
             // Classes router.
+            "Awk_Router"                    => "classes",
             "Awk_Router_Feature"            => "classes",
             "Awk_Router_Driver_Stack"       => "classes",
             "Awk_Router_Driver"             => "classes",
             "Awk_Router_Route_Part"         => "classes",
             "Awk_Router_Route"              => "classes",
-            "Awk_Router"                    => "classes",
 
             // Classes settings.
-            "Awk_Settings_Feature"          => "classes",
             "Awk_Settings"                  => "classes",
+            "Awk_Settings_Feature"          => "classes",
 
             // Classes view.
-            "Awk_View_Feature"              => "classes",
             "Awk_View"                      => "classes",
+            "Awk_View_Feature"              => "classes",
 
             // Classes controller.
-            "Awk_Controller_Feature"        => "classes",
             "Awk_Controller"                => "classes",
+            "Awk_Controller_Feature"        => "classes",
 
             // Classes library.
-            "Awk_Library_Feature"           => "classes",
             "Awk_Library"                   => "classes",
+            "Awk_Library_Feature"           => "classes",
 
             // Classes helper.
-            "Awk_Helper_Feature"            => "classes",
             "Awk_Helper"                    => "classes",
+            "Awk_Helper_Feature"            => "classes",
 
             // Classes type.
-            "Awk_Type_Feature"              => "classes",
             "Awk_Type"                      => "classes",
+            "Awk_Type_Feature"              => "classes",
 
             // Classes database.
-            "Awk_Database_Feature"          => "classes",
             "Awk_Database"                  => "classes",
+            "Awk_Database_Feature"          => "classes",
 
             // Classes model.
+            "Awk_Model"                     => "classes",
             "Awk_Model_Feature"             => "classes",
             "Awk_Model_Query"               => "classes",
-            "Awk_Model"                     => "classes",
             "Awk_Model_Row"                 => "classes",
 
             // Classes public.
-            "Awk_Public_Feature"            => "classes",
             "Awk_Public"                    => "classes",
+            "Awk_Public_Feature"            => "classes",
 
             // Classes private.
-            "Awk_Private_Feature"           => "classes",
             "Awk_Private"                   => "classes",
+            "Awk_Private_Feature"           => "classes",
 
             // Classes session.
             "Awk_Session_Feature"           => "classes",
@@ -176,8 +177,8 @@
             // Identifica a rota.
             // Se o roteador existir, ele será utilizado.
             $router_identify = self::$module->identify($engine_settings->router_default, "router", null, true, true);
-            if($router_identify["module"]->routers->exists($router_identify["name"])) {
-                $router_driver = new Awk_Router_Driver(Awk_Router::get_url(), $router_identify["module"], true);
+            if($router_identify->module->routers->exists($router_identify->name)) {
+                $router_driver = new Awk_Router_Driver(Awk_Router::get_url(), $router_identify->module, true);
                 $router_driver->redirect($engine_settings->router_default);
                 return;
             }

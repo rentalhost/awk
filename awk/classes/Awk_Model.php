@@ -52,7 +52,7 @@
          * @param string $table_base Identificador do model base.
          */
         public function set_base($table_base) {
-            $this->model_base = $this->get_module()->identify($table_base, "model", true);
+            $this->model_base = $this->get_module()->identify($table_base, "model", true)->get_instance();
         }
 
         /**

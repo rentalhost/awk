@@ -77,7 +77,7 @@
          * Identifica uma View, mas espera que ela não seja processada.
          */
         public function testIdentifierViewUnprocess() {
-            $view_instance = self::$module->identify("view@test2_args");
+            $view_instance = self::$module->identify("view@test2_args")->get_instance();
 
             $this->assertFalse($view_instance->was_processed());
             $this->expectOutputString("");
