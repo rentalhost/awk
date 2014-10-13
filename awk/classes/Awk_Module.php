@@ -233,8 +233,19 @@
                     ];
                 }
 
+                // Parâmetros que serão enviados a instância.
+                // Inicialmente, somente o nome identificado é enviado como primeiro parâmetro.
+                $instance_args = [];
+                $instance_args[] = $id_match["name"];
+
+                // Se a feature for view, impede que ela seja impressa automaticamente.
+                if($feature_type === "view") {
+                    $instance_args[] = null;
+                    $instance_args[] = true;
+                }
+
                 // Após coletar todos os dados necessários, carrega o objeto.
-                $object_instance = $module_instance->__call($feature_type, [ $id_match["name"] ]);
+                $object_instance = $module_instance->__call($feature_type, $instance_args);
 
                 // Se um método foi informado, retorna um callable.
                 if($method_name !== null) {

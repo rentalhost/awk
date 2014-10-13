@@ -74,9 +74,6 @@
          * Testa o sistema de identificação.
          */
         public function testIdentifier() {
-            $this->assertInstanceOf("Awk_Library", self::$module->identify("library@awk_suite->test6_valid_unique"));
-            $this->assertInstanceOf("Awk_Library", self::$module->identify("library@test6_valid_unique"));
-
             // Identificação simples.
             $identify_data = self::$module->identify("library@test6_valid_unique::test");
             $this->assertCount(2, $identify_data);
@@ -91,6 +88,84 @@
             $this->assertSame(self::$module, $identify_data["module"]);
             $this->assertSame("test6_valid_unique", $identify_data["name"]);
             $this->assertSame("test", $identify_data["method"]);
+
+            // Testes de identificação de todas as features.
+            // Teste em Library.
+            $identified_instance = self::$module->identify("library@awk_suite->test6_valid_unique");
+
+            $this->assertInstanceOf("Awk_Library", $identified_instance);
+            $this->assertSame("library@awk_suite->test6_valid_unique", $identified_instance->get_id());
+
+            // Omissão do módulo.
+            $identified_instance = self::$module->identify("library@test6_valid_unique");
+
+            $this->assertInstanceOf("Awk_Library", $identified_instance);
+            $this->assertSame("library@awk_suite->test6_valid_unique", $identified_instance->get_id());
+
+            // Teste em Controller.
+            $identified_instance = self::$module->identify("controller@test1_valid");
+
+            $this->assertInstanceOf("AwkSuite_Valid_Controller", $identified_instance);
+            $this->assertSame("controller@awk_suite->test1_valid", $identified_instance->get_id());
+
+            // Teste em Helper.
+            $identified_instance = self::$module->identify("helper@test1");
+
+            $this->assertInstanceOf("Awk_Helper", $identified_instance);
+            $this->assertSame("helper@awk_suite->test1", $identified_instance->get_id());
+
+            // Teste em Model.
+            $identified_instance = self::$module->identify("model@test1_base");
+
+            $this->assertInstanceOf("Awk_Model", $identified_instance);
+            $this->assertSame("model@awk_suite->test1_base", $identified_instance->get_id());
+
+            // Teste em Private.
+            $identified_instance = self::$module->identify("private@test1_file");
+
+            $this->assertInstanceOf("Awk_Private", $identified_instance);
+            $this->assertSame("private@awk_suite->test1_file", $identified_instance->get_id());
+
+            $identified_instance = self::$module->identify("private@unexistent");
+
+            $this->assertInstanceOf("Awk_Private", $identified_instance);
+            $this->assertSame("private@awk_suite->unexistent", $identified_instance->get_id());
+
+            // Teste em Public.
+            $identified_instance = self::$module->identify("public@test1_hello");
+
+            $this->assertInstanceOf("Awk_Public", $identified_instance);
+            $this->assertSame("public@awk_suite->test1_hello", $identified_instance->get_id());
+
+            $identified_instance = self::$module->identify("public@unexistent");
+
+            $this->assertInstanceOf("Awk_Public", $identified_instance);
+            $this->assertSame("public@awk_suite->unexistent", $identified_instance->get_id());
+
+            // Teste em Router.
+            $identified_instance = self::$module->identify("router@test1_basic");
+
+            $this->assertInstanceOf("Awk_Router", $identified_instance);
+            $this->assertSame("router@awk_suite->test1_basic", $identified_instance->get_id());
+
+            // Teste em Type.
+            $identified_instance = self::$module->identify("type@test1_complete");
+
+            $this->assertInstanceOf("Awk_Type", $identified_instance);
+            $this->assertSame("type@awk_suite->test1_complete", $identified_instance->get_id());
+        }
+
+        /**
+         * Testa a identificação de uma View.
+         * Não deve possuir saída.
+         */
+        public function testIdentifierView() {
+            $identified_instance = self::$module->identify("view@test1");
+
+            $this->assertInstanceOf("Awk_View", $identified_instance);
+            $this->assertSame("view@awk_suite->test1", $identified_instance->get_id());
+
+            $this->expectOutputString("");
         }
 
         /**
