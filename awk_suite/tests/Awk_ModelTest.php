@@ -20,7 +20,6 @@
 
         /**
          * Testa a base de um model.
-         * @return void
          */
         public function testModelBase() {
             $model_instance = self::$module->model("test1_base");
@@ -31,7 +30,6 @@
 
         /**
          * Testa um model que define diretamente uma tabela.
-         * @return void
          */
         public function testModelDirect() {
             $model_instance = self::$module->model("test2_direct");
@@ -42,7 +40,7 @@
 
         /**
          * Testa um módulo com uma base.
-         * @return void
+         * @return Awk_Model
          */
         public function testModelExtended() {
             $model_instance = self::$module->model("test3_extends");
@@ -56,7 +54,6 @@
         /**
          * Testa um método da query.
          * @depends testModelExtended
-         * @return void
          */
         public function testModelQueryMethod($model_instance) {
             $this->assertSame([ 1 => "1" ], $model_instance->load_test()->get_array());
@@ -66,7 +63,6 @@
          * Exceção quando um model não existe.
          * @expectedException        Awk_Model_NotExists_Exception
          * @expectedExceptionMessage O Model "unexistent" não existe no módulo "awk_suite".
-         * @return void
          */
         public function testModelUnexistentException() {
             self::$module->model("unexistent");
@@ -77,7 +73,6 @@
          * @expectedException        Awk_Model_QueryAlreadyExists_Exception
          * @expectedExceptionMessage A Query "load_test" já foi definida no Model "test3_extends" do módulo "awk_suite".
          * @depends testModelExtended
-         * @return void
          */
         public function testModelQueryExistsException($model_instance) {
             $model_instance->add_query("load_test", null, null);
@@ -88,7 +83,6 @@
          * @expectedException        Awk_Model_QueryNotExists_Exception
          * @expectedExceptionMessage A Query "load_unknow" não foi definida no Model "test3_extends" do módulo "awk_suite".
          * @depends testModelExtended
-         * @return void
          */
         public function testModelQueryNotDefinedException($model_instance) {
             $model_instance->load_unknow();

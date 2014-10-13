@@ -21,12 +21,24 @@
 
         /**
          * Testa a instância.
-         * @return void
          */
         public function testControllerLoad() {
             $controller_instance = self::$module->controller("test1_valid");
 
             $this->assertInstanceOf("Awk_Base", $controller_instance);
+
+            return $controller_instance;
+        }
+
+        /**
+         * Testa Awk_Base.
+         * @covers Awk_Base::get_parent
+         * @covers Awk_Base::get_id
+         * @depends testControllerLoad
+         */
+        public function testAwkBase($controller_instance) {
+            $this->assertInstanceOf("Awk_Controller", $controller_instance->get_parent());
+            $this->assertSame("controller@awk_suite->test1_valid", $controller_instance->get_id());
         }
 
         /**

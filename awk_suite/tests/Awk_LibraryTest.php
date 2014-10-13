@@ -66,7 +66,7 @@
 
         /**
          * Testa a base de uma library.
-         * @covers  Awk_Base::get_base_module
+         * @covers  Awk_Base::get_module
          * @depends testLibraryLoad
          * @return void
          */

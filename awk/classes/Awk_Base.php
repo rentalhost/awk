@@ -31,7 +31,7 @@
          * Obtém o módulo base.
          * @return Awk_Module Retorna o módulo base definido.
          */
-        public function get_base_module() {
+        public function get_module() {
             return $this->module;
         }
 
@@ -39,7 +39,7 @@
          * Obtém o parent base.
          * @return object Retorna a instância responsável pela criação da classe.
          */
-        public function get_base_parent() {
+        public function get_parent() {
             return $this->parent;
         }
 
