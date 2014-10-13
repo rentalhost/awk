@@ -1,0 +1,8 @@
+/awk_suite              export-ignore
+/settings.awk.php       export-ignore
+/settings.awk_suite.php export-ignore
+/composer.json          export-ignore
+/composer.lock          export-ignore
+/README.md              export-ignore
+/TODO                   export-ignore
+/CHANGELOG              export-ignore
