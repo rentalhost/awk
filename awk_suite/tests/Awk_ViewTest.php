@@ -28,7 +28,10 @@
          * Carrega a View que será testada.
          */
         public function testViewLoad() {
+            $this->assertTrue(self::$module->views->exists("test1"));
+
             self::$view_instance = self::$module->view("test1", null, true);
+
             $this->assertInstanceOf("Awk_View", self::$view_instance);
         }
 

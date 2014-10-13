@@ -30,4 +30,13 @@
 
             return $view_instance;
         }
+
+        /**
+         * Verifica se uma determinada View existe.
+         * @param  string $view_name Nome da View.
+         * @return boolean
+         */
+        public function exists($view_name) {
+            return is_readable($this->module->get_path()->get() . "/views/{$view_name}.php");
+        }
     }

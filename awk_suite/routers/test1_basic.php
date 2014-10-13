@@ -1,5 +1,8 @@
 <?php
 
+    // Adiciona um roteador de arquivos.
+    $router->add_file_passage("test1_basic.file");
+
     // Adiciona um root.
     $router->add_root(function() {
         echo "root";

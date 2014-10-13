@@ -53,6 +53,18 @@
         }
 
         /**
+         * Adiciona uma rota exclusiva para arquivos.
+         * @param callable $route_callback Definição do callable.
+         */
+        public function add_file_passage($route_callback) {
+            $router_instance = new Awk_Router_Route($this);
+            $router_instance->set_callback($route_callback);
+            $router_instance->set_file_mode();
+
+            $this->routes[] = $router_instance;
+        }
+
+        /**
          * Adiciona uma nova rota ao roteador.
          * @param string   $route_definition Definição da rota.
          * @param callable $route_callback   Definição do callable.

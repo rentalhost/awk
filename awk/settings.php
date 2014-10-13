@@ -23,9 +23,3 @@
      * @var string
      */
     $settings->router_default = "router@site->index";
-
-    /**
-     * Define o módulo da rota inicial de arquivos.
-     * @var string
-     */
-    $settings->router_file_default = "router@site->index.file";

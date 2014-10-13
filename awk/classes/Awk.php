@@ -173,18 +173,12 @@
             // Carrega as configurações do motor.
             $engine_settings = self::$module->settings();
 
-            // Por definição é usado o "index" como roteador padrão, porém,\
-            // quando vem de um arquivo público é necessário utilizar o roteador "index.file".
-            $router_id = isset($_SERVER["REDIRECT_PUBLICS"])
-                ? $engine_settings->router_file_default
-                : $engine_settings->router_default;
-
             // Identifica a rota.
             // Se o roteador existir, ele será utilizado.
-            $router_identify = self::$module->identify($router_id, "router", null, true, true);
+            $router_identify = self::$module->identify($engine_settings->router_default, "router", null, true, true);
             if($router_identify["module"]->routers->exists($router_identify["name"])) {
                 $router_driver = new Awk_Router_Driver(Awk_Router::get_url(), $router_identify["module"], true);
-                $router_driver->redirect($router_id);
+                $router_driver->redirect($engine_settings->router_default);
                 return;
             }
 

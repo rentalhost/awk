@@ -26,7 +26,7 @@
             $router_instance = self::$module->router("test1_basic");
 
             $this->assertInstanceOf("Awk_Router", $router_instance);
-            $this->assertCount(10, $router_instance->get_routes());
+            $this->assertCount(11, $router_instance->get_routes());
 
             return $router_instance;
         }
@@ -199,6 +199,22 @@
         }
 
         /**
+         * Testa a rota do módulo site.
+         */
+        public function testSiteRouter() {
+            $site_module = Awk_Module::get("site");
+
+            $this->assertTrue($site_module->routers->exists("index"));
+            $this->assertTrue($site_module->views->exists("helloWorld"));
+
+            // Testa a rota.
+            $test_driver = new Awk_Router_Driver(null, $site_module);
+            $test_driver->redirect("index");
+
+            $this->expectOutputString("Hello World!");
+        }
+
+        /**
          * Rota inexistente.
          * @expectedException           Awk_Router_NotExists_Exception
          * @expectedExceptionMessage    O Router "unexistent" não existe no módulo "awk_suite".
@@ -238,5 +254,34 @@
             $test_driver->redirect("test5_empty");
 
             $this->expectOutputString("passage->test");
+        }
+
+        /**
+         * Simula a configuração de uma rota de arquivo.
+         * @covers Awk_Router_Route::set_file_mode
+         */
+        public function testRouterConfigure3() {
+            // Cria um arquivo temporário para testes.
+            $_SERVER["DOCUMENT_ROOT"] = getcwd();
+            $_SERVER["REDIRECT_URL"] = "/publics/test1_hello.php";
+            $_SERVER["REDIRECT_PUBLICS"] = true;
+
+            $router = self::$module->router("test5b_empty");
+
+            // Adiciona uma nova rota.
+            $router->add_file_passage(function() { echo "file"; });
+
+            // Espera-se que atinja o root, e não o roteador de arquivo.
+            $test_driver = new Awk_Router_Driver("", self::$module);
+            $test_driver->redirect("test5b_empty");
+
+            $this->expectOutputString("root");
+            ob_clean();
+
+            // Espera-se que atinja o roteador do arquivo.
+            $test_driver = new Awk_Router_Driver("publics/test1_hello.php", self::$module);
+            $test_driver->redirect("test5b_empty");
+
+            $this->expectOutputString("file");
         }
     }

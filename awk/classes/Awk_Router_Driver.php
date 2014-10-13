@@ -90,6 +90,12 @@
             // Será necessário testar uma a uma, até encontrar uma que possa ser resolvida.
             $router_routes = $stack_current->router_instance->get_routes();
             foreach($router_routes as $router_route) {
+                // Se não for um arquivo público, e for uma rota específica para esse fim, ignora.
+                if(!isset($_SERVER["REDIRECT_PUBLICS"])
+                && $router_route->get_file_mode() === true) {
+                    continue;
+                }
+
                 // Verifica se a rota atual pode ser resolvida.
                 // Se puder, seu callback será executado.
                 if($router_route->match($stack_current->url_array, $output_args, $output_attrs, $url_array_index)) {

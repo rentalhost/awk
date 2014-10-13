@@ -8,7 +8,6 @@
          * Armazena o valor original.
          */
         static private $router_default_original;
-        static private $router_file_default_original;
 
         /**
          * Retorna a instância de Settings do módulo.
@@ -24,7 +23,6 @@
             $awk_settings = self::getAwkSettings();
 
             self::$router_default_original = $awk_settings->router_default;
-            self::$router_file_default_original = $awk_settings->router_file_default;
         }
 
         /**
@@ -33,7 +31,6 @@
         static public function setupAfterClass($awk_settings) {
             $awk_settings = self::getAwkSettings();
             $awk_settings->router_default = self::$router_default_original;
-            $awk_settings->router_file_default = self::$router_file_default_original;
         }
 
         /**
@@ -55,7 +52,6 @@
          */
         public function testAwkFileInit() {
             $awk_settings = self::getAwkSettings();
-            $awk_settings->router_file_default = "router@awk_suite->test6_basic.file";
 
             $_SERVER["REDIRECT_PUBLICS"] = true;
             $_SERVER["SCRIPT_NAME"] = null;

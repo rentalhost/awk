@@ -29,6 +29,12 @@
         private $callback;
 
         /**
+         * Armazena se é uma rota de arquivo.
+         * @var boolean
+         */
+        private $is_file = false;
+
+        /**
          * Construtor.
          * @param Awk_Router $router Roteador responsável pela construção.
          */
@@ -217,5 +223,21 @@
          */
         public function get_callback() {
             return $this->callback;
+        }
+
+        /**
+         * Define se é uma rota de arquivo.
+         * @param boolean $is_file Se é um arquivo.
+         */
+        public function set_file_mode($is_file = null) {
+            $this->is_file = $is_file !== false;
+        }
+
+        /**
+         * Retorna se é uma rota de arquivo.
+         * @return boolean
+         */
+        public function get_file_mode() {
+            return $this->is_file;
         }
     }
