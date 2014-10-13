@@ -23,14 +23,41 @@
         private $printed = false;
 
         /**
+         * Armazena se a View já foi processada.
+         * @var boolean
+         */
+        private $processed = false;
+
+        /**
          * Carrega a view e a retorna.
-         * @param  string  $view_name        Identificador da view.
+         * @param  string  $view_name               Identificador da view.
+         * @param  mixed[] $view_args               Argumentos que serão transferidos a view como variáveis.
+         * @param  boolean $view_avoid_print        Se deve impedir que a view seja impressa automaticamente.
+         * @param  boolean $view_avoid_processing   Se deve impedir que a view seja processada automaticamente.
+         */
+        public function load($view_name, $view_args = null, $view_avoid_print = null, $view_avoid_processing = null) {
+            $this->name = $view_name;
+            $this->path = new Awk_Path($this->module->get_path()->get() . "/views/{$view_name}.php");
+
+            // Processa a view.
+            if($view_avoid_processing !== true) {
+                $this->process($view_args, $view_avoid_print);
+            }
+        }
+
+        /**
+         * Processa os parâmetros de uma view.
          * @param  mixed[] $view_args        Argumentos que serão transferidos a view como variáveis.
          * @param  boolean $view_avoid_print Se deve impedir que a view seja impressa automaticamente.
          */
-        public function load($view_name, $view_args = null, $view_avoid_print = null) {
-            $this->name = $view_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/views/{$view_name}.php");
+        public function process($view_args = null, $view_avoid_print = null) {
+            // Reseta algumas informações.
+            $this->return = null;
+            $this->contents = null;
+            $this->printed = false;
+
+            // Indica que a View foi processada.
+            $this->processed = true;
 
             // Carrega o arquivo, armazenando sua saída.
             if($this->path->is_file()
@@ -63,6 +90,14 @@
          */
         public function was_printed() {
             return $this->printed;
+        }
+
+        /**
+         * Retorna se a View já foi processada.
+         * @return boolean
+         */
+        public function was_processed() {
+            return $this->processed;
         }
 
         /**

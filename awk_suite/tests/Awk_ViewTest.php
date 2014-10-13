@@ -63,6 +63,50 @@
         }
 
         /**
+         * Identifica uma View, mas não a processa.
+         */
+        public function testIdentifierView() {
+            self::$module->identify("view@test1_hello");
+            $this->expectOutputString("");
+        }
+
+        /**
+         * Identifica uma View, mas espera que ela não seja processada.
+         */
+        public function testIdentifierViewUnprocess() {
+            $view_instance = self::$module->identify("view@test2_args");
+
+            $this->assertFalse($view_instance->was_processed());
+            $this->expectOutputString("");
+
+            return $view_instance;
+        }
+
+        /**
+         * Processa a View.
+         * @depends testIdentifierViewUnprocess
+         */
+        public function testIdentifierViewProcessNow1($view_instance) {
+            $view_instance->process([ "hello" => "World!" ]);
+
+            $this->assertTrue($view_instance->was_printed());
+            $this->assertTrue($view_instance->was_processed());
+            $this->expectOutputString("Hello World!");
+        }
+
+        /**
+         * Processa a View, mas sem imprimí-la.
+         * @depends testIdentifierViewUnprocess
+         */
+        public function testIdentifierViewProcessNow2($view_instance) {
+            $view_instance->process([ "hello" => "World!" ], true);
+
+            $this->assertFalse($view_instance->was_printed());
+            $this->assertTrue($view_instance->was_processed());
+            $this->expectOutputString("");
+        }
+
+        /**
          * Verifica por uma view inexistente.
          * @depends testViewLoad
          */
