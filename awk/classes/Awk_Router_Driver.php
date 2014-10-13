@@ -165,14 +165,19 @@
 
         /**
          * Redireciona para um roteador através da id.
-         * @param  string $router_id Identificador do roteador.
+         * @param string|Awk_Module_Identifier $router_id Identificador do roteador.
          */
         public function redirect($router_id) {
             // Define o roteador da próxima pilha de execução.
             $stack_next = $this->get_stack_next();
 
+            // Converte um identificador, se necessário.
+            if(!$router_id instanceof Awk_Module_Identifier) {
+                $router_id = $stack_next->module_instance->identify($router_id, "router");
+            }
+
             // Carrega a definição do roteador.
-            $router_instance = $stack_next->module_instance->identify($router_id, "router")->get_instance();
+            $router_instance = $router_id->get_instance();
             $stack_next->module_instance = $router_instance->get_module();
             $stack_next->router_instance = $router_instance;
 

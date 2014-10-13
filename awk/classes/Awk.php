@@ -176,10 +176,10 @@
 
             // Identifica a rota.
             // Se o roteador existir, ele será utilizado.
-            $router_identify = self::$module->identify($engine_settings->router_default, "router", null, true, true);
+            $router_identify = self::$module->identify($engine_settings->router_default, "router", null, true);
             if($router_identify->module->routers->exists($router_identify->name)) {
                 $router_driver = new Awk_Router_Driver(Awk_Router::get_url(), $router_identify->module, true);
-                $router_driver->redirect($engine_settings->router_default);
+                $router_driver->redirect($router_identify);
                 return;
             }
 
