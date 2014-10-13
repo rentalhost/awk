@@ -1,11 +1,8 @@
 <?php
 
-    /** DATABASE */
-    // Configuração do database para testes.
-    // @type array;
+    // Configuração do Database para testes.
     $settings->database_configuration = [ ];
 
-    /** TESTS */
     // Define algumas configurações para testes.
     $settings->test_value = 123;
     $settings->test_overwrited = "before";

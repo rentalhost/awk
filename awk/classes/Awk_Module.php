@@ -187,8 +187,8 @@
             $/x", $id, $id_match);
 
             if($id_validate) {
-                // Módulo que será utilizado. Por padrão, o próprio módulo.
-                // @type Awk_Module;
+                // Módulo que será utilizado.
+                // Por padrão, o próprio módulo.
                 $module_instance = $this;
                 if(!empty($id_match["module"])) {
                     $module_instance = self::get(substr($id_match["module"], 0, -2));

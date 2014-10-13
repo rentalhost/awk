@@ -19,20 +19,28 @@
         static public function create($error_options) {
             // Definições padrões de um erro.
             $error_options = array_replace([
-                // Tipo do erro a ser lançado.
-                // @type const TYPE;
+                /**
+                 * Tipo de erro a ser lançado.
+                 * @var string
+                 */
                 "type" => self::TYPE_EXCEPTION,
 
-                // Tipo de exceção que será lançada.
-                // @type string;
+                /**
+                 * Tipo de exceção que será lançada.
+                 * @var string
+                 */
                 "exception" => "Awk_Exception",
 
-                // Mensagem do erro.
-                // @type string?;
+                /**
+                 * Mensagem de erro.
+                 * @var string
+                 */
                 "message" => null,
 
-                // Código do erro.
-                // @type int?;
+                /**
+                 * Código do erro.
+                 * @var integer
+                 */
                 "code" => null,
             ], $error_options);
 

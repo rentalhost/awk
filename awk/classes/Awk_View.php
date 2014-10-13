@@ -22,9 +22,6 @@
          */
         private $printed = false;
 
-        /** LOAD */
-        //
-        // @return self;
         /**
          * Carrega a view e a retorna.
          * @param  string  $view_name        Identificador da view.

@@ -4,8 +4,6 @@
      * Responsável pro gerir dados.
      */
     class Awk_Data implements Awk_PropertyAccess_Interface {
-        //
-        // @type array<string, mixed>;
         /**
          * Armazena os dados.
          * @var mixed[]
