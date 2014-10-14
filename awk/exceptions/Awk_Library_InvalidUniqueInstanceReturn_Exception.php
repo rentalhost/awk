@@ -11,6 +11,6 @@
          */
         public function __construct($module, $library_name) {
             parent::__construct("O método \"library_unique()\" da Library \"{$library_name}\" " .
-                "do módulo \"" . $module->get_name() . "\" não retornou uma instância da classe registrada.");
+                "do módulo \"{$module->name}\" não retornou uma instância da classe registrada.");
         }
     }

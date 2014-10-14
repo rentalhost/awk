@@ -26,7 +26,7 @@
          */
         public function load($controller_name) {
             $this->name = $controller_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/controllers/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/controllers/{$this->name}.php");
 
             // Se o arquivo do controller não existir ou não for legível, lança um erro.
             if(!$this->path->is_file()
@@ -54,7 +54,8 @@
 
             // Se o controller for uma instância de `Awk_Base`, armazena as informações do módulo.
             if($this->instance instanceof Awk_Base) {
-                $this->instance->set_base($this->module, $this);
+                $this->instance->module = $this->module;
+                $this->instance->parent = $this;
             }
         }
 

@@ -44,7 +44,7 @@
             $this->assertSame(1, self::$view_instance->get_return());
             $this->assertSame("Hello World!", self::$view_instance->get_contents());
             $this->assertSame("Hello World!", (string) self::$view_instance);
-            $this->assertTrue(self::$view_instance->get_path()->exists());
+            $this->assertTrue(self::$view_instance->path->exists());
         }
 
         /**
@@ -117,6 +117,6 @@
             $view_instance = self::$module->view("subdir/unexistent");
             $this->assertSame(null, $view_instance->get_return());
             $this->assertEmpty($view_instance->get_contents());
-            $this->assertFalse($view_instance->get_path()->exists());
+            $this->assertFalse($view_instance->path->exists());
         }
     }

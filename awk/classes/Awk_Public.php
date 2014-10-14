@@ -10,12 +10,9 @@
          */
         public function load($public_name) {
             $this->name = $public_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/publics/" . strtok($public_name, "?"));
+            $this->path = new Awk_Path($this->module->path->get() . "/publics/" . strtok($public_name, "?"));
         }
 
-        /** URL */
-        //
-        // return @;
         /**
          * Obtém uma URL de acesso ao arquivo.
          * @param  boolean $include_baseurl Se deve incluir a URL base.
@@ -23,6 +20,6 @@
          */
         public function get_url($include_baseurl = null) {
             return ( $include_baseurl === true ? Awk_Router::get_baseurl()  : null )
-                . $this->module->get_name() . "/publics/" . $this->name;
+                . "{$this->module->name}/publics/{$this->name}";
         }
     }

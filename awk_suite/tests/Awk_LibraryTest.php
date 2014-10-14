@@ -20,7 +20,6 @@
 
         /**
          * Carrega uma library válida.
-         * @covers Awk_Base::set_base
          */
         public function testLibraryLoad() {
             $this->assertEmpty(null);
@@ -63,7 +62,6 @@
 
         /**
          * Testa a base de uma library.
-         * @covers  Awk_Base::get_module
          * @depends testLibraryLoad
          */
         public function testLibraryBase($library_instance) {

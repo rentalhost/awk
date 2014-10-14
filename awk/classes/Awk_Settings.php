@@ -9,7 +9,7 @@
          * Atualmente, todas as instâncias são chamadas de "default".
          * @var string
          */
-        protected $name = "default";
+        public $name = "default";
 
         /**
          * Armazena o path de sobreposição de configurações.
@@ -28,7 +28,7 @@
          * @codeCoverageIgnore
          */
         public function load() {
-            $module_path = $this->module->get_path()->get();
+            $module_path = $this->module->path->get();
             $this->path = new Awk_Path("{$module_path}/settings.php");
 
             // Para ser um módulo válido, é esperado que o arquivo "settings.php" exista,
@@ -36,7 +36,7 @@
             $this->module->include_clean($this->path->get(), [ "settings" => $this ]);
 
             // Define o caminho de sobreposição.
-            $this->overwrite_path = new Awk_Path("{$module_path}/../settings." . $this->module->get_name() . ".php");
+            $this->overwrite_path = new Awk_Path("{$module_path}/../settings.{$this->module->name}.php");
 
             // Se o arquivo de sobreposição existe, ele é executado.
             if($this->overwrite_path->is_file()

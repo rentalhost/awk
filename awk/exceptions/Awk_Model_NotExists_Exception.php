@@ -10,6 +10,6 @@
          * @param string     $model_name      Nome do Model que não existe.
          */
         public function __construct($module, $model_name) {
-            parent::__construct("O Model \"{$model_name}\" não existe no módulo \"" . $module->get_name() . "\".");
+            parent::__construct("O Model \"{$model_name}\" não existe no módulo \"{$module->name}\".");
         }
     }

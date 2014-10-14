@@ -24,6 +24,6 @@
         public function testPrivateFile() {
             $private_instance = self::$module->private("test1_file.php");
 
-            $this->assertTrue($private_instance->get_path()->exists());
+            $this->assertTrue($private_instance->path->exists());
         }
     }

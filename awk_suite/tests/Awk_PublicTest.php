@@ -24,7 +24,7 @@
         public function testPublicFileLoad() {
             $public_instance = self::$module->public("test1_hello.php");
 
-            $this->assertTrue($public_instance->get_path()->exists());
+            $this->assertTrue($public_instance->path->exists());
 
             return $public_instance;
         }

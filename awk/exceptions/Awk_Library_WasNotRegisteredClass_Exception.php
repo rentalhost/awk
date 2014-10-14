@@ -10,6 +10,6 @@
          * @param string     $library_name    Nome da Library que não registrou a classe.
          */
         public function __construct($module, $library_name) {
-            parent::__construct("A Library \"{$library_name}\" do módulo \"" . $module->get_name() . "\" não registrou uma classe.");
+            parent::__construct("A Library \"{$library_name}\" do módulo \"{$module->name}\" não registrou uma classe.");
         }
     }

@@ -10,7 +10,6 @@
          * @param string     $library_name    Nome da Library que recebeu a falha.
          */
         public function __construct($module, $library_name) {
-            parent::__construct("A instância única da Library \"{$library_name}\" do módulo \"" .
-                $module->get_name() . "\" não pôde ser criada pois seu construtor possui parâmetros obrigatórios.");
+            parent::__construct("A instância única da Library \"{$library_name}\" do módulo \"{$module->name}\" não pôde ser criada pois seu construtor possui parâmetros obrigatórios.");
         }
     }

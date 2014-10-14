@@ -10,6 +10,6 @@
          */
         public function load($private_name) {
             $this->name = $private_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/privates/" . $private_name);
+            $this->path = new Awk_Path($this->module->path->get() . "/privates/" . $private_name);
         }
     }

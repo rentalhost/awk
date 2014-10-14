@@ -10,7 +10,6 @@
          * @param string     $controller_name Nome do Controller que registrou uma classe não localizável.
          */
         public function __construct($module, $controller_name, $class_name) {
-            parent::__construct("O Controller \"{$controller_name}\" do módulo \"" .
-                $module->get_name() . "\" registrou a classe \"{$class_name}\", mas ela não foi encontrada.");
+            parent::__construct("O Controller \"{$controller_name}\" do módulo \"{$module->name}\" registrou a classe \"{$class_name}\", mas ela não foi encontrada.");
         }
     }

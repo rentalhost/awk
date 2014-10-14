@@ -27,7 +27,7 @@
          */
         public function load($type_name) {
             $this->name = $type_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/types/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/types/{$this->name}.php");
 
             // Se o arquivo do type não existir, lança um erro.
             if(!$this->path->is_file()

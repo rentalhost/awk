@@ -10,6 +10,6 @@
          * @param string     $type_name Nome do Type com falha.
          */
         public function __construct($module, $type_name) {
-            parent::__construct("O Type \"{$type_name}\" do módulo \"" . $module->get_name() . "\" não definiu um método de transformação.");
+            parent::__construct("O Type \"{$type_name}\" do módulo \"{$module->name}\" não definiu um método de transformação.");
         }
     }

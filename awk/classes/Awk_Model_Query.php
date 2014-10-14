@@ -31,7 +31,7 @@
          * @throws Awk_Model_Row_UnsupportedQueryType_Exception Caso um tipo não suportado seja usado.
          */
         public function __construct($parent, $query_name, $query_type, $query_definer) {
-            parent::__construct($parent->get_module(), $parent);
+            parent::__construct($parent->module, $parent);
 
             // Define algumas propriedades.
             $this->query_name = $query_name;
@@ -58,7 +58,7 @@
                 case "one":
                     $query_result = $this->query($this->query_definer, $query_args);
                     if($query_result) {
-                        $row_instance = new Awk_Model_Row($this->get_module(), $this);
+                        $row_instance = new Awk_Model_Row($this->module, $this);
                         $row_instance->set_result($query_result);
 
                         return $row_instance;
@@ -77,6 +77,6 @@
          * @return PDO_Statement
          */
         private function query($query_definer, $query_args) {
-            return $this->get_module()->database()->query($query_definer);
+            return $this->module->database()->query($query_definer);
         }
     }

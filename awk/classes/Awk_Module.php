@@ -14,35 +14,19 @@
          * Nome do módulo.
          * @var string
          */
-        private $name;
+        public $name;
 
         /**
          * Caminho absoluto do módulo.
          * @var Awk_Path
          */
-        private $path;
+        public $path;
 
         /**
          * Caminho dos dados globais.
          * @var Awk_Data
          */
         public $globals;
-
-        /**
-         * Retorna o identificador do módulo.
-         * @return string
-         */
-        public function get_name() {
-            return $this->name;
-        }
-
-        /**
-         * Retorna o caminho absoluto do módulo.
-         * @return Awk_Path
-         */
-        public function get_path() {
-            return $this->path;
-        }
 
         /**
          * Constrói uma nova instância de módulo.

@@ -189,4 +189,4 @@
     $asserts->expect_equal($module->session(), []);
 
     // Elimina o bloco de sessão.
-    unset($_SESSION[getcwd() . DIRECTORY_SEPARATOR . $module->get_name()]);
+    unset($_SESSION[getcwd() . DIRECTORY_SEPARATOR . $module->name]);

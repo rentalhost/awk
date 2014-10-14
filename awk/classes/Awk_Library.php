@@ -29,7 +29,7 @@
          */
         public function load($library_name) {
             $this->name = $library_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/libraries/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/libraries/{$this->name}.php");
 
             // Se o arquivo da library não existir, lança um erro.
             if(!$this->path->is_file()
@@ -100,7 +100,8 @@
 
             // Se for uma instância de `Awk_Base`, armazena as informações da base.
             if($library_instance instanceof Awk_Base) {
-                $library_instance->set_base($this->module, $this);
+                $library_instance->module = $this->module;
+                $library_instance->parent = $this;
             }
 
             // Retorna a instância.
@@ -140,7 +141,8 @@
 
                 // Se for uma instância de `Awk_Base`, armazena as informações da base.
                 if($unique_instance instanceof Awk_Base) {
-                    $unique_instance->set_base($this->module, $this);
+                    $unique_instance->module = $this->module;
+                    $unique_instance->parent = $this;
                 }
 
                 // Armazena e retorna a instância.
@@ -161,7 +163,8 @@
 
             // Se for uma instância de `Awk_Base`, armazena as informações da base.
             if($this->unique_instance instanceof Awk_Base) {
-                $this->unique_instance->set_base($this->module, $this);
+                $this->unique_instance->module = $this->module;
+                $this->unique_instance->parent = $this;
             }
 
             // Retorna a instância única.

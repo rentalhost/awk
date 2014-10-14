@@ -23,14 +23,14 @@
         public function testClass() {
             $library_instance = self::$module->library("test1_valid_autoinit");
 
-            $this->assertInstanceOf("Awk_Module", $library_instance->get_module());
-            $this->assertInstanceOf("Awk_Library_Feature", $library_instance->get_parent());
-            $this->assertInstanceOf("Awk_Module", $library_instance->get_parent()->get_module());
+            $this->assertInstanceOf("Awk_Module", $library_instance->module);
+            $this->assertInstanceOf("Awk_Library_Feature", $library_instance->parent);
+            $this->assertInstanceOf("Awk_Module", $library_instance->parent->module);
 
-            $this->assertSame("test1_valid_autoinit", $library_instance->get_name());
+            $this->assertSame("test1_valid_autoinit", $library_instance->name);
 
-            $this->assertTrue(strpos($library_instance->get_path(false), "..") !== false);
-            $this->assertSame(str_replace("\\", "/", realpath($library_instance->get_path()->get())), $library_instance->get_path()->get_normalized());
+            $this->assertTrue(strpos($library_instance->path->get(), "..") !== false);
+            $this->assertSame(str_replace("\\", "/", realpath($library_instance->path->get())), $library_instance->path->get_normalized());
         }
 
         /**

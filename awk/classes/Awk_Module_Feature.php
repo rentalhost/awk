@@ -8,7 +8,7 @@
          * Armazena o módulo responsável.
          * @var Awk_Module
          */
-        protected $module;
+        public $module;
 
         /**
          * Mapa de features sem suporte ao recurso de verificação de existência.
@@ -29,14 +29,6 @@
         }
 
         /**
-         * Retorna o módulo da feature.
-         * @return Awk_Module
-         */
-        public function get_module() {
-            return $this->module;
-        }
-
-        /**
          * Verifica se um objeto existe em um recurso do módulo.
          * @param string $object_name       Nome do objeto a ser testado.
          * @param string $feature_directory Nome do recurso a ser testado.
@@ -50,7 +42,7 @@
             }
 
             // Determina o path a ser verificado.
-            $object_path = $this->module->get_path()->get() . "/{$feature_directory}/{$object_name}";
+            $object_path = $this->module->path->get() . "/{$feature_directory}/{$object_name}";
 
             // Aplica a extensão do projeto, se aplicável.
             // Por padrão, aplica a extensão php.

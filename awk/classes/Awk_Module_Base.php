@@ -26,25 +26,25 @@
          * Armazena uma referência direta ao módulo.
          * @var Awk_Module
          */
-        protected $module;
+        public $module;
 
         /**
          * Armazena a classe responsável pela inicialização da base.
          * @var object
          */
-        protected $parent;
+        public $parent;
 
         /**
          * Armazena o nome da base.
          * @var string
          */
-        protected $name;
+        public $name;
 
         /**
          * Armazena o path da base.
          * @var Awk_Path
          */
-        protected $path;
+        public $path;
 
         /**
          * Construtor.
@@ -54,30 +54,6 @@
         public function __construct($module, $parent) {
             $this->module = $module;
             $this->parent = $parent;
-        }
-
-        /**
-         * Obtém o módulo da base.
-         * @return Awk_Module
-         */
-        public function get_module() {
-            return $this->module;
-        }
-
-        /**
-         * Obtém o parent da base.
-         * @return object
-         */
-        public function get_parent() {
-            return $this->parent;
-        }
-
-        /**
-         * Obtém o nome da base.
-         * @return string
-         */
-        public function get_name() {
-            return $this->name;
         }
 
         /**
@@ -95,15 +71,7 @@
             // Caso contrário, aceita a validação.
             return
                 self::$feature_mapper[get_class($this)] .
-                "@"  . $this->module->get_name() .
+                "@"  . $this->module->name .
                 "->" . $this->name;
-        }
-
-        /**
-         * Obtém a instância do controlador de caminho.
-         * @return Awk_Path
-         */
-        public function get_path($normalized = null) {
-            return $this->path;
         }
     }

@@ -10,6 +10,6 @@
          * @param string     $library_name    Nome da Library que não existe.
          */
         public function __construct($module, $library_name) {
-            parent::__construct("A Library \"{$library_name}\" não existe no módulo \"" . $module->get_name() . "\".");
+            parent::__construct("A Library \"{$library_name}\" não existe no módulo \"{$module->name}\".");
         }
     }

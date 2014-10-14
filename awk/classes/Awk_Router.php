@@ -17,7 +17,7 @@
          */
         public function load($router_name) {
             $this->name = $router_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/routers/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/routers/{$this->name}.php");
 
             // Se o arquivo do roteador não existir, lança um erro.
             if(!$this->path->is_file()

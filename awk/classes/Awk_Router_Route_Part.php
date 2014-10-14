@@ -136,7 +136,7 @@
                 $this->method = "typed";
 
                 // Carrega a identificação para definir o tipo de combinação.
-                $this->match_type = $this->route->get_router()->get_module()->identify(rtrim($definition_match["identifier"]), "type", true)->get_instance();
+                $this->match_type = $this->route->get_router()->module->identify(rtrim($definition_match["identifier"]), "type", true)->get_instance();
 
                 // Se um nome de atributo foi definido, então aplica.
                 if(!empty($definition_match["attr_name"])) {

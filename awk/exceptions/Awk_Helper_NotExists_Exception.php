@@ -10,6 +10,6 @@
          * @param string     $helper_name     Nome do helper que não existe.
          */
         public function __construct($module, $helper_name) {
-            parent::__construct("O Helper \"{$helper_name}\" não existe no módulo \"" . $module->get_name() . "\".");
+            parent::__construct("O Helper \"{$helper_name}\" não existe no módulo \"{$module->name}\".");
         }
     }

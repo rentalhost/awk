@@ -37,7 +37,7 @@
          */
         public function load($view_name, $view_args = null, $view_avoid_print = null, $view_avoid_processing = null) {
             $this->name = $view_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/views/{$view_name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/views/{$view_name}.php");
 
             // Processa a view.
             if($view_avoid_processing !== true) {

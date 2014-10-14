@@ -17,7 +17,7 @@
          */
         public function load($helper_name) {
             $this->name = $helper_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/helpers/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/helpers/{$this->name}.php");
 
             // Se o arquivo do helper não existir, lança um erro.
             if(!$this->path->is_file()

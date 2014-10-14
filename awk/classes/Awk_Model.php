@@ -35,7 +35,7 @@
          */
         public function load($model_name) {
             $this->name = $model_name;
-            $this->path = new Awk_Path($this->module->get_path()->get() . "/models/{$this->name}.php");
+            $this->path = new Awk_Path($this->module->path->get() . "/models/{$this->name}.php");
 
             // Se o arquivo do model não existir, lança um erro.
             if(!$this->path->is_file()
@@ -52,7 +52,7 @@
          * @param string $table_base Identificador do model base.
          */
         public function set_base($table_base) {
-            $this->model_base = $this->get_module()->identify($table_base, "model", true)->get_instance();
+            $this->model_base = $this->module->identify($table_base, "model", true)->get_instance();
         }
 
         /**

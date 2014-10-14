@@ -178,7 +178,7 @@
 
             // Carrega a definição do roteador.
             $router_instance = $router_id->get_instance();
-            $stack_next->module_instance = $router_instance->get_module();
+            $stack_next->module_instance = $router_instance->module;
             $stack_next->router_instance = $router_instance;
 
             // Inicia o processamento de pilhas.

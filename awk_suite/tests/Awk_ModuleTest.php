@@ -119,9 +119,9 @@
             $current_directory = getcwd();
             chdir("{$current_directory}/..");
 
-            $this->assertSame("awk_suite", self::$module->get_name());
-            $this->assertSame(self::$module, self::$module->modules->get_module());
-            $this->assertTrue(Awk_Module::exists(self::$module->get_name()));
+            $this->assertSame("awk_suite", self::$module->name);
+            $this->assertSame(self::$module, self::$module->modules->module);
+            $this->assertTrue(Awk_Module::exists(self::$module->name));
 
             chdir($current_directory);
         }
@@ -135,7 +135,7 @@
 
             $this->assertCount(2, $identify_data);
             $this->assertInstanceOf("Awk_Library", $identify_data[0]);
-            $this->assertSame("test6_valid_unique", $identify_data[0]->get_name());
+            $this->assertSame("test6_valid_unique", $identify_data[0]->name);
             $this->assertSame("test", $identify_data[1]);
             $this->assertFalse(is_callable($identify_data));
 
