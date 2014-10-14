@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature library.
      */
-    class Awk_Library_Feature extends Awk_Module_Feature {
+    class Awk_Library_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias das libraries.
          * @var Awk_Library[]
@@ -27,5 +27,12 @@
             $library_instance->load($library_id);
 
             return $this->libraries[$library_id] = $library_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "libraries");
         }
     }

@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature router.
      */
-    class Awk_Router_Feature extends Awk_Module_Feature {
+    class Awk_Router_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena os roteadores instanciados.
          * @var Awk_Router[]
@@ -29,11 +29,9 @@
         }
 
         /**
-         * Verifica se um determinado roteador existe.
-         * @param  string $router_id Identificador do roteador.
-         * @return boolean
+         * @see Awk_FeatureAbstraction_Interface::exists()
          */
-        public function exists($router_id) {
-            return is_readable($this->module->get_path()->get() . "/routers/{$router_id}.php");
+        public function exists($object_name) {
+            return parent::exists($object_name, "routers");
         }
     }

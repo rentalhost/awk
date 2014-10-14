@@ -41,7 +41,6 @@
          * Verifica se um módulo responde com todas as features disponíveis.
          */
         public function testModuleFeatures() {
-            // Testa as features como propriedades.
             $this->assertInstanceOf("Awk_Router_Feature", self::$module->routers);
             $this->assertInstanceOf("Awk_Controller_Feature", self::$module->controllers);
             $this->assertInstanceOf("Awk_Library_Feature", self::$module->libraries);
@@ -55,6 +54,62 @@
             $this->assertInstanceOf("Awk_Private_Feature", self::$module->privates);
             $this->assertInstanceOf("Awk_Session_Feature", self::$module->sessions);
             $this->assertInstanceOf("Awk_Model_Feature", self::$module->models);
+        }
+
+        /**
+         * Testa os verificadores de existência de objetos nos módulos suportados.
+         * @covers Awk_Router_Feature::exists
+         * @covers Awk_Controller_Feature::exists
+         * @covers Awk_Library_Feature::exists
+         * @covers Awk_Helper_Feature::exists
+         * @covers Awk_View_Feature::exists
+         * @covers Awk_Type_Feature::exists
+         * @covers Awk_Model_Feature::exists
+         * @covers Awk_Public_Feature::exists
+         * @covers Awk_Private_Feature::exists
+         */
+        public function testModuleExists() {
+            $this->assertTrue(self::$module->routers->exists("test1_basic"));
+            $this->assertTrue(self::$module->controllers->exists("test1_valid"));
+            $this->assertTrue(self::$module->libraries->exists("test1_valid_autoinit"));
+            $this->assertTrue(self::$module->helpers->exists("test1"));
+            $this->assertTrue(self::$module->views->exists("test1"));
+            $this->assertTrue(self::$module->types->exists("test1_complete"));
+            $this->assertTrue(self::$module->models->exists("test1_base"));
+
+            // Situações especiais.
+            $this->assertTrue(self::$module->publics->exists("test1_hello.php"));
+            $this->assertTrue(self::$module->privates->exists("test1_file.php"));
+        }
+
+        /**
+         * Testa o acesso ao exists onde não é suportado.
+         * @expectedException           Awk_Module_ExistsNotSupported_Exception
+         * @expectedExceptionMessage    O recurso Database não possui suporte a verificação de existência de objetos.
+         * @covers Awk_Database_Feature::exists
+         */
+        public function testAwk_Module_ExistsNotSupported_Exception1() {
+            self::$module->databases->exists("default");
+        }
+
+        /**
+         * Testa o acesso ao exists onde não é suportado.
+         * @expectedException           Awk_Module_ExistsNotSupported_Exception
+         * @expectedExceptionMessage    O recurso Settings não possui suporte a verificação de existência de objetos.
+         * @covers Awk_Settings_Feature::exists
+         */
+        public function testAwk_Module_ExistsNotSupported_Exception2() {
+            self::$module->settings->exists("default");
+        }
+
+        /**
+         * Testa o acesso ao exists onde não é suportado.
+         * @expectedException           Awk_Module_ExistsNotSupported_Exception
+         * @expectedExceptionMessage    O recurso Session não possui suporte a verificação de existência de objetos.
+         * @covers Awk_Session_Feature::exists
+         */
+        public function testAwk_Module_ExistsNotSupported_Exception3() {
+            self::$module->sessions->exists("default");
         }
 
         /**

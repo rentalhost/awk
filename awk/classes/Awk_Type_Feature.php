@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature type.
      */
-    class Awk_Type_Feature extends Awk_Module_Feature {
+    class Awk_Type_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias das types.
          * @var Awk_Type[]
@@ -27,5 +27,12 @@
             $type_instance->load($type_id);
 
             return $this->types[$type_id] = $type_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "types");
         }
     }

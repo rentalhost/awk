@@ -83,7 +83,8 @@
             "Awk_Path"                      => "classes",
 
             // Interfaces.
-            "Awk_PropertyAccess_Interface"  => "interfaces",
+            "Awk_PropertyAccess_Interface"      => "interfaces",
+            "Awk_FeatureAbstraction_Interface"  => "interfaces",
 
             // Exceções.
             "Awk_Exception"                                             => "exceptions",
@@ -128,6 +129,7 @@
             "Awk_Module_IdFeatureExpected_Exception"                    => "exceptions",
             "Awk_Module_IdUnsupportedFormat_Exception"                  => "exceptions",
             "Awk_Module_GetIdIsNotSupported_Exception"                  => "exceptions",
+            "Awk_Module_ExistsNotSupported_Exception"                   => "exceptions",
 
             // Exceções de Router.
             "Awk_Router_Exception"                                      => "exceptions",

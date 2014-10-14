@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature private.
      */
-    class Awk_Private_Feature extends Awk_Module_Feature {
+    class Awk_Private_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Carrega uma instância imediatamente.
          * @param  string $private_name Identificador do arquivo privado.
@@ -23,5 +23,12 @@
             $private_instance->load($private_name);
 
             return $private_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "privates", false);
         }
     }

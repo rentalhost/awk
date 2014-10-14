@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature database.
      */
-    class Awk_Database_Feature extends Awk_Module_Feature {
+    class Awk_Database_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias das databases.
          * @var Awk_Database[]
@@ -26,5 +26,12 @@
 
             // Carrega e retorna.
             return $this->databases[$database_id] = new Awk_Database($this->module, $this);
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "databases");
         }
     }

@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature controller.
      */
-    class Awk_Controller_Feature extends Awk_Module_Feature {
+    class Awk_Controller_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias dos controllers.
          * @var Awk_Controller[]
@@ -28,5 +28,12 @@
 
             $this->controllers[$controller_id] = $controller_instance;
             return $controller_instance->get_instance();
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "controllers");
         }
     }

@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature view.
      */
-    class Awk_View_Feature extends Awk_Module_Feature {
+    class Awk_View_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Carrega uma view imediatamente.
          * @param  string $view_id                  Identificador da view.
@@ -32,11 +32,9 @@
         }
 
         /**
-         * Verifica se uma determinada View existe.
-         * @param  string $view_name Nome da View.
-         * @return boolean
+         * @see Awk_FeatureAbstraction_Interface::exists()
          */
-        public function exists($view_name) {
-            return is_readable($this->module->get_path()->get() . "/views/{$view_name}.php");
+        public function exists($object_name) {
+            return parent::exists($object_name, "views");
         }
     }

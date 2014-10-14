@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature model.
      */
-    class Awk_Model_Feature extends Awk_Module_Feature {
+    class Awk_Model_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias das models.
          * @var Awk_Model[]
@@ -27,5 +27,12 @@
             $model_instance->load($model_id);
 
             return $this->model[$model_id] = $model_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "models");
         }
     }

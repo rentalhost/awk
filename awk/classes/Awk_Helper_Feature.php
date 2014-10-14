@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature helper.
      */
-    class Awk_Helper_Feature extends Awk_Module_Feature {
+    class Awk_Helper_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena as instâncias das helpers.
          * @var Awk_Helper[]
@@ -27,5 +27,12 @@
             $helper_instance->load($helper_id);
 
             return $this->helpers[$helper_id] = $helper_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "helpers");
         }
     }

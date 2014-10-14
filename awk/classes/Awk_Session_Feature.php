@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature session.
      */
-    class Awk_Session_Feature extends Awk_Module_Feature implements Awk_PropertyAccess_Interface {
+    class Awk_Session_Feature extends Awk_Module_Feature implements Awk_PropertyAccess_Interface, Awk_FeatureAbstraction_Interface {
         /**
          * Armazena a chave da sessão para o módulo.
          * @var string
@@ -127,5 +127,12 @@
         public function clear() {
             $this->init_session_key();
             $_SESSION[$this->session_key] = [];
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "sessions");
         }
     }

@@ -3,7 +3,7 @@
     /**
      * Responsável pelo controle da feature settings.
      */
-    class Awk_Settings_Feature extends Awk_Module_Feature {
+    class Awk_Settings_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
          * Armazena a instância de settings.
          * @var Awk_Settings
@@ -26,5 +26,12 @@
             $settings_instance->load();
 
             return $this->settings = $settings_instance;
+        }
+
+        /**
+         * @see Awk_FeatureAbstraction_Interface::exists()
+         */
+        public function exists($object_name) {
+            return parent::exists($object_name, "settings");
         }
     }
