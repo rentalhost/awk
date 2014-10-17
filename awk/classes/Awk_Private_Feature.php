@@ -5,13 +5,6 @@
      */
     class Awk_Private_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
-         * @see self::load
-         */
-        public function feature_call($private_name) {
-            return $this->load($private_name);
-        }
-
-        /**
          * Carrega uma instância diretamente.
          * @param  string $private_name Identificador do arquivo privado.
          * @return Awk_Private

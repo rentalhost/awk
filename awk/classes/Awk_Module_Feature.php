@@ -54,11 +54,4 @@
             return is_file($object_path)
                 && is_readable($object_path);
         }
-
-        /**
-         * Este método precisa ser sobrescrito pela finalidade da feature.
-         * @codeCoverageIgnore
-         */
-        public function feature_call() {
-        }
     }

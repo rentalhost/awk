@@ -5,13 +5,6 @@
      */
     class Awk_Public_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
-         * @see self::load
-         */
-        public function feature_call($public_name) {
-            return $this->load($public_name);
-        }
-
-        /**
          * Carrega uma instância imediatamente.
          * @param  string     $public_name Identificador do arquivo público.
          * @return Awk_Public

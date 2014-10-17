@@ -135,8 +135,8 @@
             // Carrega a feature através do nome informado.
             $feature_instance = $this->load_feature($method_plural);
 
-            // Executa a `feature_call()` passando os parâmetros recebidos.
-            return call_user_func_array([ $feature_instance, "feature_call" ], $method_args);
+            // Executa o método load() passando os parâmetros recebidos.
+            return call_user_func_array([ $feature_instance, "load" ], $method_args);
         }
 
         /**

@@ -11,13 +11,6 @@
         private $libraries = [];
 
         /**
-         * @see self::load
-         */
-        public function feature_call($library_id) {
-            return $this->load($library_id);
-        }
-
-        /**
          * Retorna o gerador de instâncias da library.
          * @param  string $library_id Identificador da library.
          * @return Awk_Library

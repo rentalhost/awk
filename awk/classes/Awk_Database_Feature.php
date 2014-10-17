@@ -11,13 +11,6 @@
         private $databases = [];
 
         /**
-         * @see self::load
-         */
-        public function feature_call($database_id = null) {
-            return $this->load($database_id);
-        }
-
-        /**
          * Retorna o controle da database.
          * @param  string $database_id Identificador do database.
          * @return Awk_Database

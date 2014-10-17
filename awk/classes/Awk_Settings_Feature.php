@@ -11,13 +11,6 @@
         private $settings;
 
         /**
-         * @see self::load
-         */
-        public function feature_call() {
-            return $this->load();
-        }
-
-        /**
          * Carrega um settings imediatamente.
          * @codeCoverageIgnore
          * @return Awk_Settings

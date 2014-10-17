@@ -37,7 +37,7 @@
          * @param  mixed  $session_value Valor que será aplicado na chave.
          * @return mixed
          */
-        public function feature_call($session_key = null, $session_value = null) {
+        public function load($session_key = null, $session_value = null) {
             $this->init_session_key();
 
             switch(func_num_args()) {
