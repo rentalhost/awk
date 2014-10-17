@@ -5,12 +5,7 @@
      */
     class Awk_View_Feature extends Awk_Module_Feature implements Awk_FeatureAbstraction_Interface {
         /**
-         * Carrega uma view imediatamente.
-         * @param  string $view_id                  Identificador da view.
-         * @param  mixed[] $view_args               Argumentos que serão enviados a view como variáveis.
-         * @param  boolean $view_avoid_print        Se deverá impedir a impressão automática da view.
-         * @param  boolean $view_avoid_processing   Se deve impedir que a view seja processada automaticamente.
-         * @return Awk_View
+         * @see self::load
          */
         public function feature_call($view_id, $view_args = null, $view_avoid_print = null, $view_avoid_processing = null) {
             return $this->load($view_id, $view_args, $view_avoid_print, $view_avoid_processing);

@@ -22,7 +22,6 @@
          */
         static public function setUpBeforeClass() {
             self::$module = Awk_Module::get("awk_suite");
-            self::$module_settings = self::$module->settings();
         }
 
         /**
@@ -30,6 +29,9 @@
          * @return [type] [description]
          */
         public function testSettingsGetSet() {
+            // Carrega as configurações.
+            self::$module_settings = self::$module->settings();
+
             // Verifica se uma configuração está correta.
             $this->assertSame(123, self::$module_settings->test_value);
 

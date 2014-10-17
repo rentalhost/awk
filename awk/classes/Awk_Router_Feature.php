@@ -11,11 +11,18 @@
         private $routers = [];
 
         /**
+         * @see self::load
+         */
+        public function feature_call($router_id) {
+            return $this->load($router_id);
+        }
+
+        /**
          * Carrega um router imediatamente.
          * @param  string $router_id Identificador do roteador.
          * @return Awk_Router
          */
-        public function feature_call($router_id) {
+        public function load($router_id) {
             // Se o router já foi iniciado, apenas o retorna.
             if(isset($this->routers[$router_id])) {
                 return $this->routers[$router_id];

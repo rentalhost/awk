@@ -11,11 +11,18 @@
         private $models = [];
 
         /**
+         * @see self::load
+         */
+        public function feature_call($model_id) {
+            return $this->load($model_id);
+        }
+
+        /**
          * Retorna o controle da model.
          * @param  string $model_id Identificador do model.
          * @return Awk_Model
          */
-        public function feature_call($model_id) {
+        public function load($model_id) {
             // Se já foi registrado, retorna.
             // Caso contrário será necessário carregá-lo.
             if(isset($this->model[$model_id])) {

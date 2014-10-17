@@ -11,11 +11,18 @@
         private $controllers = [];
 
         /**
+         * @see self::load
+         */
+        public function feature_call($controller_id) {
+            return $this->load($controller_id);
+        }
+
+        /**
          * Carrega um controller imediatamente.
          * @param  string $controller_id Identificador do controller.
          * @return Awk_Controller
          */
-        public function feature_call($controller_id) {
+        public function load($controller_id) {
             // Se o controller já foi registrado, retorna.
             // Caso contrário será necessário carregá-lo.
             if(isset($this->controllers[$controller_id])) {

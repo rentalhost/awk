@@ -11,11 +11,18 @@
         private $types = [];
 
         /**
+         * @see self::load
+         */
+        public function feature_call($type_id) {
+            return $this->load($type_id);
+        }
+
+        /**
          * Retorna o controle da type.
          * @param  string $type_id Identificador do tipo.
          * @return Awk_Type
          */
-        public function feature_call($type_id) {
+        public function load($type_id) {
             // Se já foi registrado, retorna.
             // Caso contrário será necessário carregá-lo.
             if(isset($this->types[$type_id])) {

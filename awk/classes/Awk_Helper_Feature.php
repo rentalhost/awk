@@ -11,11 +11,18 @@
         private $helpers = [];
 
         /**
+         * @see self::load
+         */
+        public function feature_call($helper_id) {
+            return $this->load($helper_id);
+        }
+
+        /**
          * Retorna o controle da helper.
          * @param  string $helper_id Identificador do helper.
          * @return Awk_Helper
          */
-        public function feature_call($helper_id) {
+        public function load($helper_id) {
             // Se já foi registrado, retorna.
             // Caso contrário será necessário carregá-lo.
             if(isset($this->helpers[$helper_id])) {

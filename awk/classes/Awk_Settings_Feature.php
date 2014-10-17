@@ -11,11 +11,18 @@
         private $settings;
 
         /**
+         * @see self::load
+         */
+        public function feature_call() {
+            return $this->load();
+        }
+
+        /**
          * Carrega um settings imediatamente.
          * @codeCoverageIgnore
          * @return Awk_Settings
          */
-        public function feature_call() {
+        public function load() {
             // Se as configurações já foram iniciadas, retorna seu controlador.
             if(isset($this->settings)) {
                 return $this->settings;
