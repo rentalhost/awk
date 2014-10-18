@@ -63,6 +63,11 @@
             "Awk_Model_Query"               => "classes",
             "Awk_Model_Row"                 => "classes",
 
+            // Classes event.
+            "Awk_Event"                     => "classes",
+            "Awk_Event_Handlers"            => "classes",
+            "Awk_Event_Object"              => "classes",
+
             // Classes public.
             "Awk_Public"                    => "classes",
             "Awk_Public_Feature"            => "classes",
