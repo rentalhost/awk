@@ -11,6 +11,16 @@
         private $data = [];
 
         /**
+         * Construtor.
+         * @param mixed[] $data Dados iniciais que serão armazenados.
+         */
+        public function __construct($data = null) {
+            if($data !== null) {
+                $this->set_array($data);
+            }
+        }
+
+        /**
          * Define uma variável.
          * @param string $key   Nome da chave a ser definida.
          * @param mixed  $value Valor a ser definido.
@@ -40,9 +50,16 @@
         /**
          * Define várias variáveis.
          * @param mixed[] $keys Variáveis que serão definidas.
+         * @throws Awk_Data_InvalidDataType_Exception Caso um tipo de informação não seja suportado.
          */
         public function set_array($keys) {
-            $this->data = array_replace($this->data, $keys);
+            if(is_array($keys)) {
+                $this->data = array_replace($this->data, $keys);
+                return;
+            }
+
+            // Lança uma exceção para um valor inválido.
+            throw new Awk_Data_InvalidDataType_Exception($keys);
         }
 
         /**

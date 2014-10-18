@@ -142,6 +142,10 @@
             "Awk_Type_InvalidValidateCallback_Exception"                => "exceptions",
             "Awk_Type_WithoutTransformCallback_Exception"               => "exceptions",
             "Awk_Type_InvalidTransformCallback_Exception"               => "exceptions",
+
+            // Exceções de Data.
+            "Awk_Data_Exception"                                        => "exceptions",
+            "Awk_Data_InvalidDataType_Exception"                        => "exceptions",
         ];
 
         /**

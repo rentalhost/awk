@@ -18,6 +18,15 @@
         }
 
         /**
+         * Testa o construtor.
+         */
+        public function testConstructor() {
+            $data = new Awk_Data([ "test1" => true ]);
+
+            $this->assertSame(true, $data->test1);
+        }
+
+        /**
          * Obtém todos os dados armazenados globalmente do módulo.
          */
         public function testGlobalGetAll() {
@@ -84,5 +93,23 @@
             // Limpa os dados.
             self::$module->globals->clear();
             $this->assertEmpty(self::$module->globals->get_array());
+        }
+
+        /**
+         * Testa a exceção para um tipo não suportado.
+         * @expectedException           Awk_Data_InvalidDataType_Exception
+         * @expectedExceptionMessage    O recurso Data não suporta múltiplas definições sobre integer.
+         */
+        public function testAwk_Data_InvalidDataType_Exception1() {
+            new Awk_Data(123);
+        }
+
+        /**
+         * Testa a exceção para um tipo não suportado.
+         * @expectedException           Awk_Data_InvalidDataType_Exception
+         * @expectedExceptionMessage    O recurso Data não suporta múltiplas definições sobre Exception.
+         */
+        public function testAwk_Data_InvalidDataType_Exception2() {
+            new Awk_Data(new Exception);
         }
     }
