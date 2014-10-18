@@ -76,6 +76,10 @@
             "Awk_Private"                   => "classes",
             "Awk_Private_Feature"           => "classes",
 
+            // Classes cache.
+            "Awk_Cache"                     => "classes",
+            "Awk_Cache_Feature"             => "classes",
+
             // Classes session.
             "Awk_Session_Feature"           => "classes",
 
