@@ -86,6 +86,7 @@
             "Awk_Base"                      => "classes",
             "Awk_Data"                      => "classes",
             "Awk_Path"                      => "classes",
+            "Awk_Symbol"                    => "classes",
 
             // Interfaces.
             "Awk_PropertyAccess_Interface"      => "interfaces",
@@ -151,6 +152,10 @@
             // Exceções de Data.
             "Awk_Data_Exception"                                        => "exceptions",
             "Awk_Data_InvalidDataType_Exception"                        => "exceptions",
+
+            // Exceções de Symbol.
+            "Awk_Symbol_Exception"                                      => "exceptions",
+            "Awk_Symbol_NotConstructed_Exception"                       => "exceptions",
         ];
 
         /**
