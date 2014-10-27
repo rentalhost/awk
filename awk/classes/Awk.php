@@ -68,6 +68,9 @@
             "Awk_Event_Handlers"            => "classes",
             "Awk_Event_Object"              => "classes",
 
+            // Classes Syntax.
+            "Awk_Syntax_Object"             => "classes",
+
             // Classes public.
             "Awk_Public"                    => "classes",
             "Awk_Public_Feature"            => "classes",
@@ -144,6 +147,10 @@
             // Exceções de Router.
             "Awk_Router_Exception"                                      => "exceptions",
             "Awk_Router_NotExists_Exception"                            => "exceptions",
+
+            // Exceções de Syntax.
+            "Awk_Syntax_Exception"                                      => "exceptions",
+            "Awk_Syntax_UnsupportedFormat_Exception"                    => "exceptions",
 
             // Exceções de Type.
             "Awk_Type_Exception"                                        => "exceptions",
