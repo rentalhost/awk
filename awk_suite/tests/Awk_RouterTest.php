@@ -246,14 +246,14 @@
             $router = self::$module->router("test5_empty");
 
             // Adiciona uma nova rota.
-            $router->add_passage(function($driver) { echo "passage->"; $driver->invalidate(); });
+            $router->add_tunnel(function($driver) { echo "tunnel->"; $driver->invalidate(); });
             $router->add_route("test", function() { echo "test"; });
 
             // Testa a rota.
             $test_driver = new Awk_Router_Driver("test", self::$module);
             $test_driver->redirect("test5_empty");
 
-            $this->expectOutputString("passage->test");
+            $this->expectOutputString("tunnel->test");
         }
 
         /**
@@ -269,7 +269,7 @@
             $router = self::$module->router("test5b_empty");
 
             // Adiciona uma nova rota.
-            $router->add_file_passage(function() { echo "file"; });
+            $router->add_file_tunnel(function() { echo "file"; });
 
             // Espera-se que atinja o root, e não o roteador de arquivo.
             $test_driver = new Awk_Router_Driver("", self::$module);

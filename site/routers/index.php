@@ -1,4 +1,4 @@
 <?php
 
     // Adiciona uma rota de apresentação.
-    $router->add_route(null, "view@helloWorld");
+    $router->add_root("view@helloWorld");

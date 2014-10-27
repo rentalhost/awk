@@ -1,16 +1,16 @@
 <?php
 
     // Adiciona um roteador de arquivos.
-    $router->add_file_passage("test1_basic.file");
+    $router->add_file_tunnel("test1_basic.file");
 
     // Adiciona um root.
     $router->add_root(function() {
         echo "root";
     });
 
-    // Adiciona uma passagem.
-    $router->add_passage(function($driver) {
-        echo "passage->";
+    // Adiciona um tunel.
+    $router->add_tunnel(function($driver) {
+        echo "tunnel->";
         $driver->invalidate();
     });
 
@@ -46,7 +46,7 @@
     });
 
     // Adiciona um redirect.
-    $router->add_passage(function($driver) {
+    $router->add_tunnel(function($driver) {
         echo "redirected[test2_router]->";
         $driver->redirect("test2_router");
     });

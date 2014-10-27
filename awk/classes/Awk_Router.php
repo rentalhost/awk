@@ -45,18 +45,18 @@
         }
 
         /**
-         * Adiciona uma nova rota de passagem.
-         * @param callable|string $passage_callback Definição do callable ou de um identificador.
+         * Adiciona uma nova rota de túnel.
+         * @param callable|string $tunnel_callback Definição do callable ou de um identificador.
          */
-        public function add_passage($passage_callback) {
-            $this->add_route(null, $passage_callback);
+        public function add_tunnel($tunnel_callback) {
+            $this->add_route(null, $tunnel_callback);
         }
 
         /**
          * Adiciona uma rota exclusiva para arquivos.
          * @param callable|string $route_callback Definição do callable ou de um identificador.
          */
-        public function add_file_passage($route_callback) {
+        public function add_file_tunnel($route_callback) {
             $router_instance = new Awk_Router_Route($this);
             $router_instance->set_callback($route_callback);
             $router_instance->set_file_mode();

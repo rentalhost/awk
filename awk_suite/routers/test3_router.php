@@ -1,5 +1,5 @@
 <?php
 
-    $router->add_passage(function() {
-        echo "passage[test3_router]";
+    $router->add_tunnel(function() {
+        echo "tunnel[test3_router]";
     });

@@ -95,7 +95,7 @@
             $output_args = [];
             $output_attrs = [];
 
-            // Se não houver uma definição, é uma rota de passagem.
+            // Se não houver uma definição, é uma rota de túnel.
             // Sempre deverá ser executada.
             if(!$this->definition) {
                 return true;

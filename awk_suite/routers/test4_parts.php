@@ -51,6 +51,6 @@
     });
 
     // Falha.
-    $router->add_passage(function() {
+    $router->add_tunnel(function() {
         echo "fail";
     });
