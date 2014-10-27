@@ -151,6 +151,7 @@
             // Exceções de Syntax.
             "Awk_Syntax_Exception"                                      => "exceptions",
             "Awk_Syntax_UnsupportedFormat_Exception"                    => "exceptions",
+            "Awk_Syntax_UnsupportedFormatInContext_Exception"           => "exceptions",
 
             // Exceções de Type.
             "Awk_Type_Exception"                                        => "exceptions",

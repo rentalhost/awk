@@ -7,14 +7,13 @@
         /**
          * Gera um padrão de teste.
          */
-        private function checkObjectDefinition($object_definition, $replacement_array) {
+        private function checkObjectDefinition($object_definition, $replacement_array, $object_context = null) {
             $module      = Awk_Module::get("awk_suite");
-            $test_object = Awk_Syntax_Object::create($module, $object_definition);
+            $test_object = Awk_Syntax_Object::create($module, $object_definition, $object_context);
 
             // Valores esperados, por padrão.
             // É substituído pelo replacement.
             $replacement_array = array_replace([
-                "module"            => $module,
                 "method"            => null,
                 "method_module"     => null,
                 "name"              => null,
@@ -29,7 +28,6 @@
                 "arguments"         => null,
             ], $replacement_array);
 
-            $this->assertSame($replacement_array["module"],         $test_object->module);
             $this->assertSame($replacement_array["method"],         $test_object->method);
             $this->assertSame($replacement_array["method_module"],  $test_object->method_module);
             $this->assertSame($replacement_array["name"],           $test_object->name);
@@ -162,6 +160,7 @@
             return [
                 // Teste de statement.
                 100 =>  [ ":statement",         [ "method" => "statement", "method_type" => "statement" ] ],
+                        [ ":statement ",        [ "method" => "statement", "method_type" => "statement", "arguments" => "" ] ],
 
                 // Teste de statement com argumentos.
                 200 =>  [ ":statement test",    [ "method" => "statement", "method_type" => "statement", "arguments" => "test" ] ],
@@ -227,6 +226,37 @@
         }
 
         /**
+         * Teste de objetos contextualizados.
+         * @dataProvider providerContextDefinitions
+         */
+        public function testContext($definition_context, $definition, $expected_array) {
+            $this->checkObjectDefinition($definition, $expected_array, $definition_context);
+        }
+
+        /**
+         * Provedor de métodos.
+         */
+        public function providerContextDefinitions() {
+            return [
+                // Teste no contexto url.
+                100 =>  [ "url",    ":{int}",       [ "type" => "int" ] ],
+                        [ "url",    ":{int}?",      [ "type" => "int", "optional" => true ] ],
+                        [ "url",    ":{int}*",      [ "type" => "int", "repeat" => true, "repeat_min" => 0 ] ],
+                        [ "url",    ":{int}+",      [ "type" => "int", "repeat" => true, "repeat_min" => 1 ] ],
+                        [ "url",    ":{int}*?",     [ "type" => "int", "repeat" => true, "repeat_min" => 0, "optional" => true ] ],
+                        [ "url",    ":{int}+?",     [ "type" => "int", "repeat" => true, "repeat_min" => 1, "optional" => true ] ],
+                        [ "url",    ":{int}{3}",    [ "type" => "int", "repeat" => true, "repeat_min" => 3, "repeat_max" => 3 ] ],
+                        [ "url",    ":{int}{3,}",   [ "type" => "int", "repeat" => true, "repeat_min" => 3 ] ],
+                        [ "url",    ":{int}{3,}?",  [ "type" => "int", "repeat" => true, "repeat_min" => 3, "optional" => true ] ],
+                        [ "url",    ":{int}{,3}",   [ "type" => "int", "repeat" => true, "repeat_max" => 3 ] ],
+                        [ "url",    ":{int}{2,3}",  [ "type" => "int", "repeat" => true, "repeat_min" => 2, "repeat_max" => 3 ] ],
+                        [ "url",    ":{awk->int}",  [ "type" => "int", "type_module" => "awk" ] ],
+
+                200 =>  [ "url",    ":{int @name}", [ "type" => "int", "name" => "name", "name_type" => "variable" ] ],
+            ];
+        }
+
+        /**
          * Exceção quando uma definição de objeto é inválida.
          * @dataProvider providerUnsupportedFormats
          */
@@ -267,6 +297,40 @@
                 [ ":method{\"}" ],
                 [ ":method{'}" ],
                 [ ":method{'\\}" ],
+            ];
+        }
+
+        /**
+         * Exceção quando uma definição de objeto é inválida dentro de um contexto (mas não fora).
+         * @dataProvider providerUnsupportedFormatsInContext
+         */
+        public function testAwk_Syntax_InvalidFormatInContext_Exception($object_context, $object_definition) {
+            $this->setExpectedException(
+                "Awk_Syntax_UnsupportedFormatInContext_Exception",
+                "A definição \"{$object_definition}\" possui um formato inválido para o contexto \"{$object_context}\"."
+            );
+
+            $module      = Awk_Module::get("awk_suite");
+            $test_object = Awk_Syntax_Object::create($module, $object_definition, $object_context);
+        }
+
+        /**
+         * Formatos não suportados.
+         */
+        public function providerUnsupportedFormatsInContext() {
+            return [
+                [ "url",    "::Hello World" ],
+                [ "url",    ":statement" ],
+                [ "url",    ":method{}" ],
+
+                [ "url",    ":{@user}" ],
+
+                [ "code",   ":{id}" ],
+                [ "code",   ":{user: id}" ],
+
+                [ "code",   ":{id}{1}" ],
+                [ "code",   ":{id}*" ],
+                [ "code",   ":{id}?" ],
             ];
         }
     }

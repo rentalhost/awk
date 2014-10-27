@@ -5,16 +5,65 @@
      */
     class Awk_Syntax_Object {
         /**
+         * Identifica statements.
+         * @var string
+         */
+        const REGEX_STATEMENT_MATCH = '/^
+
+            # Identifica a chave.
+            :
+
+            # Identifica o módulo, se houver.
+            (?:
+                (?<method_module>\w+)
+                ->
+            )?
+
+            # Identifica um statement.
+            (?<method>\w+)
+
+            # Identifica argumentos.
+            (?<arguments>.*)
+
+        $/x';
+
+        /**
+         * Identifica os argumentos de um statement.
+         * @var string
+         */
+        const REGEX_STATEMENT_ARGUMENTS_MATCH = '/^
+            \s
+            (?<arguments>.*)
+        $/x';
+
+        /**
+         * Identifica os argumentos de um método.
+         * @var string
+         */
+        const REGEX_METHOD_ARGUMENTS_MATCH = '/^
+            { (?<method_arguments>.*) }
+        $/x';
+
+        /**
          * Valida uma definição de objeto.
          * @var string
          */
-        const REGEX_OBJECT_MATCH = "/^
+        const REGEX_OBJECT_PREMATCH = '/^
 
             # Valida os detalhes de um objeto.
             :{(?<object>.+?)}
 
-            # Valida a definição de repetidores e flag.
-            (?:
+            # Complemento de validação de repetidores e flags.
+            %s
+
+        $/x';
+
+        /**
+         * Complemento de validação de repetidores e flags.
+         * @var string
+         */
+        const REGEX_OBJECT_REPETITION_COMPLEMENT_MATCH = '
+            (?<repetition_complement>
                 (?:
                     # Valida o alcance de repetição.
                     (?<repeat_range>{
@@ -36,14 +85,166 @@
                     [?]
                 )?
             )?
+        ';
 
-        $/x";
+        /**
+         * Identifica um objeto.
+         * @var string
+         */
+        const REGEX_OBJECT_MATCH = '/^
+
+            # Identifica o tipo.
+            (?:
+                # Identifica o módulo, se houver.
+                (?:
+                    (?<type_module>\w+)
+                    ->
+                )?
+
+                # Identifica o tipo.
+                (?<type>\w+)
+
+                # Após o tipo, é necessário espaçamento(s).
+                \s+
+            )?
+
+            # Identifica se o objeto é uma variável.
+            (?<name_variable_identifier>@)
+
+                # Em um contexto sql, a flag de variável é opcional.
+                %s
+
+            # Identifica o nome do objeto.
+            (?<name>\w+)
+
+            # Identifica um grupo.
+            (?:
+                \#
+                (?<name_group>\d+)
+            )?
+
+            # Em um contexto sql, complementa a validação.
+            %s
+
+            # Identifica um alias.
+            (?:
+                # Antes é necessário o indicador AS.
+                \s+ [Aa][Ss] \s+
+
+                # Identifica um arroba.
+                @
+
+                # Identifica a informação.
+                (?<name_alias>\w+)
+            )?
+
+        $/x';
+
+        /**
+         * Complementa o conteúdo de um contexto SQL.
+         * @var string
+         */
+        const REGEX_OBJECT_CONTEXT_SQL_COMPLEMENT_MATCH = '
+            (?:
+                \s*
+
+                # Identifica o separador.
+                (?<sql_contents_type>[:\.])
+
+                # Identifica o conteúdo.
+                (?<sql_contents>.+)
+            )?
+        ';
+
+        /**
+         * Identifica um objeto no contexto url.
+         * @var string
+         */
+        const REGEX_OBJECT_CONTEXT_URL_MATCH = '/^
+
+            # Identifica o tipo.
+            (?:
+                # Identifica o módulo, se houver.
+                (?:
+                    (?<type_module>\w+)
+                    ->
+                )?
+
+                # Identifica o tipo.
+                (?<type>\w+)
+            )
+
+            # Identifica uma opcional variável.
+            (?:
+                \s+
+
+                # Identifica a flag da variável.
+                @
+
+                # Identifica o nome do objeto.
+                (?<name>\w+)
+            )?
+
+        $/x';
+
+        /**
+         * Identifica um complemento SQL.
+         * @var string
+         */
+        const REGEX_OBJECT_SQL_MATCH = '/
+
+            \s*
+
+            # Identifica o tipo.
+            (?:
+                # Identifica o módulo, se houver.
+                (?:
+                    (?<type_module>\w+)
+                    ->
+                )?
+
+                # Identifica o tipo.
+                (?<type>\w+)
+
+                # Após o tipo, é necessário espaçamento(s).
+                \s+
+            )?
+
+            # Identifica o nome do objeto.
+            (?<name>\w+|\*)
+
+            # Identifica um alias.
+            (?:
+                # Antes é necessário o indicador AS.
+                \s+ [Aa][Ss] \s+
+
+                # Identifica a informação.
+                (?<name_alias>\w+)
+            )?
+
+            # Espera o final do arquivo, ou uma continuação.
+            \s*
+            (,|$)
+
+        /x';
+
+        /**
+         * Identifica e separa um separador de grupo.
+         * @var string
+         */
+        const REGEX_GROUP_SPLIT = '/ \\\\ \\s* \\r?\\n \\s* /x';
 
         /**
          * Armazena o módulo do contexto.
          * @var Awk_Module
          */
         public $module;
+
+        /**
+         * Armazena o contexto utilizado.
+         * @var null|string("code", "sql", "url")
+         */
+        public $context;
 
         /**
          * Armazena o método.
@@ -157,67 +358,48 @@
          * Constrói um novo objeto com base em sua definição.
          * @param   Awk_Module  $module     Módulo de contexto.
          * @param   string      $definition Definição do objeto.
-         * @param   mixed[]     $options    Opções de identificação.
          * @return  self
          */
-        static public function create($module, $definition, $options = null) {
+        static public function create($module, $definition, $context = null) {
             $object_instance = new self;
             $object_instance->module = $module;
-
-            // Preenche as opções padrões.
-            $options = array_replace([
-                /**
-                 * Indica se validará comentários.
-                 * @var boolean
-                 */
-                "validate_comment" => null,
-
-                /**
-                 * Indica se validará métodos.
-                 * @var boolean
-                 */
-                "validate_method" => null,
-
-                /**
-                 * Indica se validará statements.
-                 * @var boolean
-                 */
-                "validate_statement" => null,
-
-                /**
-                 * Indica se validará uma variável.
-                 * @var boolean
-                 */
-                "validate_variable" => null,
-
-                /**
-                 * Indica se validará um objeto.
-                 * @var boolean
-                 */
-                "validate_object" => null,
-            ], $options);
+            $object_instance->context = $context;
 
             // Identifica se é um comentário.
-            if($options["validate_comment"] !== false
+            // Não aplicável ao contexto: url.
+            if($context !== "url"
             && self::create_comment($object_instance, $definition)) {
                 return $object_instance;
             }
 
             // Identifica se é um statement ou método.
-            if($options["validate_statement"] !== false
-            || $options["validate_method"] !== false) {
-                if(self::create_method($object_instance, $definition, $options)) {
-                    return $object_instance;
-                }
+            // Não aplicável ao contexto: url.
+            if($context !== "url"
+            && self::create_method($object_instance, $definition)) {
+                return $object_instance;
             }
 
+            // Define a validação de objeto.
+            $object_prematch = sprintf(
+                self::REGEX_OBJECT_PREMATCH,
+                // O complemento de objetos é suportado no contexto: url.
+                $context === null ||
+                $context === "url"
+                    ? self::REGEX_OBJECT_REPETITION_COMPLEMENT_MATCH
+                    : ""
+            );
+
             // Identifica se é um objeto encapsulado, como uma variável.
-            if($options["validate_variable"] !== false
-            || $options["validate_object"] !== false) {
-                if(preg_match(self::REGEX_OBJECT_MATCH, $definition, $definition_match)
-                && self::create_object($object_instance, $definition_match, $options)) {
-                    return $object_instance;
-                }
+            if(preg_match($object_prematch, $definition, $definition_match)
+            && self::create_object($object_instance, $definition_match)) {
+                return $object_instance;
+            }
+
+            // Se um contexto foi informado, tenta removê-lo.
+            // A exceção lançada será diferente caso a validação seja possível.
+            if($context !== null
+            && self::create($module, $definition)) {
+                throw new Awk_Syntax_UnsupportedFormatInContext_Exception($definition, $context);
             }
 
             // Se nada foi identificado, lança uma exceção.
@@ -244,32 +426,11 @@
          * Cria um método ou statement.
          * @param  self    $object_instance Instância a ser preenchida.
          * @param  string  $definition      Definição a ser reconhecida.
-         * @param  mixed[] $options         Opções de identificação.
          * @return true|null
          */
-        static private function create_method($object_instance, $definition, $options) {
-            // Identificador de statements.
-            static $definition_expression = "/^
-
-                # Identifica a chave.
-                :
-
-                # Identifica o módulo, se houver.
-                (?:
-                    (?<method_module>\w+)
-                    ->
-                )?
-
-                # Identifica um statement.
-                (?<method>\w+)
-
-                # Identifica argumentos.
-                (?<arguments>.*)
-
-            $/x";
-
+        static private function create_method($object_instance, $definition) {
             // Executa a identificação do statement.
-            if(preg_match($definition_expression, $definition, $definition_match)) {
+            if(preg_match(self::REGEX_STATEMENT_MATCH, $definition, $definition_match)) {
                 // Define o nome do método.
                 $object_instance->method = $definition_match["method"];
 
@@ -287,7 +448,7 @@
                 }
                 else
                 // Verifica se é possível complementar os argumentos como método.
-                if(self::complement_method_arguments($object_instance, $definition_match["arguments"], $options)) {
+                if(self::complement_method_arguments($object_instance, $definition_match["arguments"])) {
                     $object_instance->method_type = "method";
 
                     // Validação com sucesso.
@@ -295,9 +456,9 @@
                 }
                 else
                 // Caso contrário, define como argumentos de um statement.
-                if(preg_match("/^\s(.+)$/", $definition_match["arguments"], $arguments_match)) {
+                if(preg_match(self::REGEX_STATEMENT_ARGUMENTS_MATCH, $definition_match["arguments"], $arguments_match)) {
                     $object_instance->method_type = "statement";
-                    $object_instance->arguments   = $arguments_match[1];
+                    $object_instance->arguments   = $arguments_match["arguments"];
 
                     // Validação com sucesso.
                     return true;
@@ -309,20 +470,11 @@
          * Complementa os argumentos de um método.
          * @param  self    $object_instance Instância a ser preenchida.
          * @param  string  $definition      Definição a ser reconhecida.
-         * @param  mixed[] $options         Opções de identificação.
          * @return true|null
          */
-        static private function complement_method_arguments($object_instance, $definition, $options) {
-            // Identificador de métodos.
-            static $definition_expression = "/^
-                {
-                    # Identifica os argumentos do método.
-                    (?<method_arguments>.*)
-                }
-            $/x";
-
+        static private function complement_method_arguments($object_instance, $definition) {
             // Falha se não puder identificar argumentos.
-            if(!preg_match($definition_expression, $definition, $definition_match)) {
+            if(!preg_match(self::REGEX_METHOD_ARGUMENTS_MATCH, $definition, $definition_match)) {
                 return;
             }
 
@@ -336,7 +488,7 @@
             }
 
             // Obtém os blocos de argumentos, se não for possível, invalida.
-            if(!self::split_arguments($object_instance, $definition, $options)) {
+            if(!self::split_arguments($object_instance, $definition)) {
                 return;
             }
 
@@ -348,10 +500,9 @@
          * Separa os argumentos da definição.
          * @param  self    $object_instance Instância a ser preenchida.
          * @param  string  $definition      Definição a ser reconhecida.
-         * @param  mixed[] $options         Opções de identificação.
          * @return string[]
          */
-        static private function split_arguments($object_instance, $definition, $options) {
+        static private function split_arguments($object_instance, $definition) {
             // Armazena as informações obtidas.
             $definition_value  = null;
             $definition_index  = 0;
@@ -529,72 +680,31 @@
          * Cria um objeto ou variável.
          * @param  self     $object_instance    Instância a ser preenchida.
          * @param  string[] $definition_match   Definição a ser reconhecida.
-         * @param  mixed[]  $options            Opções de identificação.
          * @return true|null
          */
-        static private function create_object($object_instance, $definition_match, $options) {
-            // Identificador de objetos.
-            static $definition_expression = "/^
-
-                # Identifica o tipo.
-                (?:
-                    # Identifica o módulo, se houver.
-                    (?:
-                        (?<type_module>\w+)
-                        ->
-                    )?
-
-                    # Identifica o tipo.
-                    (?<type>\w+)
-
-                    # Após o tipo, é necessário espaçamento(s).
-                    \s+
-                )?
-
-                # Identifica se o objeto é uma variável.
-                (?<name_variable_identifier>@)?
-
-                # Identifica o nome do objeto.
-                (?<name>\w+)
-
-                # Identifica um grupo.
-                (?:
-                    \#
-                    (?<name_group>\d+)
-                )?
-
-                # Identifica um conteúdo de contexto sql.
-                (?:
-                    \s*
-
-                    # Identifica o separador.
-                    (?<sql_contents_type>[:\.])
-
-                    # Identifica o conteúdo.
-                    (?<sql_contents>.+)
-                )?
-
-                # Identifica um alias.
-                (?:
-                    # Antes é necessário o indicador AS.
-                    \s+ [Aa][Ss] \s+
-
-                    # Identifica um arroba.
-                    @
-
-                    # Identifica a informação.
-                    (?<name_alias>\w+)
-                )?
-
-            $/x";
-
+        static private function create_object($object_instance, $definition_match) {
             // Valida o complemento de repetição.
-            if(!self::complement_repetition($object_instance, $definition_match, $options)) {
+            if(!empty($definition_match["repetition_complement"])
+            && !self::complement_repetition($object_instance, $definition_match)) {
                 return;
             }
 
+            // Determina o validador do contexto.
+            $object_match = $object_instance->context !== "url"
+                              ? sprintf(self::REGEX_OBJECT_MATCH,
+                                    $object_instance->context === null ||
+                                    $object_instance->context === "sql"
+                                        ? "?"
+                                        : null,
+                                    $object_instance->context === null ||
+                                    $object_instance->context === "sql"
+                                        ? self::REGEX_OBJECT_CONTEXT_SQL_COMPLEMENT_MATCH
+                                        : null
+                                )
+                              : self::REGEX_OBJECT_CONTEXT_URL_MATCH;
+
             // Executa a identificação do objeto.
-            if(preg_match($definition_expression, $definition_match["object"], $definition_match)) {
+            if(preg_match($object_match, $definition_match["object"], $definition_match)) {
                 // Armazena o tipo.
                 if(!empty($definition_match["type"])) {
                     $object_instance->type = $definition_match["type"];
@@ -606,10 +716,21 @@
                 }
 
                 // Indica o tipo do objeto encontrado.
-                $object_instance->name_type = empty($definition_match["name_variable_identifier"]) ? "object" : "variable";
+                // Não aplicável ao contexto: url.
+                if($object_instance->context !== "url") {
+                    $object_instance->name_type = empty($definition_match["name_variable_identifier"]) ? "object" : "variable";
+                }
+                else
+                // Se uma variável for informada, determina o tipo como variable.
+                // Aplicável somente ao contexto: url.
+                if(!empty($definition_match["name"])) {
+                    $object_instance->name_type = "variable";
+                }
 
                 // Armazena o nome do objeto.
-                $object_instance->name = $definition_match["name"];
+                if(!empty($definition_match["name"])) {
+                    $object_instance->name = $definition_match["name"];
+                }
 
                 // Armazena o grupo do objeto.
                 if(!empty($definition_match["name_group"])) {
@@ -618,7 +739,7 @@
 
                 // Identifica um conteúdo aplicado ao contexto sql.
                 if(!empty($definition_match["sql_contents_type"])) {
-                    return self::complement_object_sql($object_instance, $definition_match["sql_contents"], $definition_match["sql_contents_type"], $options);
+                    return self::complement_object_sql($object_instance, $definition_match["sql_contents"], $definition_match["sql_contents_type"]);
                 }
 
                 // Armazena o alias do objeto.
@@ -636,53 +757,14 @@
          * @param  self    $object_instance Instância a ser preenchida.
          * @param  string  $definition      Definição a ser reconhecida.
          * @param  string  $definition_type Definição do tipo de separador.
-         * @param  mixed[] $options         Opções de identificação.
          * @return true|null
          */
-        static private function complement_object_sql($object_instance, $definition, $definition_type, $options) {
-            // Identificador do complemento.
-            static $definition_expression = "/
-
-                \s*
-
-                # Identifica o tipo.
-                (?:
-                    # Identifica o módulo, se houver.
-                    (?:
-                        (?<type_module>\w+)
-                        ->
-                    )?
-
-                    # Identifica o tipo.
-                    (?<type>\w+)
-
-                    # Após o tipo, é necessário espaçamento(s).
-                    \s+
-                )?
-
-                # Identifica o nome do objeto.
-                (?<name>\w+|\*)
-
-                # Identifica um alias.
-                (?:
-                    # Antes é necessário o indicador AS.
-                    \s+ [Aa][Ss] \s+
-
-                    # Identifica a informação.
-                    (?<name_alias>\w+)
-                )?
-
-                # Espera o final do arquivo, ou uma continuação.
-                \s*
-                (,|$)
-
-            /x";
-
+        static private function complement_object_sql($object_instance, $definition, $definition_type) {
             // Armazena o tamanho dos itens coletados.
             $match_length = 0;
 
             // Executa a identificação do complemento.
-            if(preg_match_all($definition_expression, $definition, $definition_matches, PREG_SET_ORDER)) {
+            if(preg_match_all(self::REGEX_OBJECT_SQL_MATCH, $definition, $definition_matches, PREG_SET_ORDER)) {
                 // Se o tipo de objeto esperar apenas um único elemento e houver mais, invalida.
                 if($definition_type === "."
                 && count($definition_matches) !== 1) {
@@ -733,10 +815,9 @@
          * Complementa o conteúdo com informações de repetidores.
          * @param  self     $object_instance  Instância a ser preenchida.
          * @param  string[] $definition_match Definição a ser reconhecida.
-         * @param  mixed[]  $options          Opções de identificação.
          * @return true|null
          */
-        static private function complement_repetition($object_instance, $definition_match, $options) {
+        static private function complement_repetition($object_instance, $definition_match) {
             // Invalida um repeat range incorreto.
             if(!empty($definition_match["repeat_range"])) {
                 if($definition_match["repeat_range"] === "{}"
@@ -795,6 +876,6 @@
          * @return string
          */
         static private function group_contents($definition) {
-            return join(preg_split("/\\\s*\r?\n\s*/", $definition));
+            return join(preg_split(self::REGEX_GROUP_SPLIT, $definition));
         }
     }
