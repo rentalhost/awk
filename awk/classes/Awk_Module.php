@@ -233,7 +233,7 @@
          * @return boolean
          */
         public function is_development() {
-            return Awk_Module::get("awk")->settings()->project_development_mode === true;
+            return Awk::$module->settings()->project_development_mode === true;
         }
 
         /**

@@ -34,7 +34,7 @@
     $router->add_route("router_controller", "controller@test1_valid::router_controller");
 
     // Rota com argumentos.
-    $router->add_route("arg/[awk->string @value]", function($driver) {
+    $router->add_route("arg/:{awk->string @value}", function($driver) {
         echo "captured[" . $driver->get_attr("value") . "]";
     });
 

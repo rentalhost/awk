@@ -21,7 +21,7 @@
          * Configurações antes da classe.
          */
         static public function setUpBeforeClass() {
-            self::$awk    = Awk_Module::get("awk");
+            self::$awk    = Awk::$module;
             self::$module = Awk_Module::get("awk_suite");
         }
 

@@ -3,6 +3,9 @@
     /**
      * @covers Awk_Router
      * @covers Awk_Router_Feature
+     * @covers Awk_Router_Route
+     * @covers Awk_Router_Driver
+     * @covers Awk_Router_Driver_Stack
      */
     class Awk_RouterTest extends PHPUnit_Framework_TestCase {
         /**
@@ -265,5 +268,78 @@
             $test_driver->redirect("test5b_empty");
 
             $this->expectOutputString("file");
+        }
+        /**
+         * Testa as rotas.
+         * @dataProvider providerRoutes
+         */
+        public function testRoutes($route, $expected_output) {
+            $test_driver = new Awk_Router_Driver($route, Awk_Module::get("awk_suite"));
+            $test_driver->redirect("test1_basic");
+
+            $this->expectOutputString($expected_output);
+        }
+
+        /**
+         * Provedor de rotas.
+         */
+        public function providerRoutes() {
+            return [
+                [ "",                       "root" ],
+                [ "simple_route",           "tunnel->simple_route" ],
+                [ "get_router",             "tunnel->Awk_Router" ],
+                [ "router_view",            "tunnel->Hello World!" ],
+                [ "router_router",          "tunnel->tunnel[test3_router]" ],
+                [ "router_controller",      "tunnel->router_controller" ],
+                [ "arg/hello world!",       "tunnel->captured[hello world!]" ],
+                [ "preserve/simple_route",  "tunnel->preserved[]->simple_route_preserved" ],
+                [ "simple_other",           "tunnel->redirected[test2_router]->simple_other" ],
+                [ "fail",                   "tunnel->redirected[test2_router]->" ],
+            ];
+        }
+
+        /**
+         * Testa o processamento de URL.
+         * @dataProvider providerURLProcess
+         */
+        public function testURLProcess($url_route, $expected_output) {
+            $test_driver = new Awk_Router_Driver($url_route, Awk_Module::get("awk_suite"));
+            $test_driver->redirect("test4_parts");
+
+            $this->expectOutputString($expected_output);
+        }
+
+        /**
+         * Provedor de testes.
+         */
+        public function providerURLProcess() {
+            return [
+                // Teste de argumentos.
+                [ "args/simple",                    "simple" ],
+                [ "args/123",                       "123,," ],
+                [ "args/123/abc",                   "123,,abc" ],
+                [ "args/123/1.5/abc",               "123,1.5,abc" ],
+                [ "args/1.5/abc",                   ",1.5,abc" ],
+                [ "args/1.5",                       ",1.5," ],
+
+                // Teste com repetidores.
+                [ "repeat/simple-one/1/2/3/abc",    "1,2,3" ],
+                [ "repeat/simple-zero/abc",         "" ],
+                [ "repeat/simple-zero/1/2/3/abc",   "1,2,3" ],
+                [ "repeat/exactly/1/2/3/abc",       "1,2,3" ],
+                [ "repeat/min/1/2/3/abc",           "1,2,3" ],
+                [ "repeat/min/1/3/abc",             "fail" ],
+                [ "repeat/min-optional/1/2/abc",    ",1" ],
+                [ "repeat/max/1/2/3/abc",           "1,2,3" ],
+                [ "repeat/max/1/2/3/4/abc",         "1,2,3" ],
+                [ "repeat/ranged/1/abc",            "fail" ],
+                [ "repeat/ranged/1/2/abc",          "1,2" ],
+                [ "repeat/ranged/1/2/3/abc",        "1,2,3" ],
+                [ "repeat/ranged/1/2/3/4/abc",      "1,2,3" ],
+
+                // Testes diversos.
+                [ "capture/hello",                  "hello" ],
+                [ "fail",                           "fail" ],
+            ];
         }
     }

@@ -41,7 +41,7 @@
          * @param callable|string $root_callback Definição do callable ou de um identificador.
          */
         public function add_root($root_callback) {
-            $this->add_route("[awk->null]", $root_callback);
+            $this->add_route(":{null}", $root_callback);
         }
 
         /**

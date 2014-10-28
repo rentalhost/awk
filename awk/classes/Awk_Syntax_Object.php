@@ -878,4 +878,22 @@
         static private function group_contents($definition) {
             return join(preg_split(self::REGEX_GROUP_SPLIT, $definition));
         }
+
+        /**
+         * Obtém a instância do tipo do objeto.
+         */
+        public function get_type() {
+            // Carrega um tipo explicitamente do mesmo módulo.
+            if($this->type_module === "module") {
+                return $this->module->type($this->type);
+            }
+
+            // Se um tipo não foi definido, carrega um tipo do Framework.
+            if($this->type_module === null) {
+                return Awk::$module->type($this->type);
+            }
+
+            // Caso contrário, carregará o tipo do módulo determinado.
+            return Awk_Module::get($this->type_module)->type($this->type);
+        }
     }

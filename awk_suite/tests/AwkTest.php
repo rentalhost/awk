@@ -13,7 +13,7 @@
          * Retorna a instância de Settings do módulo.
          */
         static private function getAwkSettings() {
-            return Awk_Module::get("awk")->settings();
+            return Awk::$module->settings();
         }
 
         /**

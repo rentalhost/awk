@@ -8,7 +8,7 @@
          * Instância do módulo do próprio motor.
          * @var Awk_Module
          */
-        static private $module;
+        static public $module;
 
         /**
          * Mapa de classes que podem ser carregadas através do motor.
@@ -26,7 +26,6 @@
             "Awk_Router_Feature"            => "classes",
             "Awk_Router_Driver_Stack"       => "classes",
             "Awk_Router_Driver"             => "classes",
-            "Awk_Router_Route_Part"         => "classes",
             "Awk_Router_Route"              => "classes",
 
             // Classes settings.

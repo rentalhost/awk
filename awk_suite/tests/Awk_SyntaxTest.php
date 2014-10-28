@@ -333,4 +333,26 @@
                 [ "code",   ":{id}?" ],
             ];
         }
+
+        /**
+         * Testa o tipo retornado.
+         * @dataProvider providerGetType
+         */
+        public function testGetType($object_definition, $type_module) {
+            $module      = Awk_Module::get("awk_suite");
+            $test_object = Awk_Syntax_Object::create($module, $object_definition, "url");
+
+            $this->assertSame($type_module, $test_object->get_type()->module->name);
+        }
+
+        /**
+         * Provedor de testes.
+         */
+        public function providerGetType() {
+            return [
+                [ ":{int}",                     "awk" ],
+                [ ":{awk->int}",                "awk" ],
+                [ ":{module->test1_complete}",  "awk_suite" ],
+            ];
+        }
     }
