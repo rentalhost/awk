@@ -50,7 +50,8 @@
         /**
          * Define várias variáveis.
          * @param mixed[] $keys Variáveis que serão definidas.
-         * @throws Awk_Data_InvalidDataType_Exception Caso um tipo de informação não seja suportado.
+         * @throws Awk_Data_InvalidDataType_Exception
+         *         Caso um tipo de informação não seja suportado.
          */
         public function set_array($keys) {
             if(is_array($keys)) {

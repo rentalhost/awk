@@ -51,6 +51,7 @@
             // Classes type.
             "Awk_Type"                      => "classes",
             "Awk_Type_Feature"              => "classes",
+            "Awk_Type_Helper"               => "classes",
 
             // Classes database.
             "Awk_Database"                  => "classes",
@@ -159,6 +160,7 @@
             "Awk_Type_InvalidValidateCallback_Exception"                => "exceptions",
             "Awk_Type_WithoutTransformCallback_Exception"               => "exceptions",
             "Awk_Type_InvalidTransformCallback_Exception"               => "exceptions",
+            "Awk_Type_AlreadyExists_Exception"                          => "exceptions",
 
             // Exceções de Data.
             "Awk_Data_Exception"                                        => "exceptions",

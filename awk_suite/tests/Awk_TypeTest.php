@@ -3,6 +3,7 @@
     /**
      * @covers Awk_Type
      * @covers Awk_Type_Feature
+     * @covers Awk_Type_Helper
      */
     class Awk_TypeTest extends PHPUnit_Framework_TestCase {
         /**
@@ -52,6 +53,11 @@
          */
         public function providerTypes() {
             return [
+                // Teste de aliases.
+                0   =>  [ "bool",    true,   true,   true ],
+                        [ "int",     true,   false,  1 ],
+                        [ "double",  true,   false,  1.0 ],
+
                 // Teste boolean.
                 100 =>  [ "boolean", true,   true,   true ],
                         [ "boolean", false,  false,  false ],
@@ -106,23 +112,23 @@
                         [ "empty",   [],     true,   null ],
                         [ "empty",   [true], false,  null ],
 
-                // Teste int.
-                400 =>  [ "int",     true,   false,  1 ],
-                        [ "int",     false,  false,  0 ],
-                        [ "int",     "on",   false,  0 ],
-                        [ "int",     "yes",  false,  0 ],
-                        [ "int",     "1",    true,   1 ],
-                        [ "int",     "0",    true,   0 ],
-                        [ "int",     "",     false,  0 ],
-                        [ "int",     "-1",   true,  -1 ],
-                        [ "int",     " ",    false,  0 ],
-                        [ "int",     1,      true,   1 ],
-                        [ "int",     1.5,    false,  1 ],
-                        [ "int",     0,      true,   0 ],
-                        [ "int",     -1,     true,  -1 ],
-                        [ "int",     null,   false,  0 ],
-                        [ "int",     [],     false,  0 ],
-                        [ "int",     [true], false,  0 ],
+                // Teste integer.
+                400 =>  [ "integer", true,   false,  1 ],
+                        [ "integer", false,  false,  0 ],
+                        [ "integer", "on",   false,  0 ],
+                        [ "integer", "yes",  false,  0 ],
+                        [ "integer", "1",    true,   1 ],
+                        [ "integer", "0",    true,   0 ],
+                        [ "integer", "",     false,  0 ],
+                        [ "integer", "-1",   true,  -1 ],
+                        [ "integer", " ",    false,  0 ],
+                        [ "integer", 1,      true,   1 ],
+                        [ "integer", 1.5,    false,  1 ],
+                        [ "integer", 0,      true,   0 ],
+                        [ "integer", -1,     true,  -1 ],
+                        [ "integer", null,   false,  0 ],
+                        [ "integer", [],     false,  0 ],
+                        [ "integer", [true], false,  0 ],
 
                 // Teste float.
                 500 =>  [ "float",   true,   false,  1.0 ],
@@ -163,13 +169,52 @@
         }
 
         /**
+         * Testa se um tipo existe.
+         */
+        public function testExists() {
+            $this->assertTrue(self::$module->types->exists("index2"));
+            $this->assertTrue(self::$module->types->exists("index"));
+        }
+
+        /**
+         * Testa um tipo de index.
+         * @depends testExists
+         */
+        public function testIndexType() {
+            $type_instance = self::$module->type("index");
+
+            $this->assertInstanceOf("Awk_Type", $type_instance);
+            $this->assertSame("index", $type_instance->name);
+            $this->assertSame(self::$module->path->get_normalized() . "/types/index.php", $type_instance->path->get_normalized());
+
+            $this->assertTrue($type_instance->validate("ok"));
+            $this->assertSame("ok", $type_instance->transform("ok"));
+        }
+
+        /**
          * Executa testes em um tipo exclusivo do módulo.
          */
         public function testTypeFromModule() {
-            $type_instance = self::$module->type("test1_complete");
+            $type_instance = self::$module->type("test1b_complete");
+
+            $this->assertInstanceOf("Awk_Type",  $type_instance);
+            $this->assertSame("test1b_complete", $type_instance->name);
+
+            $this->processTypeResponse($type_instance, true, true, "ok");
+        }
+
+        /**
+         * Testa a criação de um novo tipo.
+         */
+        public function testCreateRuntime() {
+            $type_instance = self::$module->types->create("new", "is_string", "strval");
 
             $this->assertInstanceOf("Awk_Type", $type_instance);
-            $this->processTypeResponse($type_instance, true, true, "ok");
+            $this->assertSame("new", $type_instance->name);
+            $this->assertSame(Awk_Path::normalize(__FILE__), $type_instance->path->get_normalized());
+
+            $this->assertTrue($type_instance->validate("ok"));
+            $this->assertSame("ok", $type_instance->transform("ok"));
         }
 
         /**
@@ -181,47 +226,56 @@
         }
 
         /**
-         * Uma exceção deve ser lançada quando um teste não existe no módulo.
          * @expectedException        Awk_Type_NotExists_Exception
-         * @expectedExceptionMessage O Type "unexistent" não existe no módulo "awk_suite".
+         * @expectedExceptionMessage O tipo "unexistent" não existe no módulo "awk_suite".
          */
         public function testUnexistentException() {
             self::$module->type("unexistent");
         }
 
         /**
-         * Caso não tenha definido um método de validação.
          * @expectedException        Awk_Type_WithoutValidateCallback_Exception
-         * @expectedExceptionMessage O Type "test2_without_validate" do módulo "awk_suite" não definiu um método de validação.
+         * @expectedExceptionMessage O tipo "test2_without_validate" do módulo "awk_suite" não definiu um método de validação.
          */
         public function testAwk_Type_WithoutValidateCallback_Exception() {
             self::$module->type("test2_without_validate");
         }
 
         /**
-         * Caso tenha definido um método de validação inválido.
          * @expectedException        Awk_Type_InvalidValidateCallback_Exception
-         * @expectedExceptionMessage O Type "test3_invalid_validate" do módulo "awk_suite" definiu um método de validação inválido.
+         * @expectedExceptionMessage O tipo "test3_invalid_validate" do módulo "awk_suite" definiu um método de validação inválido.
          */
         public function testAwk_Type_InvalidValidateCallback_Exception() {
             self::$module->type("test3_invalid_validate");
         }
 
         /**
-         * Caso não tenha definido um método de transformação.
          * @expectedException        Awk_Type_WithoutTransformCallback_Exception
-         * @expectedExceptionMessage O Type "test4_without_transform" do módulo "awk_suite" não definiu um método de transformação.
+         * @expectedExceptionMessage O tipo "test4_without_transform" do módulo "awk_suite" não definiu um método de transformação.
          */
         public function testAwk_Type_WithoutTransformCallback_Exception() {
             self::$module->type("test4_without_transform");
         }
 
         /**
-         * Caso tenha definido um método de transformação inválido.
          * @expectedException        Awk_Type_InvalidTransformCallback_Exception
-         * @expectedExceptionMessage O Type "test5_invalid_transform" do módulo "awk_suite" definiu um método de transformação inválido.
+         * @expectedExceptionMessage O tipo "test5_invalid_transform" do módulo "awk_suite" definiu um método de transformação inválido.
          */
         public function testAwk_Type_InvalidTransformCallback_Exception() {
             self::$module->type("test5_invalid_transform");
+        }
+
+        /**
+         * Teste de exceção.
+         */
+        public function testAwk_Type_AlreadyExists_Exception() {
+            $this->setExpectedException(
+                "Awk_Type_AlreadyExists_Exception",
+                "O tipo \"created\" do módulo \"awk_suite\" já foi definido em \"" . Awk_Path::normalize(__FILE__) . "\"."
+            );
+
+            // A primeira vez define, a segunda lançará a exceção.
+            self::$module->types->create("created");
+            self::$module->types->create("created");
         }
     }

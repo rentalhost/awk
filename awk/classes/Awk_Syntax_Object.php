@@ -881,6 +881,7 @@
 
         /**
          * Obtém a instância do tipo do objeto.
+         * @return Awk_Type
          */
         public function get_type() {
             // Carrega um tipo explicitamente do mesmo módulo.

@@ -19,9 +19,12 @@
         /**
          * Carrega o controller e a retorna.
          * @param  string $controller_name Identificador do controller a ser carregado.
-         * @throws Awk_Controller_NotExists_Exception               Caso o Controller não exista.
-         * @throws Awk_Controller_WasNotRegisteredClass_Exception   Caso o Controller não tenha registrado uma classe.
-         * @throws Awk_Controller_RegisteredNotFoundClass_Exception Caso a classe registrada pelo Controller não seja encontrada.
+         * @throws Awk_Controller_NotExists_Exception
+         *         Caso o Controller não exista.
+         * @throws Awk_Controller_WasNotRegisteredClass_Exception
+         *         Caso o Controller não tenha registrado uma classe.
+         * @throws Awk_Controller_RegisteredNotFoundClass_Exception
+         *         Caso a classe registrada pelo Controller não seja encontrada.
          * @return self
          */
         public function load($controller_name) {

@@ -13,7 +13,8 @@
         /**
          * Carrega o helper.
          * @param  string $helper_name Identificador do helper.
-         * @throws Awk_Helper_NotExists_Exception Caso o Helper não exista no módulo.
+         * @throws Awk_Helper_NotExists_Exception
+         *         Caso o Helper não exista no módulo.
          */
         public function load($helper_name) {
             $this->name = $helper_name;

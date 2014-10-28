@@ -31,7 +31,8 @@
         /**
          * Constrói uma nova instância de módulo.
          * @param string $module_name Identificador do módulo.
-         * @throws Awk_Module_NotExists_Exception       Caso o módulo não exista.
+         * @throws Awk_Module_NotExists_Exception
+         *         Caso o módulo não exista.
          * @throws Awk_Module_WithoutSettings_Exception
          *         Caso o módulo não tenha definido seu arquivo de configuração.
          */
@@ -98,7 +99,8 @@
         /**
          * Carrega uma feature através do seu nome singular.
          * @param  string $name Identificador do recurso.
-         * @throws Awk_Module_UnsupportedFeature_Exception Caso o recurso não seja suportado.
+         * @throws Awk_Module_UnsupportedFeature_Exception
+         *         Caso o recurso não seja suportado.
          * @return object
          */
         private function load_feature($name) {

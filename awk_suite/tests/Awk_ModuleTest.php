@@ -67,6 +67,7 @@
          * @covers Awk_Model_Feature::exists
          * @covers Awk_Public_Feature::exists
          * @covers Awk_Private_Feature::exists
+         * @covers Awk_Type_Feature::load_index
          */
         public function testModuleExists() {
             $this->assertTrue(self::$module->routers->exists("test1_basic"));

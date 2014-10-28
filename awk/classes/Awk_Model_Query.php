@@ -28,7 +28,8 @@
          * @param string    $query_name    Nome de referência da query.
          * @param string    $query_type    Tipo específico da query.
          * @param string    $query_definer Definição da query.
-         * @throws Awk_Model_Row_UnsupportedQueryType_Exception Caso um tipo não suportado seja usado.
+         * @throws Awk_Model_Row_UnsupportedQueryType_Exception
+         *         Caso um tipo não suportado seja usado.
          */
         public function __construct($parent, $query_name, $query_type, $query_definer) {
             parent::__construct($parent->module, $parent);
@@ -47,7 +48,8 @@
         /**
          * Executa a query com os argumentos passados.
          * @param  mixed[] $query_args Argumentos que serão passados para a query.
-         * @throws Awk_Model_QueryError_Exception Caso haja falha na execução da Query.
+         * @throws Awk_Model_QueryError_Exception
+         *         Caso haja falha na execução da Query.
          * @return Awk_Model_Row
          */
         public function execute($query_args) {

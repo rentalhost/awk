@@ -7,9 +7,9 @@
         /**
          * Constrói a exceção.
          * @param Awk_Module $module    Instância do módulo de referência.
-         * @param string     $type_name Nome do Type com falha.
+         * @param string     $type_name Nome do tipo com falha.
          */
         public function __construct($module, $type_name) {
-            parent::__construct("O Type \"{$type_name}\" do módulo \"{$module->name}\" definiu um método de transformação inválido.");
+            parent::__construct("O tipo \"{$type_name}\" do módulo \"{$module->name}\" definiu um método de transformação inválido.");
         }
     }

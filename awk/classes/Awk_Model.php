@@ -31,7 +31,8 @@
         /**
          * Carrega o model.
          * @param  string $model_name Identificador do model.
-         * @throws Awk_Model_NotExists_Exception Caso o Model não exista.
+         * @throws Awk_Model_NotExists_Exception
+         *         Caso o Model não exista.
          */
         public function load($model_name) {
             $this->name = $model_name;
@@ -98,7 +99,8 @@
          * @param string $query_name    Nome de referência da query.
          * @param string $query_type    Tipo específico da query.
          * @param string $query_definer Definição da query.
-         * @throws Awk_Model_QueryAlreadyExists_Exception Caso a Query já tenha sido definida.
+         * @throws Awk_Model_QueryAlreadyExists_Exception
+         *         Caso a Query já tenha sido definida.
          */
         public function add_query($query_name, $query_type, $query_definer) {
             // Se há houver uma chave com o mesmo nome, lança um erro.
@@ -114,7 +116,8 @@
          * Executa uma query através do seu nome definido.
          * @param  string  $query_name Nome de referência da query.
          * @param  mixed[] $call_args  Argumentos que serão transferidos a query.
-         * @throws Awk_Model_QueryNotExists_Exception Caso a Query não tenha sido definida.
+         * @throws Awk_Model_QueryNotExists_Exception
+         *         Caso a Query não tenha sido definida.
          * @return Awk_Model_Row
          */
         public function __call($query_name, $call_args) {

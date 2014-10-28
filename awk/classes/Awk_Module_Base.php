@@ -58,7 +58,8 @@
 
         /**
          * Obtém o ID do recurso.
-         * @throws Awk_Module_GetIdIsNotSupported_Exception Caso tente obter o identificador de um recurso sem suporte.
+         * @throws Awk_Module_GetIdIsNotSupported_Exception
+         *         Caso tente obter o identificador de um recurso sem suporte.
          * @return string
          */
         public function get_id() {

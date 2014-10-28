@@ -19,11 +19,16 @@
         /**
          * Carrega o type e o retorna.
          * @param  string $type_name Identificador do tipo.
-         * @throws Awk_Type_NotExists_Exception                 Caso o Type não exista no módulo.
-         * @throws Awk_Type_WithoutValidateCallback_Exception   Caso um método de validação não tenha sido definido.
-         * @throws Awk_Type_InvalidValidateCallback_Exception   Caso o método de validação não seja válido.
-         * @throws Awk_Type_WithoutTransformCallback_Exception  Caso um método de transformação não tenha sido definido.
-         * @throws Awk_Type_InvalidTransformCallback_Exception  Caso o método de transformação não seja válido.
+         * @throws Awk_Type_NotExists_Exception
+         *         Caso o tipo não exista no módulo.
+         * @throws Awk_Type_WithoutValidateCallback_Exception
+         *         Caso um método de validação não tenha sido definido.
+         * @throws Awk_Type_InvalidValidateCallback_Exception
+         *         Caso o método de validação não seja válido.
+         * @throws Awk_Type_WithoutTransformCallback_Exception
+         *         Caso um método de transformação não tenha sido definido.
+         * @throws Awk_Type_InvalidTransformCallback_Exception
+         *         Caso o método de transformação não seja válido.
          */
         public function load($type_name) {
             $this->name = $type_name;

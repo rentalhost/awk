@@ -23,9 +23,9 @@
         public function testClass() {
             $library_instance = self::$module->library("test1_valid_autoinit");
 
-            $this->assertInstanceOf("Awk_Module", $library_instance->module);
+            $this->assertInstanceOf("Awk_Module",          $library_instance->module);
             $this->assertInstanceOf("Awk_Library_Feature", $library_instance->parent);
-            $this->assertInstanceOf("Awk_Module", $library_instance->parent->module);
+            $this->assertInstanceOf("Awk_Module",          $library_instance->parent->module);
 
             $this->assertSame("test1_valid_autoinit", $library_instance->name);
 
@@ -37,15 +37,15 @@
          * Testa a obtenção de identificadores.
          */
         public function testGetId() {
-            $this->assertSame("controller@awk_suite->test1_valid", self::$module->controller("test1_valid")->get_id());
-            $this->assertSame("helper@awk_suite->test1", self::$module->helper("test1")->get_id());
+            $this->assertSame("controller@awk_suite->test1_valid",       self::$module->controller("test1_valid")->get_id());
+            $this->assertSame("helper@awk_suite->test1",                 self::$module->helper("test1")->get_id());
             $this->assertSame("library@awk_suite->test1_valid_autoinit", self::$module->library("test1_valid_autoinit")->get_id());
-            $this->assertSame("model@awk_suite->test1_base", self::$module->model("test1_base")->get_id());
-            $this->assertSame("private@awk_suite->test1_file", self::$module->private("test1_file")->get_id());
-            $this->assertSame("public@awk_suite->test1_hello", self::$module->public("test1_hello")->get_id());
-            $this->assertSame("router@awk_suite->test1_basic", self::$module->router("test1_basic")->get_id());
+            $this->assertSame("model@awk_suite->test1_base",             self::$module->model("test1_base")->get_id());
+            $this->assertSame("private@awk_suite->test1_file",           self::$module->private("test1_file")->get_id());
+            $this->assertSame("public@awk_suite->test1_hello",           self::$module->public("test1_hello")->get_id());
+            $this->assertSame("router@awk_suite->test1_basic",           self::$module->router("test1_basic")->get_id());
             $this->assertSame("type@awk_suite->test1_complete", self::$module->type("test1_complete")->get_id());
-            $this->assertSame("view@awk_suite->test1", self::$module->view("test1", null, true)->get_id());
+            $this->assertSame("view@awk_suite->test1",                   self::$module->view("test1", null, true)->get_id());
         }
 
         /**

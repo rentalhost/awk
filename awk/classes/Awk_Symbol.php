@@ -41,7 +41,8 @@
         /**
          * Retorna um símbolo armazenado.
          * @param  string $symbol_identifier Identificador do símbolo.
-         * @throws Awk_Symbol_NotConstructed_Exception Caso o símbolo nunca tenha sido contruído.
+         * @throws Awk_Symbol_NotConstructed_Exception
+         *         Caso o símbolo nunca tenha sido contruído.
          * @return self|false
          */
         static public function get($symbol_identifier) {

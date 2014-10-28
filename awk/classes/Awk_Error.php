@@ -14,7 +14,8 @@
         /**
          * Cria um erro com as especificações fornecidas.
          * @param  mixed[] $error_options Definições do erro.
-         * @throws Awk_Error_NotSupportedType_Exception Caso um tipo não suportado seja informado.
+         * @throws Awk_Error_NotSupportedType_Exception
+         *         Caso um tipo não suportado seja informado.
          */
         static public function create($error_options) {
             // Definições padrões de um erro.

@@ -23,9 +23,12 @@
         /**
          * Carrega a library e a retorna.
          * @param  string $library_name Identificador da library.
-         * @throws Awk_Library_NotExists_Exception               A Library não existe no módulo.
-         * @throws Awk_Library_WasNotRegisteredClass_Exception   A Library não registrou uma classe.
-         * @throws Awk_Library_RegisteredNotFoundClass_Exception A Library registrou uma classe que não foi encontrada.
+         * @throws Awk_Library_NotExists_Exception
+         *         A Library não existe no módulo.
+         * @throws Awk_Library_WasNotRegisteredClass_Exception
+         *         A Library não registrou uma classe.
+         * @throws Awk_Library_RegisteredNotFoundClass_Exception
+         *         A Library registrou uma classe que não foi encontrada.
          */
         public function load($library_name) {
             $this->name = $library_name;

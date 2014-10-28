@@ -13,7 +13,8 @@
         /**
          * Carrega o arquivo da rota.
          * @param  string $router_name Identificador do roteador.
-         * @throws Awk_Router_NotExists_Exception Caso o Router não exista no módulo.
+         * @throws Awk_Router_NotExists_Exception
+         *         Caso o Router não exista no módulo.
          */
         public function load($router_name) {
             $this->name = $router_name;

@@ -43,10 +43,14 @@
         /**
          * Identifica uma string e retorna a instância.
          * @param  string $id Informação que será identificada.
-         * @throws Awk_Module_IdRequiresModule_Exception    Caso o identificador não tenha definido um módulo obrigatório.
-         * @throws Awk_Module_IdRequiresFeature_Exception   Caso o identificador não tenha definido um recurso obrigatório.
-         * @throws Awk_Module_IdFeatureExpected_Exception   Caso o identificador tenha definido um recurso diferente do esperado.
-         * @throws Awk_Module_IdUnsupportedFormat_Exception Caso o identificador tenha sido definido em um formato não suportado.
+         * @throws Awk_Module_IdRequiresModule_Exception
+         *         Caso o identificador não tenha definido um módulo obrigatório.
+         * @throws Awk_Module_IdRequiresFeature_Exception
+         *         Caso o identificador não tenha definido um recurso obrigatório.
+         * @throws Awk_Module_IdFeatureExpected_Exception
+         *         Caso o identificador tenha definido um recurso diferente do esperado.
+         * @throws Awk_Module_IdUnsupportedFormat_Exception
+         *         Caso o identificador tenha sido definido em um formato não suportado.
          * @return self
          */
         public function identify($id) {
