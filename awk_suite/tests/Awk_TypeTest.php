@@ -27,159 +27,139 @@
 
         /**
          * Verifica se um tipo retorna a resposta esperada.
-         * @param  Awk_Type $type             Instância do controlador do tipo.
-         * @param  mixed    $value            Valor a ser testado pelos métodos da instância.
-         * @param  boolean  $valueValidate    Se o valor será validado corretamente.
-         * @param  mixed    $valueTransformed Valor esperado após a transformação.
+         * @param  Awk_Type $type                Instância do controlador do tipo.
+         * @param  mixed    $value               Valor a ser testado pelos métodos da instância.
+         * @param  boolean  $value_will_validate Se o valor será validado corretamente.
+         * @param  mixed    $value_transformed   Valor esperado após a transformação.
          */
-        private function processTypeResponse($type, $value, $valueValidate, $valueTransformed) {
-            $this->assertEquals($valueValidate, $type->validate($value));
-            $this->assertEquals($valueTransformed, $type->transform($value));
+        private function processTypeResponse($type, $value, $value_will_validate, $value_transformed) {
+            $this->assertEquals($value_will_validate, $type->validate($value));
+            $this->assertEquals($value_transformed, $type->transform($value));
         }
 
         /**
-         * Executa testes no tipo padrão boolean.
+         * Executa os testes.
+         * @dataProvider providerTypes
          */
-        public function testTypeBoolean() {
-            $type_instance = self::$awk->type("boolean");
+        public function testTypes($type, $value, $value_will_validate, $value_transformed) {
+            $type_instance = self::$awk->type($type);
 
-            $this->processTypeResponse($type_instance, true, true, true);
-            $this->processTypeResponse($type_instance, false, false, false);
-            $this->processTypeResponse($type_instance, "on", true, true);
-            $this->processTypeResponse($type_instance, "yes", true, true);
-            $this->processTypeResponse($type_instance, "1", true, true);
-            $this->processTypeResponse($type_instance, "0", false, false);
-            $this->processTypeResponse($type_instance, "", false, false);
-            $this->processTypeResponse($type_instance, "-1", false, false);
-            $this->processTypeResponse($type_instance, " ", false, false);
-            $this->processTypeResponse($type_instance, 1, true, true);
-            $this->processTypeResponse($type_instance, 1.5, false, false);
-            $this->processTypeResponse($type_instance, 0, false, false);
-            $this->processTypeResponse($type_instance, -1, false, false);
-            $this->processTypeResponse($type_instance, null, false, false);
-            $this->processTypeResponse($type_instance, [], false, false);
-            $this->processTypeResponse($type_instance, [true], false, false);
+            $this->processTypeResponse($type_instance, $value, $value_will_validate, $value_transformed);
         }
 
         /**
-         * Executa testes no tipo padrão null.
+         * Provedor de tests.
          */
-        public function testTypeNull() {
-            $type_instance = self::$awk->type("null");
+        public function providerTypes() {
+            return [
+                // Teste boolean.
+                100 =>  [ "boolean", true,   true,   true ],
+                        [ "boolean", false,  false,  false ],
+                        [ "boolean", "on",   true,   true ],
+                        [ "boolean", "yes",  true,   true ],
+                        [ "boolean", "1",    true,   true ],
+                        [ "boolean", "0",    false,  false ],
+                        [ "boolean", "",     false,  false ],
+                        [ "boolean", "-1",   false,  false ],
+                        [ "boolean", " ",    false,  false ],
+                        [ "boolean", 1,      true,   true ],
+                        [ "boolean", 1.5,    false,  false ],
+                        [ "boolean", 0,      false,  false ],
+                        [ "boolean", -1,     false,  false ],
+                        [ "boolean", null,   false,  false ],
+                        [ "boolean", [],     false,  false ],
+                        [ "boolean", [true], false,  false ],
 
-            $this->processTypeResponse($type_instance, true, false, null);
-            $this->processTypeResponse($type_instance, false, false, null);
-            $this->processTypeResponse($type_instance, "on", false, null);
-            $this->processTypeResponse($type_instance, "yes", false, null);
-            $this->processTypeResponse($type_instance, "1", false, null);
-            $this->processTypeResponse($type_instance, "0", false, null);
-            $this->processTypeResponse($type_instance, "", false, null);
-            $this->processTypeResponse($type_instance, "-1", false, null);
-            $this->processTypeResponse($type_instance, " ", false, null);
-            $this->processTypeResponse($type_instance, 1, false, null);
-            $this->processTypeResponse($type_instance, 1.5, false, null);
-            $this->processTypeResponse($type_instance, 0, false, null);
-            $this->processTypeResponse($type_instance, -1, false, null);
-            $this->processTypeResponse($type_instance, null, true, null);
-            $this->processTypeResponse($type_instance, [], false, null);
-            $this->processTypeResponse($type_instance, [true], false, null);
-        }
+                // Teste null.
+                200 =>  [ "null",    true,   false,  null ],
+                        [ "null",    false,  false,  null ],
+                        [ "null",    "on",   false,  null ],
+                        [ "null",    "yes",  false,  null ],
+                        [ "null",    "1",    false,  null ],
+                        [ "null",    "0",    false,  null ],
+                        [ "null",    "",     false,  null ],
+                        [ "null",    "-1",   false,  null ],
+                        [ "null",    " ",    false,  null ],
+                        [ "null",    1,      false,  null ],
+                        [ "null",    1.5,    false,  null ],
+                        [ "null",    0,      false,  null ],
+                        [ "null",    -1,     false,  null ],
+                        [ "null",    null,   true,   null ],
+                        [ "null",    [],     false,  null ],
+                        [ "null",    [true], false,  null ],
 
-        /**
-         * Executa testes no tipo padrão empty.
-         */
-        public function testTypeEmpty() {
-            $type_instance = self::$awk->type("empty");
+                // Teste empty.
+                300 =>  [ "empty",   true,   false,  null ],
+                        [ "empty",   false,  true,   null ],
+                        [ "empty",   "on",   false,  null ],
+                        [ "empty",   "yes",  false,  null ],
+                        [ "empty",   "1",    false,  null ],
+                        [ "empty",   "0",    true,   null ],
+                        [ "empty",   "",     true,   null ],
+                        [ "empty",   "-1",   false,  null ],
+                        [ "empty",   " ",    false,  null ],
+                        [ "empty",   1,      false,  null ],
+                        [ "empty",   1.5,    false,  null ],
+                        [ "empty",   0,      true,   null ],
+                        [ "empty",   -1,     false,  null ],
+                        [ "empty",   null,   true,   null ],
+                        [ "empty",   [],     true,   null ],
+                        [ "empty",   [true], false,  null ],
 
-            $this->processTypeResponse($type_instance, true, false, null);
-            $this->processTypeResponse($type_instance, false, true, null);
-            $this->processTypeResponse($type_instance, "on", false, null);
-            $this->processTypeResponse($type_instance, "yes", false, null);
-            $this->processTypeResponse($type_instance, "1", false, null);
-            $this->processTypeResponse($type_instance, "0", true, null);
-            $this->processTypeResponse($type_instance, "", true, null);
-            $this->processTypeResponse($type_instance, "-1", false, null);
-            $this->processTypeResponse($type_instance, " ", false, null);
-            $this->processTypeResponse($type_instance, 1, false, null);
-            $this->processTypeResponse($type_instance, 1.5, false, null);
-            $this->processTypeResponse($type_instance, 0, true, null);
-            $this->processTypeResponse($type_instance, -1, false, null);
-            $this->processTypeResponse($type_instance, null, true, null);
-            $this->processTypeResponse($type_instance, [], true, null);
-            $this->processTypeResponse($type_instance, [true], false, null);
-        }
+                // Teste int.
+                400 =>  [ "int",     true,   false,  1 ],
+                        [ "int",     false,  false,  0 ],
+                        [ "int",     "on",   false,  0 ],
+                        [ "int",     "yes",  false,  0 ],
+                        [ "int",     "1",    true,   1 ],
+                        [ "int",     "0",    true,   0 ],
+                        [ "int",     "",     false,  0 ],
+                        [ "int",     "-1",   true,  -1 ],
+                        [ "int",     " ",    false,  0 ],
+                        [ "int",     1,      true,   1 ],
+                        [ "int",     1.5,    false,  1 ],
+                        [ "int",     0,      true,   0 ],
+                        [ "int",     -1,     true,  -1 ],
+                        [ "int",     null,   false,  0 ],
+                        [ "int",     [],     false,  0 ],
+                        [ "int",     [true], false,  0 ],
 
-        /**
-         * Executa testes no tipo padrão int.
-         * @return [type] [description]
-         */
-        public function testTypeInt() {
-            $type_instance = self::$awk->type("int");
+                // Teste float.
+                500 =>  [ "float",   true,   false,  1.0 ],
+                        [ "float",   false,  false,  0.0 ],
+                        [ "float",   "on",   false,  0.0 ],
+                        [ "float",   "yes",  false,  0.0 ],
+                        [ "float",   "1",    true,   1.0 ],
+                        [ "float",   "0",    true,   0.0 ],
+                        [ "float",   "",     false,  0.0 ],
+                        [ "float",   "-1",   true,  -1.0 ],
+                        [ "float",   " ",    false,  0.0 ],
+                        [ "float",   1,      true,   1.0 ],
+                        [ "float",   1.5,    true,   1.5 ],
+                        [ "float",   0,      true,   0.0 ],
+                        [ "float",   -1,     true,  -1.0 ],
+                        [ "float",   null,   false,  0.0 ],
+                        [ "float",   [],     false,  0.0 ],
+                        [ "float",   [true], false,  0.0 ],
 
-            $this->processTypeResponse($type_instance, true, false, 1);
-            $this->processTypeResponse($type_instance, false, false, 0);
-            $this->processTypeResponse($type_instance, "on", false, 0);
-            $this->processTypeResponse($type_instance, "yes", false, 0);
-            $this->processTypeResponse($type_instance, "1", true, 1);
-            $this->processTypeResponse($type_instance, "0", true, 0);
-            $this->processTypeResponse($type_instance, "", false, 0);
-            $this->processTypeResponse($type_instance, "-1", true, -1);
-            $this->processTypeResponse($type_instance, " ", false, 0);
-            $this->processTypeResponse($type_instance, 1, true, 1);
-            $this->processTypeResponse($type_instance, 1.5, false, 1);
-            $this->processTypeResponse($type_instance, 0, true, 0);
-            $this->processTypeResponse($type_instance, -1, true, -1);
-            $this->processTypeResponse($type_instance, null, false, 0);
-            $this->processTypeResponse($type_instance, [], false, 0);
-            $this->processTypeResponse($type_instance, [true], false, 0);
-        }
-
-        /**
-         * Executa testes no tipo padrão float.
-         */
-        public function testTypeFloat() {
-            $type_instance = self::$awk->type("float");
-
-            $this->processTypeResponse($type_instance, true, false, 1.0);
-            $this->processTypeResponse($type_instance, false, false, 0.0);
-            $this->processTypeResponse($type_instance, "on", false, 0.0);
-            $this->processTypeResponse($type_instance, "yes", false, 0.0);
-            $this->processTypeResponse($type_instance, "1", true, 1.0);
-            $this->processTypeResponse($type_instance, "0", true, 0.0);
-            $this->processTypeResponse($type_instance, "", false, 0.0);
-            $this->processTypeResponse($type_instance, "-1", true, -1.0);
-            $this->processTypeResponse($type_instance, " ", false, 0.0);
-            $this->processTypeResponse($type_instance, 1, true, 1.0);
-            $this->processTypeResponse($type_instance, 1.5, true, 1.5);
-            $this->processTypeResponse($type_instance, 0, true, 0.0);
-            $this->processTypeResponse($type_instance, -1, true, -1.0);
-            $this->processTypeResponse($type_instance, null, false, 0.0);
-            $this->processTypeResponse($type_instance, [], false, 0.0);
-            $this->processTypeResponse($type_instance, [true], false, 0.0);
-        }
-
-        /**
-         * Executa testes no tipo padrão string.
-         */
-        public function testTypeString() {
-            $type_instance = self::$awk->type("string");
-
-            $this->processTypeResponse($type_instance, true, true, "1");
-            $this->processTypeResponse($type_instance, false, true, "");
-            $this->processTypeResponse($type_instance, "on", true, "on");
-            $this->processTypeResponse($type_instance, "yes", true, "yes");
-            $this->processTypeResponse($type_instance, "1", true, "1");
-            $this->processTypeResponse($type_instance, "0", true, "0");
-            $this->processTypeResponse($type_instance, "", true, "");
-            $this->processTypeResponse($type_instance, "-1", true, "-1");
-            $this->processTypeResponse($type_instance, " ", true, " ");
-            $this->processTypeResponse($type_instance, 1, true, "1");
-            $this->processTypeResponse($type_instance, 1.5, true, "1.5");
-            $this->processTypeResponse($type_instance, 0, true, "0");
-            $this->processTypeResponse($type_instance, -1, true, "-1");
-            $this->processTypeResponse($type_instance, null, false, "");
-            $this->processTypeResponse($type_instance, [], false, "");
-            $this->processTypeResponse($type_instance, [true], false, "");
+                // Teste string.
+                600 =>  [ "string",  true,   true,   "1" ],
+                        [ "string",  false,  true,   "" ],
+                        [ "string",  "on",   true,   "on" ],
+                        [ "string",  "yes",  true,   "yes" ],
+                        [ "string",  "1",    true,   "1" ],
+                        [ "string",  "0",    true,   "0" ],
+                        [ "string",  "",     true,   "" ],
+                        [ "string",  "-1",   true,   "-1" ],
+                        [ "string",  " ",    true,   " " ],
+                        [ "string",  1,      true,   "1" ],
+                        [ "string",  1.5,    true,   "1.5" ],
+                        [ "string",  0,      true,   "0" ],
+                        [ "string",  -1,     true,   "-1" ],
+                        [ "string",  null,   false,  "" ],
+                        [ "string",  [],     false,  "" ],
+                        [ "string",  [true], false,  "" ],
+            ];
         }
 
         /**

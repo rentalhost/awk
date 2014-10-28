@@ -41,19 +41,19 @@
          * Verifica se um módulo responde com todas as features disponíveis.
          */
         public function testModuleFeatures() {
-            $this->assertInstanceOf("Awk_Router_Feature", self::$module->routers);
+            $this->assertInstanceOf("Awk_Router_Feature",     self::$module->routers);
             $this->assertInstanceOf("Awk_Controller_Feature", self::$module->controllers);
-            $this->assertInstanceOf("Awk_Library_Feature", self::$module->libraries);
-            $this->assertInstanceOf("Awk_Helper_Feature", self::$module->helpers);
-            $this->assertInstanceOf("Awk_View_Feature", self::$module->views);
-            $this->assertInstanceOf("Awk_Database_Feature", self::$module->databases);
-            $this->assertInstanceOf("Awk_Settings_Feature", self::$module->settings);
-            $this->assertInstanceOf("Awk_Module_Feature", self::$module->modules);
-            $this->assertInstanceOf("Awk_Type_Feature", self::$module->types);
-            $this->assertInstanceOf("Awk_Public_Feature", self::$module->publics);
-            $this->assertInstanceOf("Awk_Private_Feature", self::$module->privates);
-            $this->assertInstanceOf("Awk_Session_Feature", self::$module->sessions);
-            $this->assertInstanceOf("Awk_Model_Feature", self::$module->models);
+            $this->assertInstanceOf("Awk_Library_Feature",    self::$module->libraries);
+            $this->assertInstanceOf("Awk_Helper_Feature",     self::$module->helpers);
+            $this->assertInstanceOf("Awk_View_Feature",       self::$module->views);
+            $this->assertInstanceOf("Awk_Database_Feature",   self::$module->databases);
+            $this->assertInstanceOf("Awk_Settings_Feature",   self::$module->settings);
+            $this->assertInstanceOf("Awk_Module_Feature",     self::$module->modules);
+            $this->assertInstanceOf("Awk_Type_Feature",       self::$module->types);
+            $this->assertInstanceOf("Awk_Public_Feature",     self::$module->publics);
+            $this->assertInstanceOf("Awk_Private_Feature",    self::$module->privates);
+            $this->assertInstanceOf("Awk_Session_Feature",    self::$module->sessions);
+            $this->assertInstanceOf("Awk_Model_Feature",      self::$module->models);
         }
 
         /**

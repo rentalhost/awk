@@ -40,97 +40,78 @@
 
         /**
          * Testa os métodos de caminho.
-         * @depends testRouterLoad
+         * @dataProvider providerFilePath
+         * @depends      testRouterLoad
          */
-        public function testFilePath($router_instance) {
-            // Teste UNIX.
-            $_SERVER["DOCUMENT_ROOT"] = "/home/";
-            $_SERVER["REDIRECT_URL"] = "/test/";
+        public function testFilePath($document_root, $redirect_url, $expected_result, $router_instance) {
+            $_SERVER["DOCUMENT_ROOT"] = $document_root;
+            $_SERVER["REDIRECT_URL"] = $redirect_url;
 
-            $this->assertSame("/home/test/", $router_instance->file_path());
+            $this->assertSame($expected_result, $router_instance->file_path());
+        }
 
-            $_SERVER["DOCUMENT_ROOT"] = "/home";
-            $_SERVER["REDIRECT_URL"] = "/test/";
-
-            $this->assertSame("/home/test/", $router_instance->file_path());
-
-            $_SERVER["DOCUMENT_ROOT"] = "/home";
-            $_SERVER["REDIRECT_URL"] = null;
-
-            $this->assertSame("/home/", $router_instance->file_path());
-
-            // Teste Windows.
-            $_SERVER["DOCUMENT_ROOT"] = "C:/home/";
-            $_SERVER["REDIRECT_URL"] = "/test/";
-
-            $this->assertSame("C:/home/test/", $router_instance->file_path());
-
-            $_SERVER["DOCUMENT_ROOT"] = "C:/home";
-            $_SERVER["REDIRECT_URL"] = "/test/";
-
-            $this->assertSame("C:/home/test/", $router_instance->file_path());
-
-            $_SERVER["DOCUMENT_ROOT"] = "C:/home";
-            $_SERVER["REDIRECT_URL"] = null;
-
-            $this->assertSame("C:/home/", $router_instance->file_path());
+        /**
+         * Provedor de dados.
+         */
+        public function providerFilePath() {
+            return [
+                [ "/home/",   "/test/", "/home/test/" ],
+                [ "/home",    "/test/", "/home/test/" ],
+                [ "/home",    null,     "/home/" ],
+                [ "C:/home/", "/test/", "C:/home/test/" ],
+                [ "C:/home",  "/test/", "C:/home/test/" ],
+                [ "C:/home",  null,     "C:/home/" ],
+            ];
         }
 
         /**
          * Testa os métodos de URL via PATH_INFO.
-         * @depends testRouterLoad
+         * @dataProvider providerGetUrlViaPathInfo
+         * @depends      testRouterLoad
          */
-        public function testGetUrlViaPathInfo($router_instance) {
-            $_SERVER["PATH_INFO"] = "/";
+        public function testGetUrlViaPathInfo($path_info, $expected_result, $router_instance) {
+            $_SERVER["PATH_INFO"] = $path_info;
 
-            $this->assertSame("", $router_instance->get_url());
+            $this->assertSame($expected_result, $router_instance->get_url());
+        }
 
-            $_SERVER["PATH_INFO"] = "/test";
-
-            $this->assertSame("test", $router_instance->get_url());
+        /**
+         * Provedor de dados.
+         */
+        public function providerGetUrlViaPathInfo() {
+            return [
+                [ "/",     "" ],
+                [ "/test", "test" ],
+            ];
         }
 
         /**
          * Testa os métodos de URL via REQUEST_URI.
-         * @depends testRouterLoad
+         * @dataProvider providerGetUrlViaRequestURI
+         * @depends      testRouterLoad
          */
-        public function testGetUrlViaRequestURI($router_instance) {
+        public function testGetUrlViaRequestURI($request_uri, $expected_result, $router_instance) {
             $_SERVER["SCRIPT_NAME"] = "/test/index.php";
-            $_SERVER["REQUEST_URI"] = "/test/";
+            $_SERVER["REQUEST_URI"] = $request_uri;
 
-            $this->assertSame("", $router_instance->get_url());
+            $this->assertSame($expected_result, $router_instance->get_url());
+        }
 
-            $_SERVER["REQUEST_URI"] = "/test/?skip";
-
-            $this->assertSame("", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/test";
-
-            $this->assertSame("test", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/test/";
-
-            $this->assertSame("test", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/test/?skip";
-
-            $this->assertSame("test", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/test/?skip?skip";
-
-            $this->assertSame("test", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/long/test/path";
-
-            $this->assertSame("long/test/path", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/two//slashes";
-
-            $this->assertSame("two//slashes", $router_instance->get_url());
-
-            $_SERVER["REQUEST_URI"] = "/test/two/end/slashes//";
-
-            $this->assertSame("two/end/slashes", $router_instance->get_url());
+        /**
+         * Provedor de dados.
+         */
+        public function providerGetUrlViaRequestURI() {
+            return [
+                [ "/test/",                  "" ],
+                [ "/test/?skip",             "" ],
+                [ "/test/test",              "test" ],
+                [ "/test/test/",             "test" ],
+                [ "/test/test/?skip",        "test" ],
+                [ "/test/test/?skip?skip",   "test" ],
+                [ "/test/long/test/path",    "long/test/path" ],
+                [ "/test/two//slashes",      "two//slashes" ],
+                [ "/test/two/end/slashes//", "two/end/slashes" ],
+            ];
         }
 
         /**
@@ -175,27 +156,28 @@
 
         /**
          * Executa testes no protocolo.
+         * @dataProvider providerSecureProtocol
          */
-        public function testSecureProtocol() {
-            // Verificação insegura.
-            $_SERVER["SERVER_PORT"] = 80;
+        public function testSecureProtocol($https_enabled, $server_port, $expected_result) {
+            $_SERVER["SERVER_PORT"] = $https_enabled;
+            $_SERVER["HTTPS"] = $server_port;
 
-            $this->assertFalse(Awk_Router::is_secure());
+            $this->assertSame($expected_result, Awk_Router::is_secure());
+        }
 
-            $_SERVER["HTTPS"] = "off";
+        /**
+         * Provedor de dados.
+         */
+        public function providerSecureProtocol() {
+            // Obtém a porta HTTPs padrão.
+            $https = getservbyname("https", "tcp");
 
-            $this->assertFalse(Awk_Router::is_secure());
-
-            // Verificação segura.
-            $_SERVER["HTTPS"] = "on";
-
-            $this->assertTrue(Awk_Router::is_secure());
-
-            // Verificação por porta.
-            $_SERVER["HTTPS"] = null;
-            $_SERVER["SERVER_PORT"] = getservbyname("https", "tcp");
-
-            $this->assertTrue(Awk_Router::is_secure());
+            return [
+                [ 80,     null,  false ],
+                [ 80,     "off", false ],
+                [ 80,     "on",  true ],
+                [ $https, null,  true ],
+            ];
         }
 
         /**

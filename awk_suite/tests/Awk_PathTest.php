@@ -54,49 +54,33 @@
 
         /**
          * Teste de normalização em arquivos artificiais.
+         * @dataProvider providerArtificialNormalizations
          */
-        public function testArtificialNormalizations() {
-            $path = new Awk_Path("/abc/../abc");
-            $this->assertSame("/abc", $path->get_normalized());
+        public function testArtificialNormalizations($path, $path_normalized) {
+            $path = new Awk_Path($path);
+            $this->assertSame($path_normalized, $path->get_normalized());
+        }
 
-            $path = new Awk_Path("abc/../abc");
-            $this->assertSame("abc", $path->get_normalized());
-
-            $path = new Awk_Path("/abc/..");
-            $this->assertSame("/", $path->get_normalized());
-
-            $path = new Awk_Path("abc/..");
-            $this->assertSame("", $path->get_normalized());
-
-            $path = new Awk_Path("/abc/../");
-            $this->assertSame("/", $path->get_normalized());
-
-            $path = new Awk_Path("abc/../");
-            $this->assertSame("", $path->get_normalized());
-
-            $path = new Awk_Path("/./abc/../abc");
-            $this->assertSame("/abc", $path->get_normalized());
-
-            $path = new Awk_Path("./abc/../abc");
-            $this->assertSame("abc", $path->get_normalized());
-
-            $path = new Awk_Path("/../abc");
-            $this->assertSame("/../abc", $path->get_normalized());
-
-            $path = new Awk_Path("../abc");
-            $this->assertSame("../abc", $path->get_normalized());
-
-            $path = new Awk_Path("/../abc/../abc");
-            $this->assertSame("/../abc", $path->get_normalized());
-
-            $path = new Awk_Path("../abc/../abc");
-            $this->assertSame("../abc", $path->get_normalized());
-
-            $path = new Awk_Path("../abc/../../abc");
-            $this->assertSame("../../abc", $path->get_normalized());
-
-            $path = new Awk_Path("/../abc/../../abc");
-            $this->assertSame("/../../abc", $path->get_normalized());
+        /**
+         * Provedor de paths normalizados.
+         */
+        public function providerArtificialNormalizations() {
+            return [
+                [ "abc/..",             "" ],
+                [ "abc/../",            "" ],
+                [ "abc/../abc",         "abc" ],
+                [ "./abc/../abc",       "abc" ],
+                [ "/abc/../",           "/" ],
+                [ "/abc/..",            "/" ],
+                [ "/abc/../abc",        "/abc" ],
+                [ "/./abc/../abc",      "/abc" ],
+                [ "../abc",             "../abc" ],
+                [ "../abc/../abc",      "../abc" ],
+                [ "/../abc",            "/../abc" ],
+                [ "/../abc/../abc",     "/../abc" ],
+                [ "../abc/../../abc",   "../../abc" ],
+                [ "/../abc/../../abc",  "/../../abc" ],
+            ];
         }
 
         /**

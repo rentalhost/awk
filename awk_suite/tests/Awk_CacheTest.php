@@ -70,12 +70,22 @@
 
         /**
          * Cria um arquivo de cache com base em uma não-string.
+         * @dataProvider providerCacheArrayOrObject
          */
-        public function testCacheArrayOrObject() {
-            $this->assertSame("da/c2d276b16b3e3e2b4d38b2f7dc7731", self::$module->cache([ "name" => "test" ])->hash);
-            $this->assertSame("f7/827bf44040a444ac855cd67adfb502", self::$module->cache(new stdClass)->hash);
-            $this->assertSame("fc/dad500ea6bc76788bf3e3e76273315", self::$module->cache(12345)->hash);
-            $this->assertSame("43/1014e4a761ea216e9a35f20aaec61c", self::$module->cache(true)->hash);
+        public function testCacheArrayOrObject($expected_hash, $cache_object) {
+            $this->assertSame($expected_hash, self::$module->cache($cache_object)->hash);
+        }
+
+        /**
+         * Provedor de objetos.
+         */
+        public function providerCacheArrayOrObject() {
+            return [
+                [ "da/c2d276b16b3e3e2b4d38b2f7dc7731", [ "name" => "test" ] ],
+                [ "f7/827bf44040a444ac855cd67adfb502", new stdClass ],
+                [ "fc/dad500ea6bc76788bf3e3e76273315", 12345 ],
+                [ "43/1014e4a761ea216e9a35f20aaec61c", true ],
+            ];
         }
 
         /**
